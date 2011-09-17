@@ -1,0 +1,21 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <h2>Project:{{projectName}}</h2>
+    <h2>Version:{{appVersion}}</h2>
+    <hr />
+    <p>An error has just occurred. View full details <a href=http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}>here.</a></p>
+    <br />
+    <h3>Error Message:</h3>
+    <p>{{eventMessage}}</p>
+    <br />
+    <h3>Where:</h3>
+    <p>{{eventLocation}}</p>
+    <br />
+    <h3>Stacktrace:</h3>
+    <ul>
+      {{#eventTrace}}<li>{{file}} at {{lineNumber}}</li>{{/eventTrace}}
+    </ul>
+  </body>
+</html>
