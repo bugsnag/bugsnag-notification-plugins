@@ -9,7 +9,7 @@ catch err
 
 #TODO:SM We should make it so that people can turn this off from the email itself. Either that or only email the user's address.
 
-exports.executeNotification = (account, project, user, triggerText, event, options) ->
+exports.executeNotification = (account, project, triggerText, event, options) ->
     nodemailer.sendmail = true
     
     variables = {
@@ -32,7 +32,7 @@ exports.executeNotification = (account, project, user, triggerText, event, optio
 
     html = mustache.to_html(template, variables);
     
-    console.log("Firing an email for user " + user.email + " at address " + options.email)
+    console.log("Firing an email for user at address " + options.email)
     nodemailer.send_mail {
         to : options.email,
         subject : triggerText + " on " + project.name,

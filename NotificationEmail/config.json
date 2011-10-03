@@ -1,12 +1,14 @@
 {
     "name": "Email",
     "description": "Will email the supplied address when the associated trigger fires.",
+    "applicableEndpoints" : [ "user", "projectMembers" ],
     "configurationOptions": {
-        "email": {
-            "type": "String",
-            "defaultValue": "",
-            "name": "Email Address:",
-            "description": "The email address that will receive the notifications."
-        }
+      "email": {
+        "type": "String",
+        "defaultValue": "",
+        "name": "Email Address:",
+        "description": "The email address that will receive the notifications.",
+        "automaticallyPopulated": "true"
+        }
     }
 }
