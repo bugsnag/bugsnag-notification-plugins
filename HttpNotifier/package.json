@@ -1,0 +1,8 @@
+{
+  "name": "bugsnag-http-notifier",
+  "version": "1.0.0",
+  "main": "HttpNotifier.coffee",
+  "dependencies": {
+    "request": ">=2.0.0"
+  }
+}
