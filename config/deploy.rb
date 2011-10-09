@@ -1,6 +1,7 @@
 # Setup
 set :application, "bugsnag-notification-plugins"
 set :repository, "git@github.com:bugsnag/bugsnag-notification-plugins.git"
+set :user, "deploy"
 set :scm, :git
 set :deploy_to, "/var/www/bugsnag/notification-plugins"
 set :deploy_via, :remote_cache
