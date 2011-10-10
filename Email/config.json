@@ -1,7 +1,8 @@
 {
     "name": "Email",
+    "label": "Emailing project members",
     "description": "Will email the supplied address when the associated trigger fires.",
     "targetsUsers" : "true",
-	"fieldsRequired" : "email",
-    "configurationOptions": { }
+    "fieldsRequired" : "email",
+    "configurationOptions": []
 }

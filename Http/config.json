@@ -1,0 +1,15 @@
+{
+    "name": "Http",
+    "label": "Posting to a http endpoint",
+    "description": "Will hit the supplied Http endpoint when the associated trigger fires.",
+    "configurationOptions": [
+      {
+        "name": "url",
+        "type": "String",
+        "defaultValue": "",
+        "label": "Endpoint URL",
+        "description": "The URL we will send a POST request to when the trigger fires.",
+        "required": true
+      }
+    ]
+}
