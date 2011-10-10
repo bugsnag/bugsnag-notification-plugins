@@ -7,8 +7,7 @@ try
 catch err
     console.log("NotificationEmail: error reading template: " + err)
 
-#TODO:SM We should make it so that people can turn this off from the email itself. Either that or only email the user's address.
-
+#TODO:SM We should make it so that people can turn this off from the email itself.
 exports.executeNotification = (account, project, triggerText, event, options) ->
     nodemailer.sendmail = true
     
