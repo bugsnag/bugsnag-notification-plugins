@@ -1,0 +1,13 @@
+{
+    "name": "Http",
+    "description": "Will hit the supplied Http endpoint when the associated trigger fires.",
+    "applicableEndpoints" : [ "user", "projectMembers" ],
+    "configurationOptions": {
+      "url": {
+        "type": "String",
+        "defaultValue": "",
+        "name": "Endpoint URL:",
+        "description": "The URL we will send a POST request to when the trigger fires."
+      }
+    }
+}
