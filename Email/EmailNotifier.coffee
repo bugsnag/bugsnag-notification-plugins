@@ -42,4 +42,4 @@ exports.executeNotification = (account, project, triggerText, event, options, ta
                     body: mustache.to_html plainTemplate, context
                     html: mustache.to_html htmlTemplate, context
                 }, (err, result) ->
-                    errorCallback "NotificationEmail: error sending email ", err if err, true
+                    errorCallback "NotificationEmail: error sending email ", err, true if err
