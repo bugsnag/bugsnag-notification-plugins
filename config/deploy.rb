@@ -37,7 +37,7 @@ namespace :deploy do
 
   desc "Check required packages and install if packages are not installed"
   task :check_packages, roles => :app do
-    child_folders = Dir[File.join(release_path, "*")].select{|file| File.ftype(file) == "directory"}.each{|folder| run "cd #{folder} && npm-install"}
+    run "for dir in #{release_path}/*; do if [ -d $dir ]; then (cd $dir && npm install); fi done"
   end
 end
 
