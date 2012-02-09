@@ -37,6 +37,7 @@ class exports.Notification extends notification_require.NotificationBase
             
                 for email in emails
                     do (email) =>
+                        console.log "Emailing #{email}"
                         # Send the email
                         nodemailer.send_mail {
                             to : email
