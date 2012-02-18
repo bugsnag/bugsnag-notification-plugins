@@ -24,13 +24,18 @@ class exports.Notification extends notification_require.NotificationBase
         @projectHandle.fetch (err, project) =>
             return callback(err) if err?
             context =
+                eventClass: @event.exceptions[0].errorClass
+                eventContext: @event.context
+                usersAffected: @error.affectedUserIds.length
+                errorOccurrences: @error.occurrences
+                eventReceived: new Date(@error.updatedAt).toUTCString()
+                errorFirstReceived: new Date(@error._id.generationTime * 1000).toUTCString()
+                eventMessage: @event.exceptions[0].message
+                eventTrace: @event.exceptions[0].stacktrace
                 projectName: project.name
                 projectSlug: project.slug
                 errorId: @event.errorHash
-                appVersion: @event.appVersion
-                eventMessage: @event.exceptions[0].errorClass + ": " + @event.exceptions[0].message
-                eventLocation: @event.exceptions[0].stacktrace[0].file + " at " + @event.exceptions[0].stacktrace[0].lineNumber
-                eventTrace: @event.exceptions[0].stacktrace
+                triggerText: @triggerText
         
             @emailAddresses (err, emails) =>
                 return callback "Error when retrieving emails! Contents: #{err}" if err?
@@ -40,7 +45,7 @@ class exports.Notification extends notification_require.NotificationBase
                         # Send the email
                         nodemailer.send_mail {
                             to : email
-                            subject : @triggerText + " on " + project.name
+                            subject : "[#{context.projectName}] - #{context.eventClass} : #{ if context.eventContext != "" then context.eventContext else context.eventMessage }"
                             sender: 'Bugsnag <noreply@bugsnag.com>'
                             body: mustache.to_html plainTemplate, context
                             html: mustache.to_html htmlTemplate, context
