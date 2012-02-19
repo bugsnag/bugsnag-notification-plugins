@@ -26,8 +26,6 @@ class exports.Notification extends notification_require.NotificationBase
             context =
                 eventClass: @event.exceptions[0].errorClass
                 eventContext: @event.context
-                usersAffected: @error.affectedUserIds.length
-                errorOccurrences: @error.occurrences
                 eventReceived: new Date(@error.updatedAt).toUTCString()
                 errorFirstReceived: new Date(@error._id.generationTime * 1000).toUTCString()
                 eventMessage: @event.exceptions[0].message
@@ -36,6 +34,9 @@ class exports.Notification extends notification_require.NotificationBase
                 projectSlug: project.slug
                 errorId: @event.errorHash
                 triggerText: @triggerText
+            
+            for line in @event.exceptions[0].stacktrace
+                context.inProjectStack = line and break if line.inProject = true
         
             @emailAddresses (err, emails) =>
                 return callback "Error when retrieving emails! Contents: #{err}" if err?

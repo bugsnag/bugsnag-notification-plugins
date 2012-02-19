@@ -2,16 +2,17 @@
   <head>
   </head>
   <body style="margin:0;font-size:13px;line-height:1.231;font-family:sans-serif;color:#222;font-family:'Lucida Grande','Verdana',sans-serif;-webkit-font-smoothing:antialiased">
-    <h3 style="margin:0;font-size:1.5em;margin-bottom:3px;padding-top:3px;color:#444">{{eventClass}}</h3>
-    <h4 style="margin:0;font-size:1.0em;color:#bbb;font-weight:normal;margin-bottom:20px">{{eventContext}}</h4>
-    <a href=http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}>{{triggerText}} on {{projectName}}</a><p>Error received at {{eventReceived}}</p>
+    <h3 style="margin:0;font-size:1.5em;margin-bottom:3px;padding-top:3px;color:#444">{{eventClass}} in {{eventContext}}</h3>
+    {{#eventMessage}}<h4 style="margin:0;font-size:1.0em;color:#bbb;font-weight:normal;margin-bottom:20px">{{eventMessage}}</h4>{{/eventMessage}}
+    <p>{{triggerText}} on {{projectName}} received at {{eventReceived}}. </p><a href=http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}>Click here to view on bugsnag.com</a>
+    
+    {{#inProjectStack}}
+      <h5 style="margin:0;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd; margin-top: 10px;">First in project stack frame</h3>
+      <p style="padding:6px 0;padding-left:30px;font-family:'Monaco',Courier New,monospace;font-size:12px;line-height:20px;">{{file}}:{{lineNumber}} <span style="padding:0 2px;font-family:sans-serif">&bull;</span> {{method}}<p>
+    {{/inProjectStack}}
 
-    <h5 style="margin:0;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd">Error Stacktrace</h5>
+    <h5 style="margin:0;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd">Full Stacktrace</h5>
     <ul style="list-style:none;margin:0;padding:0;">
-      <li style="background:#d7e3bb;text-shadow:0 1px 0 #fff;color:#4d5f27;padding:12px 15px;">
-        <span style="display:block;font-weight:bold">{{eventClass}}</span>
-        <span style="font-size:.8em;display:block;margin-top:6px;text-shadow:none;color:#7f905c;">{{eventMessage}}</span>
-      </li>
       {{#eventTrace}}{{#inProject}}<b>{{/inProject}}<li style="padding:6px 0;padding-left:30px;font-family:'Monaco',Courier New,monospace;font-size:12px;line-height:20px;">{{file}}:{{lineNumber}} <span style="padding:0 2px;font-family:sans-serif">&bull;</span> {{method}}</li>{{#inProject}}</b>{{/inProject}}{{/eventTrace}}
     </ul>
   </body>
