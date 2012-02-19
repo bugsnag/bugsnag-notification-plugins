@@ -27,7 +27,6 @@ class exports.Notification extends notification_require.NotificationBase
                 eventClass: @event.exceptions[0].errorClass
                 eventContext: @event.context
                 eventReceived: new Date(@error.updatedAt).toUTCString()
-                errorFirstReceived: new Date(@error._id.generationTime * 1000).toUTCString()
                 eventMessage: @event.exceptions[0].message
                 eventTrace: @event.exceptions[0].stacktrace
                 projectName: project.name
