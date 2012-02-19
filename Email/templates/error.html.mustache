@@ -6,28 +6,6 @@
     <h4 style="margin:0;font-size:1.0em;color:#bbb;font-weight:normal;margin-bottom:20px">{{eventContext}}</h4>
     <a href=http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}>{{triggerText}} on {{projectName}}</a>
     
-    <table style="-moz-border-radius:8px;border-radius:8px;background:#f3f3f3;margin:20px 0 30px 0;">
-      <tr>
-        <th style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:.9em;color:#777;vertical-align:middle;text-shadow:0 1px 0 #fff;padding:18px 0 10px 0;font-weight:normal;width:10%">Users Affected</th>
-        <th style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:.9em;color:#777;vertical-align:middle;text-shadow:0 1px 0 #fff;padding:18px 0 10px 0;font-weight:normal;width:10%">Total Occurrences</th>
-        <th style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:.9em;color:#777;vertical-align:middle;text-shadow:0 1px 0 #fff;padding:18px 0 10px 0;font-weight:normal;width:10%">Last Received</th>
-        <th style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:.9em;color:#777;vertical-align:middle;text-shadow:0 1px 0 #fff;padding:18px 0 10px 0;font-weight:normal;width:10%">First Received</th>
-      </tr>
-      <tr>
-        <td style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:3.5em;padding:5px;width:10%;text-align:center;color:#444;text-shadow:1px 1px 0 #fff;vertical-align:middle;padding:0 10px;padding-bottom:8px">
-          {{usersAffected}}
-        </td>
-        <td style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:3.5em;padding:5px;width:10%;text-align:center;color:#444;text-shadow:1px 1px 0 #fff;vertical-align:middle;padding:0 10px;padding-bottom:8px">
-          {{errorOccurrences}}
-        </td>
-        <td style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:1.3em;padding:5px;width:10%;text-align:center;color:#444;text-shadow:1px 1px 0 #fff;vertical-align:middle;padding:0 10px;padding-bottom:8px">
-          {{eventReceived}}
-        </td>
-        <td style="font-family:'museo-sans';font-weight:500;text-transform:lowercase;font-size:1.3em;padding:5px;width:10%;text-align:center;color:#444;text-shadow:1px 1px 0 #fff;vertical-align:middle;padding:0 10px;padding-bottom:8px">
-          {{errorFirstReceived}}
-        </td>
-      </tr>
-    </table>
     <h5 style="margin:0;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd">Error Stacktrace</h5>
     <ul style="list-style:none;margin:0;padding:0;">
       <li style="background:#d7e3bb;text-shadow:0 1px 0 #fff;color:#4d5f27;padding:12px 15px;">
