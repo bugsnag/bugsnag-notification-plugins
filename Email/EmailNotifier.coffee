@@ -31,11 +31,11 @@ class exports.Notification extends notification_require.NotificationBase
                 eventTrace: @event.exceptions[0].stacktrace
                 projectName: project.name
                 projectSlug: project.slug
-                errorId: @event.errorHash
+                errorId: @event._id
                 triggerText: @triggerText
             
             for line in @event.exceptions[0].stacktrace
-                if line.inProject = true
+                if line.inProject
                     context.inProjectStack = line
                     break
         
