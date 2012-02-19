@@ -35,7 +35,9 @@ class exports.Notification extends notification_require.NotificationBase
                 triggerText: @triggerText
             
             for line in @event.exceptions[0].stacktrace
-                context.inProjectStack = line and break if line.inProject = true
+                if line.inProject = true
+                    context.inProjectStack = line
+                    break
         
             @emailAddresses (err, emails) =>
                 return callback "Error when retrieving emails! Contents: #{err}" if err?
