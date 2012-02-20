@@ -40,7 +40,7 @@ class exports.Notification extends notification_require.NotificationBase
                         if line.inProject
                             context.inProjectStack = line
                             break
-        
+                            
                     @emailAddresses (err, emails) =>
                         return callback "Error when retrieving emails! Contents: #{err}" if err?
             
