@@ -1,0 +1,8 @@
+{
+  "name": "bugsnag-hipchat-notifier",
+  "version": "1.0.0",
+  "main": "HipchatNotifier.coffee",
+  "dependencies": {
+    "node-hipchat": "latest"
+  }
+}

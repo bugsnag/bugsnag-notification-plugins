@@ -2,31 +2,23 @@
   <head>
   </head>
   <body style="font-size:13px;line-height:1.231;font-family:sans-serif;color:#222;font-family:'Lucida Grande','Verdana',sans-serif;-webkit-font-smoothing:antialiased">
-    <div style="display:block;padding-top:3px;margin-bottom:20px;border-bottom:1px solid #ddd;">
-      <h5 style="display:inline;font-size:1.2em;color:#666;">{{triggerText}} in project {{projectName}}</h3>
-      <a style="float:right;" href=http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}>Click here to view on bugsnag.com</a>
+    <div style="display:block;margin:0px;margin-bottom:10px;padding-bottom:3px;border-bottom:1px solid #ddd;">
+      <h5 style="display:inline;font-size:1.2em;color:#666;">{{eventClass}} <span style="font-weight:normal;">in</span> {{eventContext}}</h3>
     </div>
-    <dl>
-      <dt style="font-weight:bold;font-size:1.2em;">Type:</dt>
-        <dd style="margin-bottom:5px;">{{eventClass}}</dd>
-      {{#eventMessage}}
-      <dt style="font-weight:bold;font-size:1.2em;">Message:</dt>
-        <dd style="margin-bottom:5px;">{{eventMessage}}</dd>
-      {{/eventMessage}}
-      <dt style="font-weight:bold;font-size:1.2em;">Location:</dt>
-        <dd style="margin-bottom:5px;">{{eventContext}}</dd>
-      <dt style="font-weight:bold;font-size:1.2em;">Received:</dt>
-        <dd style="margin-bottom:5px;">{{eventReceived}}</dd>
-    </dl>
+    {{explanationText}} <a style="font-size:1.0em;font-weight:normal;" href={{url}}>Click here to view on bugsnag.com</a>
+    {{#eventMessage}}
+      <h5 style="margin-top:25px;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:10px;border-bottom:1px solid #ddd;">Error Message</h5>
+      <p>{{eventMessage}}</p>
+    {{/eventMessage}}
     
     {{#inProjectStack}}
-      <h5 style="margin:0;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd; margin-top: 10px;">First in project stack frame</h5>
-      <p style="padding:6px 0;padding-left:30px;font-family:'Monaco',Courier New,monospace;font-size:12px;line-height:20px;font-weight:bold;">{{file}}:{{lineNumber}} <span style="padding:0 2px;font-family:sans-serif">&bull;</span> {{method}}<p>
+      <h5 style="margin-top:25px;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:10px;border-bottom:1px solid #ddd;">First in project stack frame</h5>
+      <p style="padding:0px;padding-left:30px;font-family:'Monaco',Courier New,monospace;font-size:12px;line-height:20px;font-weight:bold;">{{file}}:{{lineNumber}} <span style="padding:0 2px;font-family:sans-serif">&bull;</span> {{method}}<p>
     {{/inProjectStack}}
 
-    <h5 style="margin:0;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd">Full Stacktrace</h5>
+    <h5 style="margin-top:25px;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:10px;border-bottom:1px solid #ddd">Full Stacktrace</h5>
     <ul style="list-style:none;margin:0;padding:0;">
-      {{#eventTrace}}{{#inProject}}<b>{{/inProject}}<li style="padding:6px 0;padding-left:30px;font-family:'Monaco',Courier New,monospace;font-size:12px;line-height:20px;">{{file}}:{{lineNumber}} <span style="padding:0 2px;font-family:sans-serif">&bull;</span> {{method}}</li>{{#inProject}}</b>{{/inProject}}{{/eventTrace}}
+      {{#eventTrace}}{{#inProject}}<b>{{/inProject}}<li style="padding-bottom:6px;padding-left:30px;font-family:'Monaco',Courier New,monospace;font-size:12px;line-height:20px;">{{file}}:{{lineNumber}} <span style="padding:0 2px;font-family:sans-serif">&bull;</span> {{method}}</li>{{#inProject}}</b>{{/inProject}}{{/eventTrace}}
     </ul>
   </body>
 </html>
