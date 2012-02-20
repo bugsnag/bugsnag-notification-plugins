@@ -2,20 +2,22 @@
   <head>
   </head>
   <body style="font-size:13px;line-height:1.231;font-family:sans-serif;color:#222;font-family:'Lucida Grande','Verdana',sans-serif;-webkit-font-smoothing:antialiased">
-    <h3 style="margin:0;font-size:1.2em;margin-bottom:3px;padding-top:3px;color:#444;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd;">{{triggerText}} in project {{projectName}}</h3>
+    <div style="display:block;padding-top:3px;margin-bottom:20px;border-bottom:1px solid #ddd;">
+      <h5 style="display:inline;font-size:1.2em;color:#666;">{{triggerText}} in project {{projectName}}</h3>
+      <a style="float:right;" href=http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}>Click here to view on bugsnag.com</a>
+    </div>
     <dl>
       <dt style="font-weight:bold;font-size:1.2em;">Type:</dt>
-        <dd>{{eventClass}}</dd>
+        <dd style="margin-bottom:5px;">{{eventClass}}</dd>
       {{#eventMessage}}
       <dt style="font-weight:bold;font-size:1.2em;">Message:</dt>
-        <dd>{{eventMessage}}</dd>
+        <dd style="margin-bottom:5px;">{{eventMessage}}</dd>
       {{/eventMessage}}
       <dt style="font-weight:bold;font-size:1.2em;">Location:</dt>
-        <dd>{{eventContext}}</dd>
+        <dd style="margin-bottom:5px;">{{eventContext}}</dd>
       <dt style="font-weight:bold;font-size:1.2em;">Received:</dt>
-        <dd>{{eventReceived}}</dd>
+        <dd style="margin-bottom:5px;">{{eventReceived}}</dd>
     </dl>
-    <a href=http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}>Click here to view on bugsnag.com</a>
     
     {{#inProjectStack}}
       <h5 style="margin:0;font-size:1.2em;color:#666;padding-bottom:3px;margin-bottom:20px;border-bottom:1px solid #ddd; margin-top: 10px;">First in project stack frame</h5>
