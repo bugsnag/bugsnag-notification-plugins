@@ -1,7 +1,7 @@
-exports.createNotification = (notificationRow, triggerInstance, accountHandle, projectHandle, event, error) ->
+exports.createNotification = (notificationRow, triggerRow, accountHandle, projectHandle, event, error) ->
     notificationRequire = require(require('path').join(__dirname,notificationRow.notificationType))
     return new notificationRequire.Notification notificationRow,
-                                                triggerInstance,
+                                                triggerRow,
                                                 accountHandle,
                                                 projectHandle,
                                                 event,
@@ -11,9 +11,10 @@ class exports.NotificationBase
     dbConnection: null
     
     # Constructor bla bla
-    constructor: (@notificationRow, @trigger, @accountHandle, @projectHandle, @event, @error) ->
-        @target_type = @trigger.triggerRow.triggerOwner_type
-        @target_id = @trigger.triggerRow.triggerOwner_id
+    constructor: (@notificationRow, triggerRow, @accountHandle, @projectHandle, @event, @error) ->
+        @target_type = triggerRow.triggerOwner_type
+        @target_id = triggerRow.triggerOwner_id
+        @trigger_type = triggerRow.type
         @configuration = @notificationRow.configuration
         @emails = null
         @target = null
