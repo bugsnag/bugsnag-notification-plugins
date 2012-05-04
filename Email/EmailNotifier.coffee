@@ -49,7 +49,7 @@ class exports.Notification extends notification_require.NotificationBase
                  context =
                     eventClass: @event.exceptions[0].errorClass
                     eventContext: @event.context
-                    eventMessage: @event.exceptions[0].message
+                    eventMessage: @event.exceptions[0].message[0..100]
                     eventTrace: eventTrace
                     projectName: project.name
                     url: url
@@ -60,10 +60,11 @@ class exports.Notification extends notification_require.NotificationBase
         
                     for email in emails
                         do (email) =>
+                            console.log "Emailling #{email}"
                             # Send the email
                             nodemailer.send_mail {
                                 to : email
-                                subject : "[#{context.projectName}] - #{context.eventClass} : #{ if context.eventContext != "" then context.eventContext else context.eventMessage }"
+                                subject : "[#{context.projectName}] #{context.eventClass} in #{ if context.eventContext != "" then context.eventContext else context.eventMessage }"
                                 sender: 'Bugsnag <noreply@bugsnag.com>'
                                 body: mustache.to_html plainTemplate, context
                                 html: mustache.to_html htmlTemplate, context

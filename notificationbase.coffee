@@ -70,7 +70,7 @@ class exports.NotificationBase
             when "Project"
                 @fetchTarget (err, target) =>
                     return callback(err, null) if err?
-                    @db.collection("users").find( { $or: [{_id: { $in:target.user_ids }}, { account_admin: true, account_id: target.account_id} ]}, { fields: ["email"] }).toArray (err, results) =>
+                    @db.collection("users").find( { $or: [{_id: { $in:target.user_ids }}, { account_admin: true, account_id: target.account_id} ], invitation_token: null}, { fields: ["email"] }).toArray (err, results) =>
                         if err
                             return callback("Error when looking project email addresses! Contents: #{err}", null)
                         else
