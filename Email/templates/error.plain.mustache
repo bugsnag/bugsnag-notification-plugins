@@ -1,9 +1,8 @@
 Project:{{projectName}}
-Version:{{appVersion}}
-  An error has just occurred. View full details at http://www.bugsnag.com/projects/{{projectSlug}}/errors/{{errorId}}.
+  {{explanationText}}. View full details at {{url}}.
 Error Message:
   {{eventMessage}}
 Where:
-  {{eventLocation}}
+  {{eventContext}}
 Stacktrace:
 {{#eventTrace}}  - {{file}} at {{lineNumber}}{{/eventTrace}}

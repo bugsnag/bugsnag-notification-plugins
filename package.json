@@ -1,0 +1,7 @@
+{
+  "name": "bugsnag-notification-base",
+  "version": "1.0.0",
+  "main" : "notificationbase.coffee",
+  "dependencies": {
+    }
+}

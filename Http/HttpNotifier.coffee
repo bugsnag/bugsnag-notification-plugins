@@ -1,7 +1,9 @@
 request = require("request")
+notification_require = require "../"
 
-# Notifier
-exports.executeNotification = (account, project, triggerText, event, options) ->
-    request.post(options.url, {
-        some: "payload"
-    })
+class exports.Notification extends notification_require.NotificationBase
+    # Notifier
+    executeNotification: (callback) =>
+        request.post(@configuration.url, {
+            some: "payload"
+        })

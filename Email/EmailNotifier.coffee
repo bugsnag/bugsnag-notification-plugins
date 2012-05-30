@@ -1,39 +1,72 @@
-nodemailer = require('nodemailer')
-mustache   = require('mustache')
-fs         = require('fs')
-
-# Load the templates
-plainTemplate = loadTemplate "error.plain.mustache"
-htmlTemplate  = loadTemplate "error.html.mustache"
+nodemailer           = require('nodemailer')
+mustache             = require('mustache')
+fs                   = require('fs')
+notification_require = require "../"
 
 # Set up nodemailer
 nodemailer.sendmail = true
-
-# Notifier
-exports.executeNotification = (account, project, triggerText, event, options) ->
-    # Make variables available in templates
-    context =
-        projectName: project.name
-        projectSlug: project.slug
-        errorId: event.errorHash
-        appVersion: event.appEnvironment.appVersion
-        eventMessage: event.causes[0].errorClass + ": " + event.causes[0].message
-        eventLocation: event.causes[0].stacktrace[0].file + " at " + event.causes[0].stacktrace[0].lineNumber
-        eventTrace: event.causes[0].stacktrace
-    
-    # Send the email
-    nodemailer.send_mail {
-        to : options.email
-        subject : triggerText + " on " + project.name
-        sender: 'Bugsnag <noreply@bugsnag.com>'
-        body: mustache.to_html plainTemplate, context
-        html: mustache.to_html htmlTemplate, context
-    }, (err, result) ->
-        console.log "NotificationEmail: error sending email ", err if err
 
 # Load a mustache template from a file in the templates directory
 loadTemplate = (file) ->
     try
         fs.readFileSync require('path').join(__dirname, "templates", file), "utf-8"
     catch err
-        console.log "Email: error reading template: ", err
+        console.log "Email: error reading template: #{err}"
+
+# Load the templates
+plainTemplate = loadTemplate "error.plain.mustache"
+htmlTemplate  = loadTemplate "error.html.mustache"
+
+class exports.Notification extends notification_require.NotificationBase
+    
+    generateExplanation: (project) =>
+        switch @triggerType
+            when "TriggerFirst"
+                return "New exception in #{project.name}"
+            else
+                return "Exception in #{project.name}"
+    
+    # Notifier
+    executeNotification: (callback) =>
+        # Make variables available in templates
+        @projectHandle.fetch (err, project) =>
+            return callback(err) if err?
+            @errorUrl (err, url) =>
+                return callback(err) if err?
+                
+                eventTrace = [];
+                appendedEllipsis = false;
+                for line in @event.exceptions[0].stacktrace
+                    if line.inProject
+                        eventTrace.push(line) 
+                        appendedEllipsis = false
+                    else if appendedEllipsis == false
+                        eventTrace.push({
+                            inProject: false
+                        })
+                        appendedEllipsis = true
+                
+                 context =
+                    eventClass: @event.exceptions[0].errorClass
+                    eventContext: @event.context
+                    eventMessage: @event.exceptions[0].message[0..100]
+                    eventTrace: eventTrace
+                    projectName: project.name
+                    url: url
+                    explanationText: @generateExplanation(project)
+                        
+                @emailAddresses (err, emails) =>
+                    return callback "Error when retrieving emails! Contents: #{err}" if err?
+        
+                    for email in emails
+                        do (email) =>
+                            console.log "Emailling #{email}"
+                            # Send the email
+                            nodemailer.send_mail {
+                                to : email
+                                subject : "[#{context.projectName}] #{context.eventClass} in #{ if context.eventContext != "" then context.eventContext else context.eventMessage }"
+                                sender: 'Bugsnag <noreply@bugsnag.com>'
+                                body: mustache.to_html plainTemplate, context
+                                html: mustache.to_html htmlTemplate, context
+                            }, (err, result) ->
+                                return callback "NotificationEmail: error sending email: #{err}" if err?
