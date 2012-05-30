@@ -1,6 +1,6 @@
 {
     "name": "Hipchat",
-    "label": "Posting to a Hipchat chatroom",
+    "label": "Post to a Hipchat chatroom",
     "description": "Will post information about an error to Hipchat.",
     "configurationOptions": [
       {
