@@ -83,6 +83,9 @@ defined in your `config.json` file.
 config.json format
 ------------------
 
+For a quick example of the `config.json` file format, take a look at the
+[Hipchat plugin config.json](https://raw.github.com/bugsnag/bugsnag-notification-plugins/refactor/plugins/hipchat/config.json).
+
 Your plugin's `config.json` file describes to users how to use and configure
 your plugin from their Bugsnag dashboard. The file must be a valid JSON file
 and contain the following top-level keys:
@@ -131,38 +134,3 @@ and contain the following top-level keys:
     -   **defaultValue**
 
         A default value for this field.
-
-Example `config.json` file:
-
-    {
-      "name": "Hipchat",
-      "description": "Post to a Hipchat chatroom",
-      "fields": [
-        {
-          "name": "authToken",
-          "label": "Auth Token",
-          "description": "Your Hipchat API auth token."
-        },
-        {
-          "name": "roomId",
-          "label": "Chat Room",
-          "description": "The ID or name of the Hipchat chat room to send notifications to."
-        },
-        {
-          "name": "notify",
-          "label": "Notify",
-          "description": "Whether or not this message should trigger a notification for people in the room.",
-          "type": "boolean",
-          "optional": true,
-          "defaultValue": false
-        },
-        {
-          "name": "color",
-          "label": "Background Color",
-          "description": "The background color for Hipchat notifications.",
-          "optional": true,
-          "allowedValues": ["yellow", "red", "green", "purple", "random"],
-          "defaultValue": "yellow"
-        }
-      ]
-    }
