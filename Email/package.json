@@ -1,9 +1,0 @@
-{
-  "name": "bugsnag-email-notifier",
-  "version": "1.0.0",
-  "main": "EmailNotifier.coffee",
-  "dependencies": {
-    "nodemailer": ">=0.1.0",
-    "mustache": ">=0.1.0"
-  }
-}

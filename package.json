@@ -1,7 +1,8 @@
 {
-  "name": "bugsnag-notification-base",
+  "name": "bugsnag-notification-plugins",
   "version": "1.0.0",
-  "main" : "notificationbase.coffee",
   "dependencies": {
-    }
+    "coffee-script": ">=1.0.0",
+    "superagent": ">=0.4.2"
+  }
 }
