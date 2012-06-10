@@ -3,19 +3,7 @@ require("sugar");
 //
 // The base Bugsnag NotificationPlugin class
 // Extend this class to create your own Bugsnag notification plugins:
-// 
-// JavaScript:
-//   var util = require("util");
-//   var NotificationPlugin = require("../../notification-plugin.js")
 //
-//   function MyPlugin() {}
-//   util.inherits(MyPlugin, NotificationPlugin);
-//   MyPlugin.receiveEvent = function (config, reason, project, error) {
-//     ...
-//   };
-//   module.exports = MyPlugin;
-//
-// CoffeeScript:
 //   NotificationPlugin = require "../../notification-plugin.js"
 //   class MyPlugin extends NotificationPlugin
 //     @receiveEvent = (config, reason, project, error) ->
@@ -24,6 +12,8 @@ require("sugar");
 //
 // All notification plugins must override the receiveEvent function to perform
 // the notification. This method is fired when a new event is triggered.
+//
+// See https://github.com/bugsnag/bugsnag-notification-plugins/ for full docs
 //
 
 var NotificationPlugin = (function () {

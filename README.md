@@ -30,26 +30,30 @@ the notification. This method is fired when a new event is triggered.
 
 It is easiest to write plugins using CoffeeScript, for example:
 
-    NotificationPlugin = require "../../notification-plugin.js"
-    class MyPlugin extends NotificationPlugin
-      @receiveEvent = (config, reason, project, error) ->
-        # Do the hard work here
+```coffeescript
+NotificationPlugin = require "../../notification-plugin.js"
+class MyPlugin extends NotificationPlugin
+  @receiveEvent = (config, reason, project, error) ->
+    # Do the hard work here
 
-    module.exports = MyPlugin
+module.exports = MyPlugin
+```
 
 If you prefer to write your plugin with plain old JavaScript, this is also 
 possible:
 
-    var util = require("util");
-    var NotificationPlugin = require("../../notification-plugin.js")
+```javascript
+var util = require("util");
+var NotificationPlugin = require("../../notification-plugin.js")
 
-    function MyPlugin() {}
-    util.inherits(MyPlugin, NotificationPlugin);
-    MyPlugin.receiveEvent = function (config, reason, project, error) {
-      // Do the hard work here
-    };
+function MyPlugin() {}
+util.inherits(MyPlugin, NotificationPlugin);
+MyPlugin.receiveEvent = function (config, reason, project, error) {
+  // Do the hard work here
+};
 
-    module.exports = MyPlugin;
+module.exports = MyPlugin;
+```
 
 
 HTTP helper methods
@@ -58,14 +62,16 @@ HTTP helper methods
 Since most notification plugins will use http for communication to external 
 services, we've provided some helper functions to make basic http request:
 
-    // Perform a HTTP GET request
-    NotificationPlugin.httpGet(url, params, callback)
+```javascript
+// Perform a HTTP GET request
+NotificationPlugin.httpGet(url, params, callback)
 
-    // Perform a HTTP POST request
-    NotificationPlugin.httpPost(url, params, callback)
+// Perform a HTTP POST request
+NotificationPlugin.httpPost(url, params, callback)
 
-    // Perform a HTTP POST request with a JSON body
-    NotificationPlugin.httpPostJson(url, params, callback)
+// Perform a HTTP POST request with a JSON body
+NotificationPlugin.httpPostJson(url, params, callback)
+```
 
 
 Testing your plugin
