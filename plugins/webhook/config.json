@@ -1,0 +1,11 @@
+{
+  "name": "Webhook",
+  "label": "Post to a Webhook URL",
+  "options": [
+    {
+      "name": "url",
+      "label": "Webhook URL",
+      "description": "The URL you would like error data posted to."
+    }
+  ]
+}
