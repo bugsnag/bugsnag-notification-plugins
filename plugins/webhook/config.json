@@ -1,7 +1,7 @@
 {
   "name": "Webhook",
-  "label": "Post to a Webhook URL",
-  "options": [
+  "description": "Post to a Webhook URL",
+  "fields": [
     {
       "name": "url",
       "label": "Webhook URL",

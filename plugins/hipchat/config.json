@@ -1,7 +1,7 @@
 {
   "name": "Hipchat",
-  "label": "Post to a Hipchat chatroom",
-  "options": [
+  "description": "Post to a Hipchat chatroom",
+  "fields": [
     {
       "name": "authToken",
       "label": "Auth Token",
@@ -17,16 +17,15 @@
       "label": "Notify",
       "description": "Whether or not this message should trigger a notification for people in the room.",
       "type": "boolean",
-      "optional": true,
-      "default": false
+      "defaultValue": false
     },
     {
       "name": "color",
       "label": "Background Color",
       "description": "The background color for Hipchat notifications.",
-      "allowedValues": ["yellow", "red", "green", "purple", "random"],
       "optional": true,
-      "default": "yellow"
+      "allowedValues": ["yellow", "red", "green", "purple", "random"],
+      "defaultValue": "yellow"
     }
   ]
 }
