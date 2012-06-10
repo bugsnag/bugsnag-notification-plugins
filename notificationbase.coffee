@@ -37,7 +37,7 @@ class exports.NotificationBase
     errorUrl: (callback) =>
         @projectHandle.fetch (err, project) =>
             return callback(err, null) if err?
-            return callback(null, "http://www.bugsnag.com/projects/#{project.slug}/errors/#{@error._id}")
+            return callback(null, "http://www.bugsnag.com/errors/#{@error._id}")
          
     # Fetches the target of the notification. callback(err, target)   
     fetchTarget: (callback) =>
