@@ -80,7 +80,9 @@ Testing your plugin
 By extending the `NotificationPlugin` class, you'll be able to test your 
 plugin directly on the command line as follows:
 
-    > node index.js --option=value --anotherOption=something
+```shell
+> node index.js --option=value --anotherOption=something
+```
 
 Command line options represent the customizable per-project settings as
 defined in your `config.json` file.
