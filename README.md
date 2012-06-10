@@ -87,18 +87,52 @@ Your plugin's `config.json` file describes to users how to use and configure
 your plugin from their Bugsnag dashboard. The file must be a valid JSON file
 and contain the following top-level keys:
 
-- **name** - The name of your plugin, eg. "Hipchat"
-- **description** - A simple description of the action that will be performed, eg. "Post to a Hipchat chatroom"
-- **instructions** - Any further instructions to present to the user (optional)
-- **fields** - An array of fields to present to the user on the Bugsnag.com dashboard. Each field should contain the following keys:
-  - **name** - A simple camelcase name for this field, eg. "authToken"
-  - **label** - The label to display to the user for this field, eg. "Auth Token"
-  - **description** - A full description or hint for this field, eg "Your Hipchat auth token from the dashboard on hipchat.com" (optional)
-  - **type** - The data type of this field, either `string` or `boolean` (optional, defaults to `string`)
-  - **allowedValues** - An array of allowed values for this field. When this is set, this option will be presented in a dropdown list (optional).
-  - **defaultValue** - A default value for this field.
+-   **name**
 
-Example:
+    The name of your plugin, eg. "Hipchat"
+
+-   **description**
+
+    A simple description of the action that will be performed, 
+    eg. "Post to a Hipchat chatroom"
+
+-   **instructions**
+
+    Any further instructions to present to the user (optional)
+
+-   **fields**
+
+    An array of fields to present to the user on the Bugsnag.com dashboard. 
+    Each field should contain the following keys:
+
+    -   **name**
+
+        A simple camelcase name for this field, eg. "authToken"
+
+    -   **label**
+
+        The label to display to the user for this field, eg. "Auth Token"
+
+    -   **description**
+
+        A full description or hint for this field, eg "Your Hipchat auth token
+        from the dashboard on hipchat.com" (optional)
+
+    -   **type**
+
+        The data type of this field, either `string` or `boolean`
+        (optional, defaults to `string`)
+
+    -   **allowedValues**
+
+        An array of allowed values for this field. When this is set, this 
+        option will be presented in a dropdown list (optional).
+
+    -   **defaultValue**
+
+        A default value for this field.
+
+Example `config.json` file:
 
     {
       "name": "Hipchat",
