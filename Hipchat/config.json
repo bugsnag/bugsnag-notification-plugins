@@ -16,7 +16,7 @@
         "type": "String",
         "defaultValue": "",
         "label": "Chat Room",
-        "description": "The chat room to send the notification to.",
+        "description": "The ID of the chat room to send the notification to.",
         "required": true
       },
       {
