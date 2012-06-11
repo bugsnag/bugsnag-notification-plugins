@@ -1,14 +1,8 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class Webhook extends NotificationPlugin
-  @receiveEvent: (config, reason, project, error) ->
-    # Build the request
-    params = 
-      reason: reason
-      project: project
-      error: error
-
+  @receiveEvent: (config, event) ->
     # Send the request to the url
-    @httpPostJson config.url, params
+    @httpPostJson config.url, event
 
 module.exports = Webhook

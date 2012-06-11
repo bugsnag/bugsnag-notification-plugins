@@ -20,14 +20,26 @@ var NotificationPlugin = (function () {
   function NotificationPlugin() {}
 
   // Fired when a new event is triggered for notification
-  NotificationPlugin.receiveEvent = function (config, reason, project, error) {
+  // Plugins MUST override this method
+  NotificationPlugin.receiveEvent = function (config, event) {
     throw new Error("Plugins must override receiveEvent");
   };
 
 
-  // Build a short message from this event
-  NotificationPlugin.shortMessage = function (reason, projectName, error) {
-    return "[" + reason + " on " + projectName + "] " + error.exceptionClass + ": " + (error.message.substr(0, 10));
+  // Utility methods for generating notification content
+  NotificationPlugin.stacktraceLineString = function (stacktraceLine) {
+    return stacktraceLine.file + ":" + stacktraceLine.lineNumber + " - " + stacktraceLine.method
+  };
+
+  NotificationPlugin.firstStacktraceLine = function (stacktrace) {
+    for(var i=0; i<stacktrace.length; i++) {
+      var line = stacktrace[i];
+      if(line.inProject) {
+        return this.stacktraceLineString(line);
+      }
+    }
+
+    return this.stacktraceLineString(stacktrace[0]);
   };
 
 
@@ -48,47 +60,52 @@ var NotificationPlugin = (function () {
 
   // Fire a test event to your notification plugin (do not override)
   NotificationPlugin.fireTestEvent = function (config) {
-    var error, projectName, reason;
-    reason = "First exception";
-    projectName = "Example";
-    error = {
-      "exceptionClass": "RuntimeError",
-      "message": "Something really bad happened",
-      "context": "home#example",
-      "appVersion": "1.0.0",
-      "releaseStage": "production",
-      "firstStacktraceLine": "app/example_controller.rb:87 - example",
-      "totalOccurrences": 5,
-      "usersAffected": 5,
-      "contextsAffected": 1,
-      "firstReceived": new Date(),
-      "eventUrl": "http://www.bugsnag.com/blah"
+    var event = {
+      error: {
+        exceptionClass: "ExampleException",
+        message: "Something really bad happened",
+        context: "home#example",
+        appVersion: "1.0.0",
+        releaseStage: "production",
+        occurrences: 42,
+        firstReceived: new Date(),
+        usersAffected: 20,
+        url: "http://bugsnag.com/errors/example/events/example"
+      },
+      project: {
+        id: "example",
+        name: "Example.com",
+        url: "http://bugsnag.com/projects/example"
+      },
+      trigger: {
+        type: "TriggerFirst",
+        name: "Exception"
+      }
     };
-    return this.receiveEvent(config, reason, projectName, error);
+
+    return this.receiveEvent(config, event);
   };
 
 
   // Configuration validation methods (do not override)
-  var configError = function (message) {
-    throw new Error("ConfigurationError: " + message);
-  };
-
   NotificationPlugin.validateConfig = function (config, pluginConfigFile) {
     var fs = require("fs");
     var pluginConfig = JSON.parse(fs.readFileSync(pluginConfigFile, "ascii"));
-    pluginConfig.options.each(function (option) {
-      var configValue = config[option.name];
+    if(pluginConfig.fields) {
+      pluginConfig.fields.each(function (option) {
+        var configValue = config[option.name];
 
-      // Validate all non-optional config options are present
-      if (!(configValue || option.optional)) {
-        configError("Missing '" + option.name + "'");
-      }
+        // Validate all non-optional config fields are present
+        if (!(configValue || option.optional)) {
+          throw new Error("ConfigurationError: Missing '" + option.name + "'");
+        }
 
-      // Validate fields with allowed values
-      if (configValue && option.allowedValues && option.allowedValues.none(configValue)) {
-        configError("Invalid value for '" + option.name + "'");
-      }
-    });
+        // Validate fields with allowed values
+        if (configValue && option.allowedValues && option.allowedValues.none(configValue)) {
+          throw new Error("ConfigurationError: Invalid value for '" + option.name + "'");
+        }
+      });
+    }
   };
 
 
