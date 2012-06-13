@@ -1,7 +1,7 @@
 {
   "name": "HipChat",
   "description": "Post to a HipChat chatroom",
-  "supportedTriggers": ["exception", "firstException"],
+  "supportedTriggers": "all",
   "fields": [
     {
       "name": "authToken",
