@@ -48,12 +48,17 @@ var NotificationPlugin = require("../../notification-plugin.js")
 
 function MyPlugin() {}
 util.inherits(MyPlugin, NotificationPlugin);
-MyPlugin.receiveEvent = function (config, reason, project, error) {
+MyPlugin.receiveEvent = function (config, event) {
   // Do the hard work here
 };
 
 module.exports = MyPlugin;
 ```
+
+
+Event Format
+------------
+TODO: Explain the event object that gets passed into receiveEvent
 
 
 HTTP helper methods
@@ -108,6 +113,13 @@ and contain the following top-level keys:
 -   **instructions**
 
     Any further instructions to present to the user (optional)
+
+-   **supportedTriggers**
+
+    We trigger notifications when certain events occur in bugsnag (see the 
+    Event Format) documentation above. To signal which triggers your plugin
+    understands, set this to an array of trigger strings.
+    eg. ["exception", "firstException"].
 
 -   **fields**
 
