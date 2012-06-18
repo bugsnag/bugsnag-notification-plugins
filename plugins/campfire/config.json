@@ -1,0 +1,22 @@
+{
+  "name": "Campfire",
+  "description": "Post to a Campfire chatroom",
+  "supportedTriggers": "all",
+  "fields": [
+    {
+      "name": "authToken",
+      "label": "Auth Token",
+      "description": "Your Campfire API auth token"
+    },
+    {
+      "name": "roomId",
+      "label": "Chat Room",
+      "description": "The ID of the chat room to send notifications to"
+    },
+    {
+      "name": "domain",
+      "label": "Domain",
+      "description": "The Campfire domain for the account"
+    }
+  ]
+}
