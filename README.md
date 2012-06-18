@@ -63,8 +63,10 @@ an event object, which tells you the reason we triggered a notification.
 
 ```javascript
 event: {
+    
     // Contains information about the project which has had an event
     project: {
+        
         // The project name
         name: "Project Name",
         
@@ -74,6 +76,7 @@ event: {
 
     // The reason the user is being notified by the notifier
     trigger: {
+        
         // The identifier for the reason for notification
         type: "firstException",
         
@@ -83,6 +86,7 @@ event: {
 
     // The error that caused the notification (optional). Will not be present if the project has hit the rate limit.
     error: {
+        
         // The class of exception that caused the error
         exceptionClass: "NullPointerException",
         
@@ -113,6 +117,7 @@ event: {
         
         // The stack trace for this error. An array of stack frames.
         stacktrace: [{
+            
             // The file that this stack frame was in.
             file: "BugsnagMainActivity.java",
             
@@ -125,7 +130,8 @@ event: {
             // Indicates that this stack fram was within the project. If the key is not present, 
             // it is assumed to be false.
             inProject: true
-        },...
+        }
+        ...
         ]
     }
 }
@@ -186,56 +192,45 @@ For a quick example of the `config.json` file format, take a look at the
 
 Your plugin's `config.json` file describes to users how to use and configure
 your plugin from their Bugsnag dashboard. The file must be a valid JSON file
-and contain the following top-level keys:
+and look similar to the following example:
 
--   **name**
-
-    The name of your plugin, eg. "Hipchat"
-
--   **description**
-
-    A simple description of the action that will be performed, 
-    eg. "Post to a Hipchat chatroom"
-
--   **instructions**
-
-    Any further instructions to present to the user (optional)
-
--   **supportedTriggers**
-
-    We trigger notifications when certain events occur in bugsnag (see the 
-    Event Format) documentation above. To signal which triggers your plugin
-    understands, set this to an array of trigger strings.
-    eg. ["exception", "firstException"].
-
--   **fields**
-
-    An array of fields to present to the user on the Bugsnag.com dashboard. 
-    Each field should contain the following keys:
-
-    -   **name**
-
-        A simple camelcase name for this field, eg. "authToken"
-
-    -   **label**
-
-        The label to display to the user for this field, eg. "Auth Token"
-
-    -   **description**
-
-        A full description or hint for this field, eg "Your Hipchat auth token
-        from the dashboard on hipchat.com" (optional)
-
-    -   **type**
-
-        The data type of this field, either `string` or `boolean`
-        (optional, defaults to `string`)
-
-    -   **allowedValues**
-
-        An array of allowed values for this field. When this is set, this 
-        option will be presented in a dropdown list (optional).
-
-    -   **defaultValue**
-
-        A default value for this field.
+```javascript
+{
+    // The name of the plugin.
+    "name": "HipChat",
+    
+    // A simple description of the action that will be performed.
+    "description": "Post to a HipChat chatroom",
+    
+    // We trigger notifications when certain events occur in bugsnag (see the Event Format documentation above).
+    // To signal which triggers your plugin understands, set this to an array of trigger strings. eg. ["exception", "firstException"].
+    // If you will support all triggers, set the value to "all".
+    "supportedTriggers": "all",
+    
+    // An array of fields to present to the user on the Bugsnag.com dashboard.
+    "fields": [{
+        
+        // The name of the field. This is how you will reference the field in the configuration
+        // options that are passed to your notifier when it is run. Should be camelCase.
+        "name": "authToken",
+        
+        // The label to display to the user for this field
+        "label": "Auth Token",
+        
+        // A full description or hint for this field. Will be displayed to the user as a hint.
+        "description": "Your HipChat API auth token",
+        
+        // The data type of this field, either string or boolean (optional, defaults to string)
+        "type": "boolean",
+        
+        // An array of allowed values for this field. When this is set, this option will be presented 
+        // in a dropdown list (optional).
+        "allowedValues": ["yellow", "red", "green", "purple", "random"],
+        
+        // A default value for this field (optional).
+        "defaultValue": "yellow"
+    }
+    ...
+    ]
+}
+```
