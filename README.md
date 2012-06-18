@@ -139,7 +139,7 @@ services, we've provided a `request` helper function. This function provides
 a `superagent` request object, which you can
 [read about here](http://visionmedia.github.com/superagent/). Some examples:
 
-```javascript
+```coffeescript
 // Perform a HTTP GET request
 @request
   .get("http://someurl.com")
@@ -182,7 +182,7 @@ config.json format
 ------------------
 
 For a quick example of the `config.json` file format, take a look at the
-[Hipchat plugin config.json](https://raw.github.com/bugsnag/bugsnag-notification-plugins/refactor/plugins/hipchat/config.json).
+[Hipchat plugin config.json](https://raw.github.com/bugsnag/bugsnag-notification-plugins/master/plugins/hipchat/config.json).
 
 Your plugin's `config.json` file describes to users how to use and configure
 your plugin from their Bugsnag dashboard. The file must be a valid JSON file
