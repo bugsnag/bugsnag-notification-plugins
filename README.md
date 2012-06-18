@@ -58,8 +58,71 @@ module.exports = MyPlugin;
 
 Event Format
 ------------
-TODO: Explain the event object that gets passed into receiveEvent
+As well as being passed in the users configuration for your notification, you are passed
+an event object, which tells you what the user needs to be notified about.
 
+```javascript
+event: {
+    // Contains information about the project which has had an event
+    project: {
+        // The project name
+        name: "Project Name",
+        
+        // The url for the Bugsnag dashboard of the project
+        url: "https://bugsnag.com/projects/project-name"
+    },
+    // The reason the user is being notified by the notifier
+    trigger: {
+        // The identifier for the reason for notification
+        type: "firstException",
+        
+        // The human readable form of the trigger. This can be used to start a sentance.
+        message: "New exception"
+    },
+    // The error that caused the notification (optional). Will not be present if the project has hit the rate limit.
+    error: {
+        // The class of exception that caused the error
+        exceptionClass: "NullPointerException",
+        
+        // The message that came with the exception. This may not be present if the exception didnt generate one.
+        message: "Null cannot be dereferenced",
+        
+        // The context that was active in the application when the error occurred. This could be which screen the user was using at the time, for example.
+        context: "BugsnagMainActivity",
+        
+        // The application version
+        appVersion: "1.2.3",
+        
+        // The release stage, will most often be production, or development.
+        releaseStage: "production",
+        
+        // The number of times this exception has occured (including this one)
+        occurrences: 1,
+        
+        // When was the error first received. Will be a Date object.
+        firstReceived: new Date(),
+        
+        // How many users have been affected. Could be 0 if there was no user associated with the error.
+        usersAffected: 1,
+        
+        // The stack trace for this error. An array of stack frames.
+        stacktrace: [{
+            // The file that this stack frame was in.
+            file: "BugsnagMainActivity.java",
+            
+            // The line number of the stack frame, within the file.
+            lineNumber: 123,
+            
+            // The method that was being executed.
+            method: "onCreate",
+            
+            // Indicates that this stack fram was within the project. If the key is not present, it is assumed to be false.
+            inProject: true
+        },...
+        ]
+    }
+}
+```
 
 HTTP helper methods
 -------------------
