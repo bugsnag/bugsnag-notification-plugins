@@ -5,6 +5,12 @@ Bugsnag.com can notify you when errors happen in your applications.
 We've created a plugin architecture so you can contribute notification 
 plugins for services you use.
 
+What is Bugsnag?
+----------------
+
+[Bugsnag](http://bugsnag.com) captures errors in real-time from your web, 
+mobile and desktop applications, helping you to understand and resolve them 
+as fast as possible. [Create a free account](http://bugsnag.com).
 
 Steps to contributing
 ---------------------
@@ -204,7 +210,8 @@ and look similar to the following example:
     
     // We trigger notifications when certain events occur in bugsnag (see the Event Format documentation above).
     // To signal which triggers your plugin understands, set this to an array of trigger
-    // strings. eg. ["exception", "firstException"]. If you will support all triggers, set the value to "all".
+    // strings. eg. ["exception", "firstException"]. 
+    // If you will support all triggers, set the value to "all".
     "supportedTriggers": "all",
     
     // An array of fields to present to the user on the Bugsnag.com dashboard.
@@ -217,7 +224,7 @@ and look similar to the following example:
         // The label to display to the user for this field
         "label": "Auth Token",
         
-        // A full description or hint for this field. Will be displayed to the user as a hint.
+        // A full description or hint for this field.
         "description": "Your HipChat API auth token",
         
         // The data type of this field, either string or boolean (optional, defaults to string)
@@ -234,3 +241,11 @@ and look similar to the following example:
     ]
 }
 ```
+
+Reporting Bugs or Feature Requests
+----------------------------------
+
+Please report any bugs or feature requests on the github issues page for this
+project here:
+
+<https://github.com/bugsnag/bugsnag-notification-plugins/issues>
