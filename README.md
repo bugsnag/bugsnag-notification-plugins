@@ -87,7 +87,8 @@ event: {
         // The message that came with the exception. This may not be present if the exception didnt generate one.
         message: "Null cannot be dereferenced",
         
-        // The context that was active in the application when the error occurred. This could be which screen the user was using at the time, for example.
+        // The context that was active in the application when the error occurred. This could be which screen
+        // the user was using at the time, for example.
         context: "BugsnagMainActivity",
         
         // The application version
@@ -116,7 +117,8 @@ event: {
             // The method that was being executed.
             method: "onCreate",
             
-            // Indicates that this stack fram was within the project. If the key is not present, it is assumed to be false.
+            // Indicates that this stack fram was within the project. If the key is not present, 
+            // it is assumed to be false.
             inProject: true
         },...
         ]
