@@ -90,13 +90,18 @@ var NotificationPlugin = (function () {
         var configValue = config[option.name];
 
         // Validate all non-optional config fields are present
-        if (!(configValue || option.optional)) {
+        if (!(configValue !== undefined || option.optional || (option.type == "boolean" && option.defaultValue !== undefined))) {
           throw new Error("ConfigurationError: Missing '" + option.name + "'");
         }
 
         // Validate fields with allowed values
-        if (configValue && option.allowedValues && option.allowedValues.none(configValue)) {
+        if (configValue !== undefined && option.allowedValues && option.allowedValues.none(configValue)) {
           throw new Error("ConfigurationError: Invalid value for '" + option.name + "'");
+        }
+
+        // Fill in default values
+        if(configValue == undefined && option.defaultValue !== undefined) {
+          config[option.name] = option.defaultValue;
         }
       });
     }
