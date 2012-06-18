@@ -203,8 +203,8 @@ and look similar to the following example:
     "description": "Post to a HipChat chatroom",
     
     // We trigger notifications when certain events occur in bugsnag (see the Event Format documentation above).
-    // To signal which triggers your plugin understands, set this to an array of trigger strings. eg. ["exception", "firstException"].
-    // If you will support all triggers, set the value to "all".
+    // To signal which triggers your plugin understands, set this to an array of trigger
+    // strings. eg. ["exception", "firstException"]. If you will support all triggers, set the value to "all".
     "supportedTriggers": "all",
     
     // An array of fields to present to the user on the Bugsnag.com dashboard.
