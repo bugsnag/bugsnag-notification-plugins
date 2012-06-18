@@ -6,7 +6,7 @@ require("sugar");
 //
 //   NotificationPlugin = require "../../notification-plugin.js"
 //   class MyPlugin extends NotificationPlugin
-//     @receiveEvent = (config, reason, project, error) ->
+//     @receiveEvent = (config, event) ->
 //       ...
 //   module.exports = MyPlugin
 //
@@ -44,18 +44,7 @@ var NotificationPlugin = (function () {
 
 
   // Utility methods for http requests
-  var request = require("superagent");
-  NotificationPlugin.httpGet = function (url, params, callback) {
-    return request.get(url).send(params).end(callback);
-  };
-
-  NotificationPlugin.httpPost = function (url, params, callback) {
-    return request.post(url).send(params).type("form").end(callback);
-  };
-
-  NotificationPlugin.httpPostJson = function (url, obj, callback) {
-    return request.post(url).send(obj).end(callback);
-  };
+  NotificationPlugin.request = require("superagent");
 
 
   // Fire a test event to your notification plugin (do not override)
@@ -70,16 +59,21 @@ var NotificationPlugin = (function () {
         occurrences: 42,
         firstReceived: new Date(),
         usersAffected: 20,
-        url: "http://bugsnag.com/errors/example/events/example"
+        url: "http://bugsnag.com/errors/example/events/example",
+        stacktrace: [{
+          file: "app/controllers/home_controller.rb",
+          lineNumber: 123,
+          method: "example",
+          inProject: true
+        }]
       },
       project: {
-        id: "example",
         name: "Example.com",
         url: "http://bugsnag.com/projects/example"
       },
       trigger: {
-        type: "TriggerFirst",
-        name: "Exception"
+        type: "firstException",
+        message: "New exception"
       }
     };
 

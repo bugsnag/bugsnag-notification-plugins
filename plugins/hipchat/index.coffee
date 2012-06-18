@@ -19,6 +19,10 @@ class Hipchat extends NotificationPlugin
       color: config.color || "yellow"
 
     # Send the request to hipchat
-    @httpPost HIPCHAT_API_ENDPOINT, params
+    @request
+      .post(HIPCHAT_API_ENDPOINT)
+      .send(params)
+      .type("form")
+      .end()
 
 module.exports = Hipchat

@@ -15,7 +15,7 @@ Steps to contributing
 - Create a `config.json` file describing the usage and configurable settings for your plugin
 - Add a 50x50 `icon.png` file representing your plugin
 - If necessary, add any node module dependencies to the base `package.json` file
-- Send a pull request from your fork to bugsnag/bugsnag-notification-plugins
+- Send a pull request from your fork to [bugsnag/bugsnag-notification-plugins](https://github.com/bugsnag/bugsnag-notification-plugins)
 
 
 Writing your plugin
@@ -33,7 +33,7 @@ It is easiest to write plugins using CoffeeScript, for example:
 ```coffeescript
 NotificationPlugin = require "../../notification-plugin.js"
 class MyPlugin extends NotificationPlugin
-  @receiveEvent = (config, reason, project, error) ->
+  @receiveEvent = (config, event) ->
     # Do the hard work here
 
 module.exports = MyPlugin
@@ -58,8 +58,8 @@ module.exports = MyPlugin;
 
 Event Format
 ------------
-As well as being passed in the users configuration for your notification, you are passed
-an event object, which tells you what the user needs to be notified about.
+As well as passing the user's plugin configuration settings, we also pass you
+an event object, which tells you the reason we triggered a notification.
 
 ```javascript
 event: {
@@ -71,6 +71,7 @@ event: {
         // The url for the Bugsnag dashboard of the project
         url: "https://bugsnag.com/projects/project-name"
     },
+
     // The reason the user is being notified by the notifier
     trigger: {
         // The identifier for the reason for notification
@@ -79,6 +80,7 @@ event: {
         // The human readable form of the trigger. This can be used to start a sentance.
         message: "New exception"
     },
+
     // The error that caused the notification (optional). Will not be present if the project has hit the rate limit.
     error: {
         // The class of exception that caused the error
@@ -106,6 +108,9 @@ event: {
         // How many users have been affected. Could be 0 if there was no user associated with the error.
         usersAffected: 1,
         
+        // The URL on bugsnag.com with the full details about this erro
+        url: "https://bugsnag.com/errors/example",
+        
         // The stack trace for this error. An array of stack frames.
         stacktrace: [{
             // The file that this stack frame was in.
@@ -126,21 +131,35 @@ event: {
 }
 ```
 
-HTTP helper methods
+HTTP request helper
 -------------------
 
 Since most notification plugins will use http for communication to external 
-services, we've provided some helper functions to make basic http request:
+services, we've provided a `request` helper function. This function provides
+a `superagent` request object, which you can
+[read about here](http://visionmedia.github.com/superagent/). Some examples:
 
 ```javascript
 // Perform a HTTP GET request
-NotificationPlugin.httpGet(url, params, callback)
+@request
+  .get("http://someurl.com")
+  .send(params)
+  .end()
 
-// Perform a HTTP POST request
-NotificationPlugin.httpPost(url, params, callback)
+
+// Perform a normal HTTP POST request
+@request
+  .post("http://someurl.com")
+  .send(params)
+  .type("form")
+  .end()
+
 
 // Perform a HTTP POST request with a JSON body
-NotificationPlugin.httpPostJson(url, params, callback)
+@request
+  .post("http://someurl.com")
+  .send(params)
+  .end()
 ```
 
 
