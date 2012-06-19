@@ -1,0 +1,23 @@
+{
+  "name": "GitHub Issue",
+  "description": "Create a GitHub issue",
+  "supportedTriggers": ["firstException"],
+  "fields": [
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "Your GitHub username"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your GitHub password",
+      "type": "password"
+    },
+    {
+      "name": "repo",
+      "label": "Repository",
+      "description": "Which GitHub repository to create the issue on, eg rails/rails"
+    }
+  ]
+}
