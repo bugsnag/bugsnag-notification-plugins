@@ -1,5 +1,5 @@
 {
-  "name": "GitHub Issue",
+  "name": "GitHub Issues",
   "description": "Create a GitHub issue",
   "supportedTriggers": ["firstException"],
   "fields": [
