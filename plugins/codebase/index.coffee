@@ -1,6 +1,6 @@
 NotificationPlugin = require "../../notification-plugin"
 
-class GithubIssue extends NotificationPlugin
+class Codebase extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
@@ -19,18 +19,25 @@ class GithubIssue extends NotificationPlugin
 
     [View full stacktrace](#{event.error.url})
     """
-    
+
   @receiveEvent: (config, event) ->
     # Build the request
-    params = 
-      title: "#{event.error.exceptionClass} in #{event.error.context}"
-      body: markdownBody(event)
+    body = 
+      """
+      <ticket>
+        <summary>#{event.error.exceptionClass} in #{event.error.context}</summary>
+        <ticket-type>bug</ticket-type>
+        <description>#{markdownBody(event)}</description>
+      </ticket>
+      """
 
     # Send the request to the url
     @request
-      .post("https://api.github.com/repos/#{config.repo}/issues")
-      .send(params)
-      .auth(config.username, config.password)
+      .post("http://api3.codebasehq.com/#{config.project}/tickets")
+      .set("Accept", "application/xml")
+      .type("application/xml")
+      .auth("#{config.account}/#{config.username}", config.apiKey)
+      .send(body)
       .end();
 
-module.exports = GithubIssue
+module.exports = Codebase

@@ -1,0 +1,29 @@
+{
+  "name": "Lighthouse",
+  "description": "Create a Lighthouse Ticket",
+  "supportedTriggers": ["firstException"],
+  "fields": [
+    {
+      "name": "url",
+      "label": "Lighthouse URL",
+      "description": "Your Lighthouse URL, eg http://myaccount.lighthouse.com"
+    },
+    {
+      "name": "projectId",
+      "label": "Project ID",
+      "description": "Your Lighthouse project ID. You can find this from the URL to your Lighthouse project."
+    },
+    {
+      "name": "apiKey",
+      "label": "API Key",
+      "description": "Your Lighthouse API Key (http://help.lighthouseapp.com/kb/api/how-do-i-get-an-api-token)"
+    },
+    {
+      "name": "tags",
+      "label": "Tags",
+      "description": "Which tags to add to tickets, comma delimited",
+      "optional": true,
+      "defaultValue": "bugsnag"      
+    }
+  ]
+}

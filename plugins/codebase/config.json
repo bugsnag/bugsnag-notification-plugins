@@ -1,0 +1,27 @@
+{
+  "name": "Codebase",
+  "description": "Create a Codebase Ticket",
+  "supportedTriggers": ["firstException"],
+  "fields": [
+    {
+      "name": "account",
+      "label": "Account Name",
+      "description": "Your Codebase account name."
+    },
+    {
+      "name": "project",
+      "label": "Project Permalink",
+      "description": "Your Codebase project's short project name (permalink)"
+    },
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "The username associated to your api key."
+    },
+    {
+      "name": "apiKey",
+      "label": "API Key",
+      "description": "Your Codebase API Key"
+    }
+  ]
+}
