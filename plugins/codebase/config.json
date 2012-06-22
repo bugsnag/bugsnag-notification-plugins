@@ -1,6 +1,6 @@
 {
   "name": "Codebase",
-  "description": "Create a Codebase Ticket",
+  "description": "Create a Codebase ticket",
   "supportedTriggers": ["firstException"],
   "fields": [
     {

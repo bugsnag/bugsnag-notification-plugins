@@ -1,0 +1,17 @@
+{
+  "name": "Pivotal Tracker",
+  "description": "Create a Pivotal Tracker story",
+  "supportedTriggers": ["firstException"],
+  "fields": [
+    {
+      "name": "projectId",
+      "label": "Project Id",
+      "description": "Your Pivotal Tracker project ID."
+    },
+    {
+      "name": "apiToken",
+      "label": "API Token",
+      "description": "Your Pivotal Tracker API Token, from your profile page."
+    }
+  ]
+}
