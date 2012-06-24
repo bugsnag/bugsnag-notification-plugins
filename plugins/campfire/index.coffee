@@ -13,8 +13,13 @@ class Campfire extends NotificationPlugin
       message:
         body: message
         type: "TextMessage"
+        
+    url = "https://#{config.authToken}:X@#{config.domain}.campfirenow.com/room/#{config.roomId}/speak.xml"
 
     # Send the request to campfire
-    @httpPostJson "https://#{config.authToken}:X@#{config.domain}.campfirenow.com/room/#{config.roomId}/speak.xml", payload
+    @request
+      .post(url)
+      .send(payload)
+      .end();
 
 module.exports = Campfire
