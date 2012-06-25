@@ -227,7 +227,7 @@ and look similar to the following example:
         // A full description or hint for this field.
         "description": "Your HipChat API auth token",
         
-        // The data type of this field, either string or boolean (optional, defaults to string)
+        // The data type of this field, either string, password or boolean (optional, defaults to string)
         "type": "boolean",
         
         // An array of allowed values for this field. When this is set, this option will be presented 
