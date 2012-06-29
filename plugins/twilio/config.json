@@ -1,0 +1,27 @@
+{
+  "name": "Twilio SMS",
+  "description": "Send an SMS with Twilio",
+  "supportedTriggers": "all",
+  "fields": [
+    {
+      "name": "fromNumber",
+      "label": "Twilio Number",
+      "description": "The Twilio phone number to send the SMS from"
+    },
+    {
+      "name": "toNumber",
+      "label": "Number to SMS",
+      "description": "The phone number to send the SMS to"
+    },
+    {
+      "name": "accountSid",
+      "label": "Account SID",
+      "description": "Your Twilio account SID"
+    },
+    {
+      "name": "authToken",
+      "label": "Auth Token",
+      "description": "Your Token auth token"
+    }
+  ]
+}
