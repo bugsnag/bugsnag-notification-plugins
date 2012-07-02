@@ -83,7 +83,6 @@ event: {
     
     // Contains information about the project which has had an event
     project: {
-        
         // The project name
         name: "Project Name",
         
@@ -93,7 +92,6 @@ event: {
 
     // The reason the user is being notified by the notifier
     trigger: {
-        
         // The identifier for the reason for notification
         type: "firstException",
         
@@ -105,7 +103,6 @@ event: {
     // The error that caused the notification (optional). Will not be present if
     // the project has hit the rate limit.
     error: {
-        
         // The class of exception that caused the error
         exceptionClass: "NullPointerException",
         
@@ -139,7 +136,6 @@ event: {
         
         // The stack trace for this error. An array of stack frames.
         stacktrace: [{
-            
             // The file that this stack frame was in.
             file: "BugsnagMainActivity.java",
             
