@@ -1,27 +1,38 @@
-Bugsnag Notification Plugins
-============================
+Bugsnag Notification Plugin Creation Guide
+==========================================
 
 Bugsnag.com can notify you when errors happen in your applications.
 We've created a plugin architecture so you can contribute notification 
 plugins for services you use.
 
-What is Bugsnag?
-----------------
-
 [Bugsnag](http://bugsnag.com) captures errors in real-time from your web, 
 mobile and desktop applications, helping you to understand and resolve them 
-as fast as possible. [Create a free account](http://bugsnag.com).
+as fast as possible. [Create a free account](http://bugsnag.com) to start 
+capturing exceptions from your applications.
+
 
 Steps to contributing
 ---------------------
 
-- Fork the project
-- Create a new folder in `/plugins/` for your plugin
-- Create the plugin file as `index.js` or `index.coffee`, see below for instructions
-- Create a `config.json` file describing the usage and configurable settings for your plugin
-- Add a 50x50 `icon.png` file representing your plugin
-- If necessary, add any node module dependencies to the base `package.json` file
-- Send a pull request from your fork to [bugsnag/bugsnag-notification-plugins](https://github.com/bugsnag/bugsnag-notification-plugins)
+-   [Fork](https://help.github.com/articles/fork-a-repo) the 
+    [bugsnag-notification-plugins project](https://github.com/bugsnag/bugsnag-notification-plugins)
+    on GitHub.
+
+-   Create a new folder in `/plugins/` for your plugin
+
+-   Create the plugin file as `index.js` or `index.coffee`, see below for 
+    instructions
+
+-   Create a `config.json` file describing the usage and configurable settings
+    for your plugin
+
+-   Add a 50x50 `icon.png` file representing your plugin
+
+-   If necessary, add any node module dependencies to the base `package.json` 
+    file
+
+-   [Make a pull request](https://help.github.com/articles/using-pull-requests)
+    from your fork to [bugsnag/bugsnag-notification-plugins](https://github.com/bugsnag/bugsnag-notification-plugins)
 
 
 Writing your plugin
@@ -86,20 +97,24 @@ event: {
         // The identifier for the reason for notification
         type: "firstException",
         
-        // The human readable form of the trigger. This can be used to start a sentance.
+        // The human readable form of the trigger. This can be used to start 
+        // a sentance.
         message: "New exception"
     },
 
-    // The error that caused the notification (optional). Will not be present if the project has hit the rate limit.
+    // The error that caused the notification (optional). Will not be present if
+    // the project has hit the rate limit.
     error: {
         
         // The class of exception that caused the error
         exceptionClass: "NullPointerException",
         
-        // The message that came with the exception. This may not be present if the exception didnt generate one.
+        // The message that came with the exception. This may not be present if 
+        // the exception didnt generate one.
         message: "Null cannot be dereferenced",
         
-        // The context that was active in the application when the error occurred. This could be which screen
+        // The context that was active in the application when the error 
+        // occurred. This could be which screen
         // the user was using at the time, for example.
         context: "BugsnagMainActivity",
         
@@ -115,7 +130,8 @@ event: {
         // When was the error first received. Will be a Date object.
         firstReceived: new Date(),
         
-        // How many users have been affected. Could be 0 if there was no user associated with the error.
+        // How many users have been affected. Could be 0 if there was no user 
+        // associated with the error.
         usersAffected: 1,
         
         // The URL on bugsnag.com with the full details about this erro
@@ -133,8 +149,8 @@ event: {
             // The method that was being executed.
             method: "onCreate",
             
-            // Indicates that this stack fram was within the project. If the key is not present, 
-            // it is assumed to be false.
+            // Indicates that this stack fram was within the project. If the key
+            //is not present, it is assumed to be false.
             inProject: true
         }
         ...
@@ -193,9 +209,6 @@ directory first, to install the dependencies for the project.
 config.json format
 ------------------
 
-For a quick example of the `config.json` file format, take a look at the
-[Hipchat plugin config.json](https://raw.github.com/bugsnag/bugsnag-notification-plugins/master/plugins/hipchat/config.json).
-
 Your plugin's `config.json` file describes to users how to use and configure
 your plugin from their Bugsnag dashboard. The file must be a valid JSON file
 and look similar to the following example:
@@ -208,17 +221,18 @@ and look similar to the following example:
     // A simple description of the action that will be performed.
     "description": "Post to a HipChat chatroom",
     
-    // We trigger notifications when certain events occur in bugsnag (see the Event Format documentation above).
-    // To signal which triggers your plugin understands, set this to an array of trigger
-    // strings. eg. ["exception", "firstException"]. 
-    // If you will support all triggers, set the value to "all".
-    "supportedTriggers": "all",
+    // We trigger notifications when certain events occur in bugsnag (see the 
+    // Event Format documentation above). To signal which triggers your plugin
+    // understands, set this to an array of trigger strings. 
+    // eg. ["exception", "firstException"]. 
+    "supportedTriggers": ["firstException"],
     
     // An array of fields to present to the user on the Bugsnag.com dashboard.
     "fields": [{
         
-        // The name of the field. This is how you will reference the field in the configuration
-        // options that are passed to your notifier when it is run. Should be camelCase.
+        // The name of the field. This is how you will reference the field in 
+        // the configuration options that are passed to your notifier when it is
+        // run. Should be camelCase.
         "name": "authToken",
         
         // The label to display to the user for this field
@@ -227,11 +241,12 @@ and look similar to the following example:
         // A full description or hint for this field.
         "description": "Your HipChat API auth token",
         
-        // The data type of this field, either string, password or boolean (optional, defaults to string)
+        // The data type of this field, either string, password or boolean 
+        // (optional, defaults to string)
         "type": "boolean",
         
-        // An array of allowed values for this field. When this is set, this option will be presented 
-        // in a dropdown list (optional).
+        // An array of allowed values for this field. When this is set, this 
+        // option will be presented in a dropdown list (optional).
         "allowedValues": ["yellow", "red", "green", "purple", "random"],
         
         // A default value for this field (optional).
