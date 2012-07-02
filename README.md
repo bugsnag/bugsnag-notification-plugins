@@ -225,7 +225,6 @@ and look similar to the following example:
     
     // An array of fields to present to the user on the Bugsnag.com dashboard.
     "fields": [{
-        
         // The name of the field. This is how you will reference the field in 
         // the configuration options that are passed to your notifier when it is
         // run. Should be camelCase.
