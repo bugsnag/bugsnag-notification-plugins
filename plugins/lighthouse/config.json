@@ -1,7 +1,7 @@
 {
   "name": "Lighthouse",
   "description": "Create a Lighthouse ticket",
-  "supportedTriggers": ["firstException"],
+  "supportedTriggers": ["firstException", "unresolved"],
   "fields": [
     {
       "name": "url",

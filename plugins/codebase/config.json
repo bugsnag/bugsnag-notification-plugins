@@ -1,7 +1,7 @@
 {
   "name": "Codebase",
   "description": "Create a Codebase ticket",
-  "supportedTriggers": ["firstException"],
+  "supportedTriggers": ["firstException", "unresolved"],
   "fields": [
     {
       "name": "account",

@@ -1,7 +1,7 @@
 {
   "name": "GitHub Issues",
   "description": "Create a GitHub issue",
-  "supportedTriggers": ["firstException"],
+  "supportedTriggers": ["firstException", "unresolved"],
   "fields": [
     {
       "name": "username",
