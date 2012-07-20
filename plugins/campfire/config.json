@@ -10,13 +10,13 @@
     },
     {
       "name": "roomId",
-      "label": "Chat Room",
-      "description": "The ID of the chat room to send notifications to"
+      "label": "Chat Room ID",
+      "description": "Check your campfire URL for a room ID. Usually 6 digits."
     },
     {
       "name": "domain",
-      "label": "Domain",
-      "description": "The Campfire domain for the account"
+      "label": "Subdomain",
+      "description": "The Campfire subdomain for the account"
     }
   ]
 }
