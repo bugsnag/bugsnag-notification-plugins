@@ -81,13 +81,22 @@ an event object, which tells you the reason we triggered a notification.
 ```javascript
 event: {
     
+    // Contains information about the account which has had an event
+    account: {
+        // The account name
+        name: "Account Name",
+        
+        // The url for the Bugsnag dashboard of the account
+        url: "https://bugsnag.com/dashboard/"
+    },
+    
     // Contains information about the project which has had an event
     project: {
         // The project name
         name: "Project Name",
         
         // The url for the Bugsnag dashboard of the project
-        url: "https://bugsnag.com/projects/project-name"
+        url: "https://bugsnag.com/dashboard/project-name"
     },
 
     // The reason the user is being notified by the notifier
