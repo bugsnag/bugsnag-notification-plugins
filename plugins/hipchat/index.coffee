@@ -9,7 +9,7 @@ class Hipchat extends NotificationPlugin
       # Build the message for error notifications
       error_string = (event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)
       
-      message =  "<b>#{event.trigger.message}</b> from <a href=\"#{event.project.url}\">#{event.project.name}</a> in <b>#{event.error.context}</b> (<a href=\"#{event.error.url}\">details</a>)"
+      message =  "<b>#{event.trigger.message} in #{event.error.releaseStage}</b> from <a href=\"#{event.project.url}\">#{event.project.name}</a> in <b>#{event.error.context}</b> (<a href=\"#{event.error.url}\">details</a>)"
       message += "<br>&nbsp;&nbsp;&nbsp;#{error_string}"
       message += "<br>&nbsp;&nbsp;&nbsp;<code>#{@firstStacktraceLine(event.error.stacktrace)}</code>" if event.error.stacktrace
     else    
