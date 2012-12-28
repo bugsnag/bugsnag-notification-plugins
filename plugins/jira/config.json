@@ -11,13 +11,13 @@
     },
     {
       "name": "projectKey",
-      "label": "Project",
-      "description": "Where to place the issue"
+      "label": "Project Key",
+      "description": "The project key for the JIRA project"
     },
     {
       "name": "issueType",
       "label": "Issue Type",
-      "description": "What to create the issue as",
+      "description": "The type of issue to be created",
       "defaultValue": "Bug"
     },
     {
