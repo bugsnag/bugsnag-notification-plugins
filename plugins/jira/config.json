@@ -1,15 +1,13 @@
 {
   "name": "Atlassian Jira",
   "description": "Create an issue for exceptions",
-  "supportedTriggers": "all",//["exception", "firstException"]
+  "supportedTriggers": "firstException",
   "fields": [
     {
       "name": "host",
       "label": "Host",
       "description": "Host url of your instance",
       "defaultValue": "https://company.jira.com"
-      //"allowedValues": ["yellow", "red", "green", "purple", "random"],
-      //"type": "boolean",//string, password or boolean
     },
     {
       "name": "projectKey",
@@ -23,9 +21,15 @@
       "defaultValue": "Bug"
     },
     {
-      "name": "authToken",
-      "label": "Auth Token",
-      "description": "Your Token auth token"
+      "name": "username",
+      "label": "Username",
+      "description": "Username for basic auth"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Password for basic auth",
+      "type": "password"
     }
   ]
 }
