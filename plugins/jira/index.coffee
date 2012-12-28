@@ -1,44 +1,45 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class Jira extends NotificationPlugin
+  stacktraceLines = (stacktrace) ->
+      ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
+      
+  jiraBody = (event) ->
+      """
+      h1. #{event.trigger.message} in #{event.project.name}
+
+      *#{event.error.exceptionClass}* in *#{event.error.context}*
+      #{event.error.message if event.error.message}
+
+      [View on bugsnag.com|#{event.error.url}]
+
+      h1. Stacktrace
+
+          #{stacktraceLines(event.error.stacktrace).join("\n")}
+
+      [View full stacktrace|#{event.error.url}]
+      """
+  
   @receiveEvent: (config, event) ->
     if event.error
-      
-      description = [event.error.context, event.error.firstReceived ];
-
-      event.error.stacktrace.forEach( (stack)  ->
-        description.push("--------------------\n
-        file: " + stack.file + "\n
-        line number: " + stack.lineNumber + "\n
-        method: " + stack.method + "\n
-        --------------------");
-      )
-      
-      description.push(event.error.url);
-
       params =
         fields:
           project: 
             key: config.projectKey
-          summary: [event.error.releaseStage.toUpperCase(), event.trigger.message, event.error.message].join(' ')
-          description: description.join("\n\n")
+          summary: "#{event.error.exceptionClass} in #{event.error.context}"
+          description: jiraBody(event)
           issuetype:
             name: config.issueType
 
-
-
-          
       url = config.host + "/rest/api/2/issue"
 
-      # Send the request to campfire
+      # Send the request to jira
       @request
         .post(url)
         .auth(config.username, config.password)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .send(params)
-        .end( (res) ->
-          #console.log(res)
-        )
+        .end()
 
 module.exports = Jira

@@ -7,7 +7,7 @@
       "name": "host",
       "label": "Host",
       "description": "Host url of your instance",
-      "defaultValue": "https://company.jira.com"
+      "defaultValue": "https://company.atlassian.net"
     },
     {
       "name": "projectKey",
