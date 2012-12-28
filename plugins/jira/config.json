@@ -1,6 +1,6 @@
 {
   "name": "Atlassian Jira",
-  "description": "Create an issue for exceptions",
+  "description": "Create a JIRA issue",
   "supportedTriggers": "firstException",
   "fields": [
     {
