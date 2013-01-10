@@ -1,0 +1,17 @@
+{
+  "name": "Asana",
+  "description": "Create an Asana task",
+  "supportedTriggers": ["firstException", "unresolved"],
+  "fields": [
+    {
+      "name": "apiKey",
+      "label": "API Key",
+      "description": "Your Asana API key"
+    },
+    {
+      "name": "workspaceName",
+      "label": "Workspace name",
+      "description": "Your Asana workspace name"
+    }
+  ]
+}
