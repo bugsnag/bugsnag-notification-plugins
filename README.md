@@ -140,7 +140,7 @@ event: {
         // associated with the error.
         usersAffected: 1,
         
-        // The URL on bugsnag.com with the full details about this erro
+        // The URL on bugsnag.com with the full details about this error
         url: "https://bugsnag.com/errors/example",
         
         // The stack trace for this error. An array of stack frames.
