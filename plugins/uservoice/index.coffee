@@ -14,7 +14,7 @@ class UserVoice extends NotificationPlugin
         subject: "#{event.error.exceptionClass} in #{event.error.context}"
         message:
           """
-          #{event.error.exceptionClass}* in #{event.error.context}*
+          #{event.error.exceptionClass} in #{event.error.context}
           #{event.error.message if event.error.message}
           #{event.error.url}
 
