@@ -26,6 +26,12 @@ class PivotalTracker extends NotificationPlugin
       .set("X-TrackerToken", config.apiToken)
       .type("form")
       .send(params)
-      .end();
+      .buffer(true)
+      .end((res) ->
+        if res?.text
+          console.log res.text
+        else
+          console.log "No response from pivotal! Status #{res.status}"
+      );
 
 module.exports = PivotalTracker
