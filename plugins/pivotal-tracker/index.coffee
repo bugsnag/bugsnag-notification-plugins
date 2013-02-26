@@ -28,9 +28,8 @@ class PivotalTracker extends NotificationPlugin
       .send(params)
       .buffer(true)
       .end((res) ->
-        if res && res.status != 200
-          console.log "Status code: #{res.status}"
-          console.log res.text || "No response from pivotal!"
+        console.log "Status code: #{res.status}"
+        console.log res.text || "No response from pivotal!"
       );
 
 module.exports = PivotalTracker
