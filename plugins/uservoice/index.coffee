@@ -29,6 +29,10 @@ class UserVoice extends NotificationPlugin
       .post("#{uservoiceUrl}/api/v1/tickets.json")
       .send(params)
       .type("form")
-      .end()
+      .buffer(true)
+      .end((res) ->
+        console.log "Status code: #{res.status}"
+        console.log res.text || "No response from UserVoice!"
+      );
 
 module.exports = UserVoice
