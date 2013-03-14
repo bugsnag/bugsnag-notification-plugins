@@ -1,0 +1,35 @@
+{
+  "name": "Atlassian Jira",
+  "description": "Create a JIRA issue",
+  "supportedTriggers": "firstException",
+  "fields": [
+    {
+      "name": "host",
+      "label": "Host",
+      "description": "Host url of your instance",
+      "defaultValue": "https://company.atlassian.net"
+    },
+    {
+      "name": "projectKey",
+      "label": "Project Key",
+      "description": "The project key for the JIRA project"
+    },
+    {
+      "name": "issueType",
+      "label": "Issue Type",
+      "description": "The type of issue to be created",
+      "defaultValue": "Bug"
+    },
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "Username for basic auth"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Password for basic auth",
+      "type": "password"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "UserVoice",
+  "description": "Create a UserVoice Helpdesk ticket",
+  "supportedTriggers": ["firstException"],
+  "fields": [
+    {
+      "name": "url",
+      "label": "Site URL",
+      "description": "Your UserVoice site URL (eg. bugsnag.uservoice.com)"
+    },
+    {
+      "name": "apiKey",
+      "label": "API Key",
+      "description": "Your UserVoice API key (Settings -> Channels -> Add API client)"
+    }
+  ]
+}
