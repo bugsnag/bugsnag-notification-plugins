@@ -22,10 +22,14 @@ class PivotalTracker extends NotificationPlugin
 
     # Send the request to the url
     @request
-      .post("http://www.pivotaltracker.com/services/v3/projects/#{config.projectId}/stories")
+      .post("https://www.pivotaltracker.com/services/v3/projects/#{config.projectId}/stories")
       .set("X-TrackerToken", config.apiToken)
       .type("form")
       .send(params)
-      .end();
+      .buffer(true)
+      .end((res) ->
+        console.log "Status code: #{res.status}"
+        console.log res.text || "No response from pivotal!"
+      );
 
 module.exports = PivotalTracker

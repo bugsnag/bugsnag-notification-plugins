@@ -38,6 +38,10 @@ class Codebase extends NotificationPlugin
       .type("application/xml")
       .auth("#{config.account}/#{config.username}", config.apiKey)
       .send(body)
-      .end();
+      .buffer(true)
+      .end((res) ->
+        console.log "Status code: #{res.status}"
+        console.log res.text || "No response from Codebase!"
+      );
 
 module.exports = Codebase

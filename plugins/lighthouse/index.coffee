@@ -34,6 +34,10 @@ class Lighthouse extends NotificationPlugin
       .post("#{lighthouse_url}/projects/#{config.projectId}/tickets.json")
       .set("X-LighthouseToken", config.apiKey)
       .send(params)
-      .end();
+      .buffer(true)
+      .end((res) ->
+        console.log "Status code: #{res.status}"
+        console.log res.text || "No response from Lighthouse!"
+      );
 
 module.exports = Lighthouse

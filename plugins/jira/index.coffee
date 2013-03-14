@@ -40,6 +40,11 @@ class Jira extends NotificationPlugin
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .send(params)
-        .end()
+        .buffer(true)
+        .end((res) ->
+          console.log "Status code: #{res.status}"
+          console.log res.text || "No response from JIRA!"
+        );
+        
 
 module.exports = Jira

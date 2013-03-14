@@ -31,6 +31,10 @@ class GithubIssue extends NotificationPlugin
       .post("https://api.github.com/repos/#{config.repo}/issues")
       .send(params)
       .auth(config.username, config.password)
-      .end();
+      .buffer(true)
+      .end((res) ->
+        console.log "Status code: #{res.status}"
+        console.log res.text || "No response from Github!"
+      );
 
 module.exports = GithubIssue
