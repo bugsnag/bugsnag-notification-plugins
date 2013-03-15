@@ -8,5 +8,6 @@
     "optimist": "latest",
     "sugar": "latest",
     "async": "~0.2.6"
-  }
+  },
+  "main": "./index.js"
 }
