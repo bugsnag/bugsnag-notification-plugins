@@ -9,6 +9,13 @@ class Siasto extends NotificationPlugin
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
   @receiveEvent: (config, event) ->
+    getUserIds = (cb) =>
+      @request
+        .get("#{BASE_URL}/projects/#{config.projectId}/users")
+        .auth(config.apiKey, "")
+        .end (res) ->
+          console.log res
+
     # Create the task
     @request
       .post("#{BASE_URL}/tasks")
