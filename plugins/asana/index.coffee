@@ -1,6 +1,10 @@
+async = require "async"
+
 NotificationPlugin = require "../../notification-plugin"
 
 class Asana extends NotificationPlugin
+  BASE_URL = "https://app.asana.com/api/1.0"
+
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
   
@@ -14,36 +18,53 @@ View on bugsnag.com:
   
 Stacktrace:
 #{stacktraceLines(event.error.stacktrace).join("\n")}"""
-    
-  @receiveEvent: (config, event) ->
-    # Look up the workspace id
-    @request
-      .get("https://app.asana.com/api/1.0/workspaces")
-      .auth(config.apiKey, "")
-      .end (res) =>
-        workspace = res.body?.data?.find? (el) -> el.name == config.workspaceName
 
-        # Build the request
-        params = 
+  @receiveEvent: (config, event) ->
+    # Look up workspace id from project name
+    getWorkspaceId = (cb) =>
+      @request
+        .get("#{BASE_URL}/workspaces")
+        .auth(config.apiKey, "")
+        .end (res) =>
+          workspace = res.body?.data?.find? (el) -> el.name == config.workspaceName
+          if workspace
+            cb(null, workspace.id)
+          else
+            cb(new Error("Workspace not found with name '#{config.workspaceName}'"))
+
+    # Look up project id from project name
+    getProjectId = (cb) =>
+      @request
+        .get("#{BASE_URL}/projects")
+        .auth(config.apiKey, "")
+        .end (res) =>
+          return cb(null, null) unless config.projectName
+
+          project = res.body?.data?.find? (el) -> el.name == config.projectName
+          if project
+            cb(null, project.id)
+          else
+            cb(new Error("Project not found with name '#{config.projectName}'"))
+
+    # Look up workspace and project ids
+    async.parallel
+      workspaceId: getWorkspaceId
+      projectId: getProjectId
+    , (err, results) =>
+      return console.error(err) if err?
+
+      # Create the task
+      @request
+        .post("https://app.asana.com/api/1.0/tasks")
+        .send
           name: "#{event.error.exceptionClass} in #{event.error.context}"
           notes: markdownBody(event)
-          workspace: workspace.id
-        
-        # Send the request to the url
-        @request
-          .post("https://app.asana.com/api/1.0/tasks")
-          .send(params)
-          .type("form")
-          .auth(config.apiKey, "")
-          .end (res) ->
-            console.log res.body.data.id
+          workspace: results.workspaceId
+          projects: [results.projectId]
+        .type("form")
+        .auth(config.apiKey, "")
+        .end (res) ->
+          console.log "Status code: #{res.status}"
+          console.log res.text || "No response from asana!"
 
 module.exports = Asana
-# 
-# 
-# curl -u <api_key>: https://app.asana.com/api/1.0/tasks \
-#     -d "assignee=1235" \
-#     -d "followers[0]=5678" \
-#     -d "name=Hello, world%21" \
-#     -d "notes=How are you today%3F" \
-#     -d "workspace=14916"

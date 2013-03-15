@@ -6,6 +6,7 @@
     "coffee-script": ">=1.0.0",
     "superagent": ">=0.4.2",
     "optimist": "latest",
-    "sugar": "latest"
+    "sugar": "latest",
+    "async": "~0.2.6"
   }
 }

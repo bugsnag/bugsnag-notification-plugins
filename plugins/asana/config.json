@@ -12,6 +12,12 @@
       "name": "workspaceName",
       "label": "Workspace name",
       "description": "Your Asana workspace name"
+    },
+    {
+      "name": "projectName",
+      "label": "Project name",
+      "description": "The name of the project to add error to",
+      "optional": true
     }
   ]
 }
