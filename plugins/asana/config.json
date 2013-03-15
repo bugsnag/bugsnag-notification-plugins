@@ -16,7 +16,7 @@
     {
       "name": "projectName",
       "label": "Project name",
-      "description": "The name of the project to add error to",
+      "description": "Your Asana project name",
       "optional": true
     }
   ]
