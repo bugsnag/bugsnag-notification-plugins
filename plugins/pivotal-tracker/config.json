@@ -2,6 +2,7 @@
   "name": "Pivotal Tracker",
   "description": "Create a Pivotal Tracker story",
   "supportedTriggers": ["firstException", "unresolved"],
+  "issueTracker": true,
   "fields": [
     {
       "name": "projectId",
