@@ -1,23 +1,17 @@
 {
-  "name": "Asana",
-  "description": "Create an Asana task",
+  "name": "Siasto",
+  "description": "Create a Siasto task",
   "supportedTriggers": ["firstException", "unresolved"],
   "fields": [
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your Asana API key"
+      "description": "Your Siasto API key"
     },
     {
-      "name": "workspaceName",
-      "label": "Workspace name",
-      "description": "Your Asana workspace name"
-    },
-    {
-      "name": "projectName",
-      "label": "Project name",
-      "description": "Your Asana project name",
-      "optional": true
+      "name": "projectId",
+      "label": "Project ID",
+      "description": "Your Siasto project ID"
     }
   ]
 }
