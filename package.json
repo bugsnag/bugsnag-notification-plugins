@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "coffee-script": ">=1.0.0",
-    "superagent": ">=0.4.2",
-    "optimist": "latest",
-    "sugar": "latest",
+    "coffee-script": "~1.6.1",
+    "superagent": "~0.13.0",
+    "optimist": "~0.3.5",
+    "sugar": "~1.3.8",
     "async": "~0.2.6"
   },
   "main": "./index.js"
