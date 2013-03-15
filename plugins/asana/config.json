@@ -2,6 +2,7 @@
   "name": "Asana",
   "description": "Create an Asana task",
   "supportedTriggers": ["firstException", "unresolved"],
+  "issueTracker": true,
   "fields": [
     {
       "name": "apiKey",

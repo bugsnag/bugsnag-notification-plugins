@@ -1,7 +1,8 @@
 {
   "name": "Atlassian Jira",
   "description": "Create a JIRA issue",
-  "supportedTriggers": "firstException",
+  "supportedTriggers": ["firstException", "unresolved"],
+  "issueTracker": true,
   "fields": [
     {
       "name": "host",

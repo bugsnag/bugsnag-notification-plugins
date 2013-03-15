@@ -1,7 +1,8 @@
 {
   "name": "UserVoice",
   "description": "Create a UserVoice Helpdesk ticket",
-  "supportedTriggers": ["firstException"],
+  "supportedTriggers": ["firstException", "unresolved"],
+  "issueTracker": true,
   "fields": [
     {
       "name": "url",
