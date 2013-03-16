@@ -48,7 +48,7 @@ var NotificationPlugin = (function () {
 
 
   // Fire a test event to your notification plugin (do not override)
-  NotificationPlugin.fireTestEvent = function (config) {
+  NotificationPlugin.fireTestEvent = function (config, callback) {
     var event = {
       error: {
         exceptionClass: "ExampleException",
@@ -77,11 +77,7 @@ var NotificationPlugin = (function () {
       }
     };
 
-    this.receiveEvent(config, event, function (err, data) {
-      if(err) return console.error(err);
-
-      console.log("Fired test event successfully");
-    });
+    this.receiveEvent(config, event, callback);
   };
 
 
@@ -127,7 +123,7 @@ if (module.parent && module.parent.parent === null) {
   var flags = Object.keys(argv).exclude("_", "$0");
   var config = {};
   flags.each(function (flag) {
-    if(argv[flag].length) {
+    if(argv[flag] != null && argv[flag] != "") {
       config[flag] = argv[flag];
     }
   });
@@ -141,5 +137,11 @@ if (module.parent && module.parent.parent === null) {
 
   // Fire a test event
   var plugin = require(module.parent.filename);
-  plugin.fireTestEvent(config);
+  plugin.fireTestEvent(config, function (err, data) {
+    if(err) {
+      console.error("Error firing notification\n", err.stack);
+    } else {
+      console.log("Fired test event successfully\n", data);
+    }
+  });
 }

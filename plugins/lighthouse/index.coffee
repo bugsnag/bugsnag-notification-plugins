@@ -20,24 +20,26 @@ class Lighthouse extends NotificationPlugin
     [View full stacktrace](#{event.error.url})
     """
 
-  @receiveEvent: (config, event) ->
-    # Build the request
-    params = 
+  @receiveEvent: (config, event, callback) ->
+    # Build the ticket payload
+    payload = 
       ticket:
         title: "#{event.error.exceptionClass} in #{event.error.context}"
         body: markdownBody(event)
         tag: config.tags
 
     # Send the request to the url
-    lighthouse_url = if config.url.startsWith("http://") then config.url else "http://#{config.url}"
     @request
-      .post("#{lighthouse_url}/projects/#{config.projectId}/tickets.json")
+      .post("#{config.url}/projects/#{config.projectId}/tickets.json")
       .set("X-LighthouseToken", config.apiKey)
-      .send(params)
-      .buffer(true)
-      .end((res) ->
-        console.log "Status code: #{res.status}"
-        console.log res.text || "No response from Lighthouse!"
-      );
+      .send(payload)
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        return callback(res.error) if res.error
+
+        callback null,
+          id: res.body.ticket.number
+          url: res.body.ticket.url
 
 module.exports = Lighthouse

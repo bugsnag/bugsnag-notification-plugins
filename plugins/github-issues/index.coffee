@@ -1,6 +1,8 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class GithubIssue extends NotificationPlugin
+  BASE_URL = "https://api.github.com"
+
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
@@ -20,21 +22,25 @@ class GithubIssue extends NotificationPlugin
     [View full stacktrace](#{event.error.url})
     """
     
-  @receiveEvent: (config, event) ->
-    # Build the request
-    params = 
+  @receiveEvent: (config, event, callback) ->
+    # Build the ticket
+    payload = 
       title: "#{event.error.exceptionClass} in #{event.error.context}"
       body: markdownBody(event)
 
-    # Send the request to the url
+    # Send the request
     @request
-      .post("https://api.github.com/repos/#{config.repo}/issues")
-      .send(params)
+      .post("#{BASE_URL}/repos/#{config.repo}/issues")
       .auth(config.username, config.password)
-      .buffer(true)
-      .end((res) ->
-        console.log "Status code: #{res.status}"
-        console.log res.text || "No response from Github!"
-      );
+      .send(payload)
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        return callback(res.error) if res.error
+
+        callback null,
+          id: res.body.id
+          number: res.body.number
+          url: res.body.html_url
 
 module.exports = GithubIssue

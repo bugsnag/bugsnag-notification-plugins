@@ -1,7 +1,7 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class Twilio extends NotificationPlugin
-  @receiveEvent: (config, event) ->
+  @receiveEvent: (config, event, callback) ->
     # Build the message
     message = "[#{event.project.name}] #{event.trigger.message}"
     if event.error
@@ -19,6 +19,9 @@ class Twilio extends NotificationPlugin
       .send(params)
       .auth(config.accountSid, config.authToken)
       .type("form")
-      .end()
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        callback(res.error)
 
 module.exports = Twilio
