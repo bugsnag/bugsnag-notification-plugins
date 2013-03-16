@@ -1,0 +1,13 @@
+{
+  "name": "Email",
+  "description": "Email project members",
+  "supportedTriggers": "all",
+  "fields": [
+    {
+      "name": "includeMetadata",
+      "label": "Include Meta-data",
+      "description": "Includes detailed meta-data with every email (not recommended)",
+      "type": "boolean"
+    }
+  ]
+}
