@@ -1,25 +1,30 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class Campfire extends NotificationPlugin
-  @receiveEvent: (config, event) ->
+  @receiveEvent: (config, event, callback) ->
     # Build the message
+    message = "#{event.trigger.message} in #{event.project.name}!"
     if event.error
-      message = "#{event.trigger.message} in #{event.project.name}! #{event.error.exceptionClass}" + (if event.error.message then ": #{event.error.message}" else "") + " (#{event.error.url})"
+      message += " #{event.error.exceptionClass}" if event.error.exceptionClass
+      message += ": #{event.error.message}" if event.error.message
+      message += " (#{event.error.url})"
     else
-      message =  "#{event.trigger.message} in #{event.project.name} (#{event.project.url})" + ( if event.error then " in #{event.error.context} (#{event.error.url})" else "")
-
-    # Build the request
-    payload = 
-      message:
-        body: message
-        type: "TextMessage"
-        
-    url = "https://#{config.authToken}:X@#{config.domain}.campfirenow.com/room/#{config.roomId}/speak.xml"
+      message += " (#{event.project.url})"
 
     # Send the request to campfire
     @request
-      .post(url)
-      .send(payload)
-      .end();
+      .post("https://#{config.domain}.campfirenow.com/room/#{config.roomId}/speak.json")
+      .auth(config.authToken, "X")
+      .send
+        message:
+          body: message
+          type: "TextMessage"
+      .on "error", (err) ->
+        callback err
+      .end (res) ->
+        return callback(res.error) if res.error
+
+        callback null,
+          id: res.body.message.id
 
 module.exports = Campfire

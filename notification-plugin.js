@@ -78,9 +78,9 @@ var NotificationPlugin = (function () {
     };
 
     this.receiveEvent(config, event, function (err, data) {
-      if(err) return console.error(err);
+      if(err) return console.error("Error firing notification\n" + err.stack);
 
-      console.log("Fired test event successfully");
+      console.log("Fired test event successfully\n", data);
     });
   };
 
@@ -127,7 +127,7 @@ if (module.parent && module.parent.parent === null) {
   var flags = Object.keys(argv).exclude("_", "$0");
   var config = {};
   flags.each(function (flag) {
-    if(argv[flag].length) {
+    if(argv[flag] != null && argv[flag] != "") {
       config[flag] = argv[flag];
     }
   });
