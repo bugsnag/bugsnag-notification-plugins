@@ -1,7 +1,6 @@
 {
   "name": "bugsnag-notification-plugins",
-  "version": "1.0.0",
-  "private": true,
+  "version": "1.0.1",
   "dependencies": {
     "coffee-script": "~1.6.1",
     "superagent": "~0.13.0",
