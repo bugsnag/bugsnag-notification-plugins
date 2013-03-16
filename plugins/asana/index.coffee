@@ -9,15 +9,17 @@ class Asana extends NotificationPlugin
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
   
   markdownBody = (event) ->
-    """#{event.error.exceptionClass} in #{event.error.context}
+    """
+    #{event.error.exceptionClass} in #{event.error.context}
 
-#{event.error.message if event.error.message}
-  
-View on bugsnag.com:
-#{event.error.url}
-  
-Stacktrace:
-#{stacktraceLines(event.error.stacktrace).join("\n")}"""
+    #{event.error.message if event.error.message}
+
+    View on bugsnag.com:
+    #{event.error.url}
+
+    Stacktrace:
+    #{stacktraceLines(event.error.stacktrace).join("\n")}
+    """
 
   @receiveEvent: (config, event) ->
     # Look up workspace id from project name
@@ -53,14 +55,18 @@ Stacktrace:
     , (err, results) =>
       return console.error(err) if err?
 
+      # Build task payload
+      taskPayload =
+        name: "#{event.error.exceptionClass} in #{event.error.context}"
+        notes: markdownBody(event)
+        workspace: results.workspaceId
+
+      taskPayload.workspace = results.workspaceId if results.workspaceId?
+
       # Create the task
       @request
         .post("https://app.asana.com/api/1.0/tasks")
-        .send
-          name: "#{event.error.exceptionClass} in #{event.error.context}"
-          notes: markdownBody(event)
-          workspace: results.workspaceId
-          projects: [results.projectId]
+        .send(taskPayload)
         .type("form")
         .auth(config.apiKey, "")
         .end (res) ->

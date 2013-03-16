@@ -21,7 +21,7 @@ var NotificationPlugin = (function () {
 
   // Fired when a new event is triggered for notification
   // Plugins MUST override this method
-  NotificationPlugin.receiveEvent = function (config, event) {
+  NotificationPlugin.receiveEvent = function (config, event, callback) {
     throw new Error("Plugins must override receiveEvent");
   };
 
@@ -77,7 +77,11 @@ var NotificationPlugin = (function () {
       }
     };
 
-    return this.receiveEvent(config, event);
+    this.receiveEvent(config, event, function (err, data) {
+      if(err) return console.error(err);
+
+      console.log("Fired test event successfully");
+    });
   };
 
 
@@ -91,7 +95,7 @@ var NotificationPlugin = (function () {
 
         // Validate all non-optional config fields are present
         if (!(configValue !== undefined || option.optional || (option.type == "boolean" && option.defaultValue !== undefined))) {
-          throw new Error("ConfigurationError: Missing '" + option.name + "'");
+          throw new Error("ConfigurationError: Required configuration option '" + option.name + "' is missing");
         }
 
         // Validate fields with allowed values
@@ -119,14 +123,23 @@ if (module.parent && module.parent.parent === null) {
   var path = require("path");
   var argv = require("optimist").argv;
 
+  // Parse command line flags
   var flags = Object.keys(argv).exclude("_", "$0");
   var config = {};
   flags.each(function (flag) {
-    config[flag] = argv[flag];
+    if(argv[flag].length) {
+      config[flag] = argv[flag];
+    }
   });
 
-  NotificationPlugin.validateConfig(config, path.dirname(module.parent.filename) + "/config.json");
+  // Validate configuration
+  try {
+    NotificationPlugin.validateConfig(config, path.dirname(module.parent.filename) + "/config.json");
+  } catch (err) {
+    return console.error(err.message);
+  }
 
+  // Fire a test event
   var plugin = require(module.parent.filename);
   plugin.fireTestEvent(config);
 }
