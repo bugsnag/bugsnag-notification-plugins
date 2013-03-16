@@ -1,10 +1,12 @@
+xml2js = require "xml2js"
+
 NotificationPlugin = require "../../notification-plugin"
 
 class PivotalTracker extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
-  @receiveEvent: (config, event) ->
+  @receiveEvent: (config, event, callback) ->
     # Build the request
     params =
       "story[name]": "#{event.error.exceptionClass} in #{event.error.context}"
@@ -27,9 +29,16 @@ class PivotalTracker extends NotificationPlugin
       .type("form")
       .send(params)
       .buffer(true)
-      .end((res) ->
-        console.log "Status code: #{res.status}"
-        console.log res.text || "No response from pivotal!"
-      );
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        return callback(res.error) if res.error
+
+        # Pivotal tracker api responds in XML :(
+        parser = new xml2js.Parser(ignoreAttrs: true, explicitArray: false)
+        parser.parseString res.text, (err, result) ->
+          callback null,
+            id: result.story.id
+            url: result.story.url
 
 module.exports = PivotalTracker

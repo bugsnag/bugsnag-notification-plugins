@@ -1,6 +1,8 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class Codebase extends NotificationPlugin
+  BASE_URL = "http://api3.codebasehq.com"
+
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
@@ -20,28 +22,27 @@ class Codebase extends NotificationPlugin
     [View full stacktrace](#{event.error.url})
     """
 
-  @receiveEvent: (config, event) ->
-    # Build the request
-    body = 
-      """
-      <ticket>
-        <summary>#{event.error.exceptionClass} in #{event.error.context}</summary>
-        <ticket-type>bug</ticket-type>
-        <description>#{markdownBody(event)}</description>
-      </ticket>
-      """
+  @receiveEvent: (config, event, callback) ->
+    # Build the ticket payload
+    payload = 
+      ticket:
+        summary: "#{event.error.exceptionClass} in #{event.error.context}"
+        ticket_type: "bug"
+        description: "#{markdownBody(event)}"
 
-    # Send the request to the url
+    # Send the request to codebase
     @request
-      .post("http://api3.codebasehq.com/#{config.project}/tickets")
-      .set("Accept", "application/xml")
-      .type("application/xml")
+      .post("#{BASE_URL}/#{config.project}/tickets")
+      .set("Accept", "application/json")
       .auth("#{config.account}/#{config.username}", config.apiKey)
-      .send(body)
-      .buffer(true)
-      .end((res) ->
-        console.log "Status code: #{res.status}"
-        console.log res.text || "No response from Codebase!"
-      );
+      .send(payload)
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        return callback(res.error) if res.error
+
+        callback null,
+          id: res.body.ticket.ticket_id
+          url: "https://#{config.account}.codebasehq.com/projects/#{config.project}/tickets/#{res.body.ticket.ticket_id}"
 
 module.exports = Codebase

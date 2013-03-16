@@ -4,9 +4,9 @@ class UserVoice extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
-  @receiveEvent: (config, event) ->
-    # Build the request
-    params = 
+  @receiveEvent: (config, event, callback) ->
+    # Build the payload
+    payload = 
       name: "Bugsnag"
       client: config.apiKey
       email: "bugsnag@bugsnag.com"
@@ -22,17 +22,20 @@ class UserVoice extends NotificationPlugin
           #{stacktraceLines(event.error.stacktrace).join("\n")}
           """
 
-    # Send the request to hipchat
-    uservoiceUrl = if config.url.startsWith(/https?:\/\//) then config.url else "https://#{config.url}"
-    
+    # Send the request
+    url = if config.url.startsWith(/https?:\/\//) then config.url else "https://#{config.url}"
     @request
-      .post("#{uservoiceUrl}/api/v1/tickets.json")
-      .send(params)
+      .post("#{url}/api/v1/tickets.json")
+      .send(payload)
       .type("form")
-      .buffer(true)
-      .end((res) ->
-        console.log "Status code: #{res.status}"
-        console.log res.text || "No response from UserVoice!"
-      );
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        return callback(res.error) if res.error
+
+        callback null,
+          id: res.body.ticket.id
+          number: res.body.ticket.ticket_number
+          url: "#{url}/admin/tickets/#{res.body.ticket.ticket_number}"
 
 module.exports = UserVoice
