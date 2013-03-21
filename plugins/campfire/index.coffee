@@ -15,6 +15,7 @@ class Campfire extends NotificationPlugin
     @request
       .post("https://#{config.domain}.campfirenow.com/room/#{config.roomId}/speak.json")
       .auth(config.authToken, "X")
+      .redirects(0)
       .send
         message:
           body: message
@@ -22,7 +23,7 @@ class Campfire extends NotificationPlugin
       .on "error", (err) ->
         callback err
       .end (res) ->
-        return callback(res.error) if res.error
+        return callback(new Error("Bad response code: #{res.status}")) unless 200 <= res.status < 300
 
         callback null,
           id: res.body.message.id
