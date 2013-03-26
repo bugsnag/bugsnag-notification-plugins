@@ -66,7 +66,7 @@ class Asana extends NotificationPlugin
         notes: markdownBody(event)
         workspace: results.workspaceId
 
-      taskPayload.workspace = results.workspaceId if results.workspaceId?
+      taskPayload.projects = [results.projectId] if results.projectId?
 
       # Create the task
       @request
