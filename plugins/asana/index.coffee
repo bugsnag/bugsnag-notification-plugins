@@ -6,7 +6,11 @@ class Asana extends NotificationPlugin
   BASE_URL = "https://app.asana.com/api/1.0"
 
   stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
+    anyInProject = stacktrace.some (el) -> el.inProject
+    if anyInProject
+      ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
+    else
+      ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace[0..4])
   
   markdownBody = (event) ->
     """
