@@ -13,6 +13,13 @@
       "name": "apiToken",
       "label": "API Token",
       "description": "Your Pivotal Tracker API Token, from your profile page."
+    },
+    {
+      "name": "labels",
+      "label": "Labels",
+      "description": "Comma separated list of labels to apply to the story.",
+      "optional": true,
+      "defaultValue": "bugsnag"
     }
   ]
 }
