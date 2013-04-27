@@ -32,6 +32,7 @@ class GithubIssue extends NotificationPlugin
     @request
       .post("#{BASE_URL}/repos/#{config.repo}/issues")
       .auth(config.username, config.password)
+      .set("User-Agent", "Bugsnag")
       .send(payload)
       .on "error", (err) ->
         callback(err)
