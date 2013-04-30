@@ -11,7 +11,7 @@ class PivotalTracker extends NotificationPlugin
     params =
       "story[name]": "#{event.error.exceptionClass} in #{event.error.context}"
       "story[story_type]": "bug"
-      "story[labels]": (config.labels || "bugsnag").trim()
+      "story[labels]": (config?.labels || "bugsnag").trim()
       "story[description]":      
         """
         *#{event.error.exceptionClass}* in *#{event.error.context}*
