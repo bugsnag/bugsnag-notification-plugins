@@ -16,7 +16,7 @@
     },
     {
       "name": "labels",
-      "label": "Labels",
+      "label": "Labels (comma separated)",
       "description": "Comma separated list of labels to apply to the story.",
       "optional": true,
       "defaultValue": "bugsnag"
