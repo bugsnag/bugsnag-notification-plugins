@@ -3,7 +3,7 @@ NotificationPlugin = require "../../notification-plugin"
 class Campfire extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
     # Build the message
-    message = "#{event.trigger.message} in #{event.project.name}!"
+    message = "#{event.trigger.message} in #{event.error.releaseStage} from #{event.project.name}!"
     if event.error
       message += " #{event.error.exceptionClass}" if event.error.exceptionClass
       message += ": #{event.error.message}" if event.error.message
