@@ -1,0 +1,29 @@
+{
+  "name": "Trello",
+  "description": "Create a Trello card",
+  "supportedTriggers": ["firstException", "unresolved"],
+  "issueTracker": true,
+  "fields": [
+    {
+      "name": "applicationKey",
+      "label": "Application Key",
+      "description": "Your Trello Application Key. You can create a new App Key at https://trello.com/1/appKey/generate."
+    },
+    {
+      "name": "memberToken",
+      "label": "Member Token",
+      "description": "An authenticated token for the user who the Trello cards should be created by. You can create a member token with read write access forever at https://trello.com/1/authorize?key=:applicationKey&name=Bugsnag&expiration=never&response_type=token&scope=read,write, replacing :applicationKey with the key generated for your application."
+    },
+    {
+      "name": "listId",
+      "label": "List Id",
+      "description": "The ID of the Trello list that you'd like new cards added to. You can find the list ID by visiting the following URL, replacing the boardId, applicationKey, and memberToken terms with your own values: https://api.trello.com/1/boards/:boardId/lists?key=:applicationKey&token=:memberToken"
+    },
+    {
+      "name": "labels",
+      "label": "Labels",
+      "description": "Comma separated list of label colors to apply to the card. Options: green, yellow, orange, red, purple, blue",
+      "optional": true
+    }
+  ]
+}
