@@ -255,6 +255,11 @@ and look similar to the following example:
         
         // A default value for this field (optional).
         "defaultValue": "yellow"
+
+        // A link to documentation for this field - or a method of obtaining the value (optional)
+        // Can also contain other fields by using {fieldName} in the URL. In the following example
+        // applicationKey is another configuration option that is required for this URL.
+        "link": "https://trello.com/1/authorize?key={applicationKey}&name=Bugsnag"
     }
     ...
     ]
