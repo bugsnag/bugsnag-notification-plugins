@@ -1,0 +1,23 @@
+{
+  "name": "GitLab Issues",
+  "description": "Create a GitLab issue",
+  "supportedTriggers": ["firstException", "unresolved"],
+  "issueTracker": true,
+  "fields": [
+    {
+      "name": "private_token",
+      "label": "Private Token",
+      "description": "Your personal API Key used to access the GitLab API. Consult GitLab API documentation for generating this."
+    },
+    {
+      "name": "gitlab_url",
+      "label": "GitLab URL",
+      "description": "The absolute base URL to your GitLab installation (e.g. http://demo.gitlab.com)"
+    },
+    {
+      "name": "project_id",
+      "label": "Repository Name",
+      "description": "Which GitLab repository to create the issue on, eg rails/rails"
+    }
+  ]
+}
