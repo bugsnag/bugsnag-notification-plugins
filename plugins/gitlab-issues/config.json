@@ -7,12 +7,12 @@
     {
       "name": "private_token",
       "label": "Private Token",
-      "description": "Your personal API Key used to access the GitLab API. Consult GitLab API documentation for generating one."
+      "description": "Your private token used to access the GitLab API. Consult GitLab API documentation for generating one."
     },
     {
       "name": "gitlab_url",
       "label": "GitLab URL",
-      "description": "The absolute base URL to your GitLab installation (e.g. http://demo.gitlab.com)"
+      "description": "The base URL to your GitLab installation (e.g. http://demo.gitlab.com)"
     },
     {
       "name": "project_id",
