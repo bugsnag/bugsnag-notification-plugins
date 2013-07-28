@@ -7,7 +7,7 @@
     {
       "name": "private_token",
       "label": "Private Token",
-      "description": "Your personal API Key used to access the GitLab API. Consult GitLab API documentation for generating this."
+      "description": "Your personal API Key used to access the GitLab API. Consult GitLab API documentation for generating one."
     },
     {
       "name": "gitlab_url",
