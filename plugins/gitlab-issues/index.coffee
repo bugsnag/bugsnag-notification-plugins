@@ -20,27 +20,43 @@ class GitLabIssue extends NotificationPlugin
 
     [View full stacktrace](#{event.error.url})
     """
-    
-  @receiveEvent: (config, event, callback) ->
-    # Build the ticket
-    payload = 
-      title: "#{event.error.exceptionClass} in #{event.error.context}"
-      labels: "bugsnag"
-      description: markdownBody(event)
-      private_token: config.private_token
 
-    # Send the request
+  @getProject: (config, cb) =>
     @request
-      .post("#{config.gitlab_url}/api/v3/projects/#{config.project_id}/issues")
+      .get("#{config.gitlab_url}/api/v3/projects/?per_page=100")
       .set("User-Agent", "Bugsnag")
-      .send(payload)
+      .set("PRIVATE-TOKEN", config.private_token)
       .on "error", (err) ->
-        callback(err)
+        cb(err)
       .end (res) ->
-        return callback(res.error) if res.error
+        return cb(res.error) if res.error
 
-        callback null,
-          id: res.body.id
-          url: "#{config.gitlab_url}/#{config.project_id}/issues/#{res.body.id}"
+        project = res.body?.find? (el) -> [el.name, el.name_with_namespace, el.path, el.path_with_namespace].indexOf config.projectName != -1
+
+        cb null, project
+    
+  @receiveEvent: (config, event, callback) =>
+    @getProject config, (err, project) =>
+      return callback(err) if err
+
+      # Build the ticket
+      payload = 
+        title: "#{event.error.exceptionClass} in #{event.error.context}"
+        labels: "bugsnag"
+        description: markdownBody(event)
+
+      # Send the request
+      @request
+        .post("#{config.gitlab_url}/api/v3/projects/#{project.id}/issues")
+        .set("User-Agent", "Bugsnag")
+        .set("PRIVATE-TOKEN", config.private_token)
+        .send(payload)
+        .on("error", callback)
+        .end (res) ->
+          return callback(res.error) if res.error
+
+          callback null,
+            id: res.body.id
+            url: "#{config.gitlab_url}/#{project.path_with_namespace || project.path}/issues/#{res.body.id}"
 
 module.exports = GitLabIssue
