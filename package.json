@@ -1,7 +1,7 @@
 {
   "name": "bugsnag-notification-plugins",
   "description": "Notification plugins (chat and issue tracking integrations) for Bugsnag.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "dependencies": {
     "coffee-script": "~1.6.1",
     "superagent": "~0.13.0",
