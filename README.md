@@ -73,6 +73,22 @@ module.exports = MyPlugin;
 ```
 
 
+Testing your plugin
+-------------------
+
+By extending the `NotificationPlugin` class, you'll be able to test your 
+plugin directly on the command line. In your new plugin directory
+(`plugins/your-plugin`) run `index.coffee` directly:
+
+    > coffee index.coffee --option=value --anotherOption=something
+
+Command line options represent the customizable per-project settings as
+defined in your `config.json` file.
+
+**NOTE:** You should ensure you have run `npm install` in the top level
+directory first, to install the dependencies for the project.
+
+
 Event Format
 ------------
 As well as passing the user's plugin configuration settings, we also pass you
@@ -194,21 +210,6 @@ a `superagent` request object, which you can
   .send(params)
   .end()
 ```
-
-
-Testing your plugin
--------------------
-
-By extending the `NotificationPlugin` class, you'll be able to test your 
-plugin directly on the command line as follows:
-
-    > node index.js --option=value --anotherOption=something
-
-Command line options represent the customizable per-project settings as
-defined in your `config.json` file.
-
-**NOTE:** You should ensure you have run `npm install` in the top level
-directory first, to install the dependencies for the project.
 
 
 config.json format
