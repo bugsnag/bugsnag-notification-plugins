@@ -6,7 +6,8 @@
     {
       "name": "apiToken",
       "label": "Flow API token",
-      "description": "The API token of the Flow to send notifications to"
+      "description": "The API token of the Flow to send notifications to",
+      "link": "https://www.flowdock.com/account/tokens"
     }
   ]
 }
