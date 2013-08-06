@@ -7,12 +7,13 @@
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your Asana API key"
+      "description": "Your Asana API key",
+      "link": "http://app.asana.com/-/account_api"
     },
     {
       "name": "workspaceName",
-      "label": "Workspace name",
-      "description": "Your Asana workspace name"
+      "label": "Workspace or organization name",
+      "description": "Your Asana workspace name or organization name"
     },
     {
       "name": "projectName",
