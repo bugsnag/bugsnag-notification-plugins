@@ -1,0 +1,12 @@
+{
+  "name": "Flowdock",
+  "description": "Post to a Flowdock inbox",
+  "supportedTriggers": "all",
+  "fields": [
+    {
+      "name": "apiToken",
+      "label": "Flow API token",
+      "description": "The API token of the Flow to send notifications to"
+    }
+  ]
+}
