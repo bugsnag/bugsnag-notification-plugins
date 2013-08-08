@@ -47,7 +47,7 @@ class Hipchat extends NotificationPlugin
     '{{#if error}}' +
       ' in <b>{{error.context}}</b> (<a href="{{error.url}}">details</a>)' +
       '<br>&nbsp;&nbsp;&nbsp;{{error_string}}' +
-      '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;{{stack_trace_line}}{{/if}}' +
+      '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;<code>{{stack_trace_line}}</code>{{/if}}' +
     '{{/if}}'
   )
 
