@@ -7,7 +7,7 @@
     {
       "name": "url",
       "label": "URL",
-      "description": "URL to your bugify API endpoint, eg. http://bugify.mysite.com/api",
+      "description": "URL to your Bugify website, eg. http://bugify.mysite.com"
     },
     {
       "name": "apiKey",
