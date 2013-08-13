@@ -1,4 +1,6 @@
 require("sugar");
+fs = require("fs");
+Handlebars = require("handlebars");
 
 //
 // The base Bugsnag NotificationPlugin class
@@ -18,6 +20,10 @@ require("sugar");
 
 var NotificationPlugin = (function () {
   function NotificationPlugin() {}
+
+  // Load templates
+  NotificationPlugin.markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md", "utf8"));
+  NotificationPlugin.textTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.txt", "utf8"));
 
   // Fired when a new event is triggered for notification
   // Plugins MUST override this method
@@ -42,6 +48,17 @@ var NotificationPlugin = (function () {
     return this.stacktraceLineString(stacktrace[0]);
   };
 
+  NotificationPlugin.title = function (event) {
+    return event.error.exceptionClass + " in " + event.error.context;
+  };
+
+  NotificationPlugin.markdownBody = function (event) {
+    return this.markdownTemplate(event);
+  };
+
+  NotificationPlugin.textBody = function (event) {
+    return this.textTemplate(event);
+  };
 
   // Utility methods for http requests
   NotificationPlugin.request = require("superagent");
