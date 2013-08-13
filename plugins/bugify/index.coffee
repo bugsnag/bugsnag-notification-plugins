@@ -30,7 +30,6 @@ class Bugify extends NotificationPlugin
       .post("#{config.url}/api/issues.json")
       .auth(config.apiKey, "")
       .type("form")
-      .set('Accept', 'application/json')
       .send(payload)
       .on "error", (err) ->
         callback(err)
