@@ -23,7 +23,6 @@ var NotificationPlugin = (function () {
 
   // Load templates
   NotificationPlugin.markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md", "utf8"));
-  NotificationPlugin.textTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.txt", "utf8"));
 
   // Fired when a new event is triggered for notification
   // Plugins MUST override this method
