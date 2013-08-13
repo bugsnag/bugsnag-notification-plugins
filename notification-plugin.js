@@ -65,6 +65,11 @@ var NotificationPlugin = (function () {
           lineNumber: 123,
           method: "example",
           inProject: true
+        }, {
+          file: "app/controllers/other_controller.rb",
+          lineNumber: 12,
+          method: "broken",
+          inProject: true
         }]
       },
       project: {
