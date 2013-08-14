@@ -22,7 +22,7 @@ var NotificationPlugin = (function () {
   function NotificationPlugin() {}
 
   // Load templates
-  NotificationPlugin.markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md", "utf8"));
+  NotificationPlugin.markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md.hbs", "utf8"));
 
   // Fired when a new event is triggered for notification
   // Plugins MUST override this method
@@ -53,10 +53,6 @@ var NotificationPlugin = (function () {
 
   NotificationPlugin.markdownBody = function (event) {
     return this.markdownTemplate(event);
-  };
-
-  NotificationPlugin.textBody = function (event) {
-    return this.textTemplate(event);
   };
 
   // Utility methods for http requests
