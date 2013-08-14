@@ -3,32 +3,13 @@ NotificationPlugin = require "../../notification-plugin"
 class Codebase extends NotificationPlugin
   BASE_URL = "http://api3.codebasehq.com"
 
-  stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-
-  markdownBody = (event) ->
-    """
-    ## #{event.trigger.message} in #{event.project.name}
-
-    **#{event.error.exceptionClass}** in **#{event.error.context}**
-    #{event.error.message if event.error.message}
-
-    [View on bugsnag.com](#{event.error.url})
-
-    ## Stacktrace
-
-        #{stacktraceLines(event.error.stacktrace).join("\n")}
-
-    [View full stacktrace](#{event.error.url})
-    """
-
   @receiveEvent: (config, event, callback) ->
     # Build the ticket payload
     payload = 
       ticket:
-        summary: "#{event.error.exceptionClass} in #{event.error.context}"
+        summary: @title(event)
+        description: @markdownBody(event)
         ticket_type: "bug"
-        description: "#{markdownBody(event)}"
 
     # Send the request to codebase
     @request

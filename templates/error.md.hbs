@@ -1,0 +1,12 @@
+## {{trigger.message}} in {{project.name}}
+
+**{{error.exceptionClass}}** in **{{error.context}}**
+{{#if error.message}}{{error.message}}{{/if}}
+
+[View on bugsnag.com]({{error.url}})
+
+## Stacktrace
+{{#each error.stacktrace}}
+{{#if inProject}}    {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}
+
+[View full stacktrace]({{error.url}})
