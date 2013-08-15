@@ -1,26 +1,6 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class GitLabIssue extends NotificationPlugin
-
-  stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-
-  markdownBody = (event) ->
-    """
-    ## #{event.trigger.message} in #{event.project.name}
-
-    **#{event.error.exceptionClass}** in **#{event.error.context}**
-    #{event.error.message if event.error.message}
-
-    [View on bugsnag.com](#{event.error.url})
-
-    ## Stacktrace
-
-        #{stacktraceLines(event.error.stacktrace).join("\n")}
-
-    [View full stacktrace](#{event.error.url})
-    """
-
   @getProject: (config, cb) =>
     @request
       .get("#{config.gitlab_url}/api/v3/projects/?per_page=100")
@@ -41,9 +21,9 @@ class GitLabIssue extends NotificationPlugin
 
       # Build the ticket
       payload = 
-        title: "#{event.error.exceptionClass} in #{event.error.context}"
+        title: @title(event)
+        description: @markdownBody(event)
         labels: "bugsnag"
-        description: markdownBody(event)
 
       # Send the request
       @request
