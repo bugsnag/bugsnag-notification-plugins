@@ -1,7 +1,7 @@
 {
   "name": "Trello",
   "description": "Create a Trello card",
-  "supportedTriggers": ["firstException", "unresolved"],
+  "supportedTriggers": ["firstException", "unresolved", "exception"],
   "issueTracker": true,
   "fields": [
     {
