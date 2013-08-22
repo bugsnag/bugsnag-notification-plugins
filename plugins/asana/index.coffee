@@ -12,7 +12,7 @@ class Asana extends NotificationPlugin
     else
       ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace[0..4])
   
-  markdownBody = (event) ->
+  renderBody = (event) ->
     """
     #{event.error.exceptionClass} in #{event.error.context}
 
@@ -67,7 +67,7 @@ class Asana extends NotificationPlugin
       # Build task payload
       taskPayload =
         name: "#{event.error.exceptionClass} in #{event.error.context}"
-        notes: markdownBody(event)
+        notes: renderBody(event)
         workspace: results.workspaceId
 
       taskPayload.projects = [results.projectId] if results.projectId?

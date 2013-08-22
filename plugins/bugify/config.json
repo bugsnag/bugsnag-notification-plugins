@@ -1,0 +1,23 @@
+{
+  "name": "Bugify",
+  "description": "Create a Bugify ticket",
+  "supportedTriggers": ["firstException", "unresolved"],
+  "issueTracker": true,
+  "fields": [
+    {
+      "name": "url",
+      "label": "URL",
+      "description": "URL to your Bugify website, eg. http://bugify.mysite.com"
+    },
+    {
+      "name": "apiKey",
+      "label": "API Key",
+      "description": "Your API key"
+    },
+    {
+      "name": "projectId",
+      "label": "Project ID",
+      "description": "The project ID to create the ticket in"
+    }
+  ]
+}
