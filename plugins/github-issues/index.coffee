@@ -8,6 +8,7 @@ class GithubIssue extends NotificationPlugin
     payload = 
       title: @title(event)
       body: @markdownBody(event)
+      labels: (config?.labels || "bugsnag").split(",").compact(true)
 
     # Send the request
     @request

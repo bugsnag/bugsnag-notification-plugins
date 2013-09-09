@@ -19,6 +19,13 @@
       "name": "repo",
       "label": "Repository",
       "description": "Which GitHub repository to create the issue on, eg rails/rails"
+    },
+    {
+      "name": "labels",
+      "label": "Labels (comma separated)",
+      "description": "Comma separated list of labels to apply to the issue.",
+      "optional": true,
+      "defaultValue": "bugsnag"
     }
   ]
 }
