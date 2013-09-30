@@ -1,0 +1,46 @@
+{
+  "name": "OnTime",
+  "description": "Create an OnTime item",
+  "supportedTriggers": ["firstException", "unresolved", "exception"],
+  "issueTracker": true,
+  "fields": [
+    {
+      "name": "url",
+      "label": "OnTime URL",
+      "description": "Your OnTime URL, eg https://company.ontimenow.com"
+    },
+    {
+      "name": "project",
+      "label": "Project Name",
+      "description": "The name of your OnTime project. It must be a unique value."
+    },
+    {
+      "name": "itemType",
+      "label": "Item Type",
+      "description": "The type of item to be created. These are the default values, you might have renamed them.",
+       "allowedValues": ["Defects (Bugs)", "Features (Product Backlog)", "Tasks (Custom Items)", "Incidents (Help Desk)"],
+      "defaultValue": "Defects (Bugs)"
+    },
+    {
+      "name": "clientid",
+      "label": "OnTime Private Client Id",
+      "description": "You can find this value in OnTime->Tools->System Options->OnTime API Settings"
+    },
+    {
+      "name": "clientsecret",
+      "label": "OnTime Private Client Secret",
+      "description": "You can find this value in OnTime->Tools->System Options->OnTime API Settings"
+    },
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "Your OnTime username"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your OnTime password",
+      "type": "password"
+    }
+  ]
+}
