@@ -1,0 +1,12 @@
+{
+  "name": "Slack Webhook",
+  "description": "Post to a Slack Webhook URL",
+  "supportedTriggers": "all",
+  "fields": [
+    {
+      "name": "url",
+      "label": "Slack Webhook URL",
+      "description": "The Slack webhook URL you would like error data posted to."
+    }
+  ]
+}
