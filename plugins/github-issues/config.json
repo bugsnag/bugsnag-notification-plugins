@@ -6,8 +6,8 @@
   "fields": [
     {
       "name": "oauthToken",
-      "label": "OAuth Token",
-      "description": "Your GitHub OAuth token",
+      "label": "Access Token",
+      "description": "Your GitHub access token",
       "link": "https://github.com/settings/tokens/new"
     },
     {
