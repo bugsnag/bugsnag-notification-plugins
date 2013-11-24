@@ -17,7 +17,7 @@ class GithubIssue extends NotificationPlugin
 
     # Authenticate the request
     if config.oauthToken
-      req.set("Authorization", "token #{config.oauth_token}")
+      req.set("Authorization", "token #{config.oauthToken}")
     else
       req.auth(config.username, config.password)
 
