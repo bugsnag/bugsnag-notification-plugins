@@ -10,11 +10,19 @@ class GithubIssue extends NotificationPlugin
       body: @markdownBody(event)
       labels: (config?.labels || "bugsnag").split(",").compact(true)
 
-    # Send the request
-    @request
+    # Start building the request
+    req = @request
       .post("#{BASE_URL}/repos/#{config.repo}/issues")
-      .auth(config.username, config.password)
       .set("User-Agent", "Bugsnag")
+
+    # Authenticate the request
+    if config.oauthToken
+      req.set("Authorization", "token #{config.oauth_token}")
+    else
+      req.auth(config.username, config.password)
+
+    # Send the request
+    req
       .send(payload)
       .on "error", (err) ->
         callback(err)
