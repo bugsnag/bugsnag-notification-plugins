@@ -5,15 +5,10 @@
   "issueTracker": true,
   "fields": [
     {
-      "name": "username",
-      "label": "Username",
-      "description": "Your GitHub username"
-    },
-    {
-      "name": "password",
-      "label": "Password",
-      "description": "Your GitHub password",
-      "type": "password"
+      "name": "oauthToken",
+      "label": "Access Token",
+      "description": "Your GitHub access token",
+      "link": "https://github.com/settings/tokens/new"
     },
     {
       "name": "repo",
