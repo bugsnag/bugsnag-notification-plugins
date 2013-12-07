@@ -12,5 +12,9 @@
     "xml2js": "~0.2.6",
     "handlebars": "~1.0.12"
   },
-  "main": "./index.js"
+  "main": "./index.js",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-release": "~0.6.0"
+  }
 }
