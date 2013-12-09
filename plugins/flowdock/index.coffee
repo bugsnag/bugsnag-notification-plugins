@@ -44,11 +44,11 @@ class Flowdock extends NotificationPlugin
         <br/>
         {{error.message}}
       </p>
-      {{#if releaseStage}}
-        <p>Release stage: {{releaseStage}}</p>
+      {{#if error.releaseStage}}
+        <p>Release stage: {{error.releaseStage}}</p>
       {{/if}}
-      {{#if appVersion}}
-        <p>App version: {{appVersion}}</p>
+      {{#if error.appVersion}}
+        <p>App version: {{error.appVersion}}</p>
       {{/if}}
 
       <p><strong>Stacktrace summary</strong></p>
