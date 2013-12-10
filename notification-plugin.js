@@ -82,6 +82,16 @@ var NotificationPlugin = (function () {
           lineNumber: 12,
           method: "broken",
           inProject: true
+        }, {
+          file: "gems/junk/junkfile.rb",
+          lineNumber: 999,
+          method: "something",
+          inProject: false
+        }, {
+          file: "lib/important/magic.rb",
+          lineNumber: 4,
+          method: "load_something",
+          inProject: true
         }]
       },
       project: {

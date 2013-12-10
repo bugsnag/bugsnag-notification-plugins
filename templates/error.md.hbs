@@ -6,7 +6,7 @@
 [View on bugsnag.com]({{error.url}})
 
 ## Stacktrace
-{{#each error.stacktrace}}
-{{#if inProject}}    {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}
+{{#each error.stacktrace}}{{#if inProject}}
+    {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}
 
 [View full stacktrace]({{error.url}})
