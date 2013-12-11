@@ -1,7 +1,7 @@
 {
   "name": "Webhook",
   "actions": {
-    "create": "Post to a Webhook URL",
+    "create": "Post to a Webhook URL"
   },
   "supportedTriggers": "all",
   "fields": [

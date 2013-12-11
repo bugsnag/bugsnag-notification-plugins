@@ -1,7 +1,7 @@
 {
   "name": "Campfire",
   "actions": {
-    "create": "Post to a Campfire chatroom",
+    "create": "Post to a Campfire chatroom"
   },
   "supportedTriggers": "all",
   "type": "communication",
