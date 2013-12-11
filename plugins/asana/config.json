@@ -1,6 +1,9 @@
 {
   "name": "Asana",
   "description": "Create an Asana task",
+  "actions": {
+    "view": "View in Asana"
+  },
   "supportedTriggers": ["firstException", "unresolved"],
   "issueTracker": true,
   "fields": [

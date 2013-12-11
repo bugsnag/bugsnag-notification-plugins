@@ -1,6 +1,9 @@
 {
   "name": "Bugify",
   "description": "Create a Bugify ticket",
+  "actions": {
+    "view": "View in Bugify"
+  },
   "supportedTriggers": ["firstException", "unresolved"],
   "issueTracker": true,
   "fields": [

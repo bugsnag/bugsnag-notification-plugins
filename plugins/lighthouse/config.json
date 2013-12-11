@@ -1,6 +1,9 @@
 {
   "name": "Lighthouse",
   "description": "Create a Lighthouse ticket",
+  "actions": {
+    "view": "View in Lighthouse"
+  },
   "supportedTriggers": ["firstException", "unresolved"],
   "issueTracker": true,
   "fields": [
