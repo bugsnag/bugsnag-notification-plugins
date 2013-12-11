@@ -1,5 +1,8 @@
 {
   "name": "Pivotal Tracker",
+  "actions": {
+    "view": "View in Pivotal Tracker"
+  },
   "description": "Create a Pivotal Tracker story",
   "supportedTriggers": ["firstException", "unresolved"],
   "issueTracker": true,

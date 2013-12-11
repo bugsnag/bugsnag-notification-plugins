@@ -1,6 +1,9 @@
 {
   "name": "GitLab Issues",
   "description": "Create a GitLab issue",
+  "actions": {
+    "view": "View on GitLab"
+  },
   "supportedTriggers": ["firstException", "unresolved"],
   "issueTracker": true,
   "fields": [

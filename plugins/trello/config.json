@@ -1,6 +1,9 @@
 {
   "name": "Trello",
   "description": "Create a Trello card",
+  "actions": {
+    "view": "View in Trello"
+  },
   "supportedTriggers": ["firstException", "unresolved", "exception"],
   "issueTracker": true,
   "fields": [

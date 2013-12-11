@@ -1,6 +1,9 @@
 {
   "name": "GitHub Issues",
   "description": "Create a GitHub issue",
+  "actions": {
+    "view": "View on Github"
+  },
   "supportedTriggers": ["firstException", "unresolved"],
   "issueTracker": true,
   "fields": [

@@ -1,6 +1,9 @@
 {
   "name": "OnTime",
   "description": "Create an OnTime item",
+  "actions": {
+    "view": "View in OnTime"
+  },
   "supportedTriggers": ["firstException", "unresolved", "exception"],
   "issueTracker": true,
   "fields": [

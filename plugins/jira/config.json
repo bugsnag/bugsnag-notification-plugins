@@ -1,6 +1,9 @@
 {
   "name": "Atlassian Jira",
   "description": "Create a JIRA issue",
+  "actions": {
+    "view": "View in JIRA"
+  },
   "supportedTriggers": ["firstException", "unresolved"],
   "issueTracker": true,
   "fields": [
