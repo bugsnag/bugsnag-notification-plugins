@@ -1,5 +1,6 @@
 {
   "name": "GitHub Issues",
+  "url": "https://github.com",
   "actions": {
     "create": "Create a GitHub issue",
     "view": "View on Github"

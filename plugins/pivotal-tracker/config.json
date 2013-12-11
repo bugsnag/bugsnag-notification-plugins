@@ -1,5 +1,6 @@
 {
   "name": "Pivotal Tracker",
+  "url": "http://www.pivotaltracker.com",
   "actions": {
     "create": "Create a Pivotal Tracker story",
     "view": "View in Pivotal Tracker"

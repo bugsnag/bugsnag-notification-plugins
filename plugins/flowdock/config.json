@@ -1,5 +1,6 @@
 {
   "name": "Flowdock",
+  "url": "https://www.flowdock.com",
   "actions": {
     "create": "Post to a Flowdock inbox"
   },

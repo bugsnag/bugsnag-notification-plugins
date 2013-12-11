@@ -1,5 +1,6 @@
 {
   "name": "UserVoice",
+  "url": "https://www.uservoice.com",
   "actions": {
     "create": "Create a UserVoice ticket",
     "view": "View on UserVoice"

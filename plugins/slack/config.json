@@ -1,5 +1,6 @@
 {
   "name": "Slack Webhook",
+  "url": "https://slack.com",
   "actions": {
     "create": "Post to a Slack Webhook URL"
   },

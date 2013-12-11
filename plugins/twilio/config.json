@@ -1,5 +1,6 @@
 {
   "name": "Twilio SMS",
+  "url": "http://www.twilio.com",
   "actions": {
     "create": "Send an SMS with Twilio"
   },

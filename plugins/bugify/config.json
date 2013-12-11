@@ -1,5 +1,6 @@
 {
   "name": "Bugify",
+  "url": "https://bugify.com",
   "actions": {
     "create": "Create a Bugify ticket",
     "view": "View in Bugify"

@@ -1,5 +1,6 @@
 {
   "name": "HipChat",
+  "url": "https://www.hipchat.com",
   "actions": {
     "create": "Post to a HipChat chatroom"
   },

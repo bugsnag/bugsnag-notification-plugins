@@ -1,5 +1,6 @@
 {
   "name": "Campfire",
+  "url": "https://campfirenow.com",
   "actions": {
     "create": "Post to a Campfire chatroom"
   },

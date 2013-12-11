@@ -1,5 +1,6 @@
 {
   "name": "OnTime",
+  "url": "http://www.ontimenow.com",
   "actions": {
     "create": "Create an OnTime item",
     "view": "View in OnTime"

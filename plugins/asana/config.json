@@ -1,5 +1,6 @@
 {
   "name": "Asana",
+  "url": "https://asana.com",
   "actions": {
     "create": "Create an Asana task",
     "view": "View in Asana"

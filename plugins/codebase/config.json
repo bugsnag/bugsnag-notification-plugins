@@ -1,5 +1,6 @@
 {
   "name": "Codebase",
+  "url": "http://www.codebasehq.com",
   "actions": {
     "create": "Create a Codebase ticket",
     "view": "View on Codebase"

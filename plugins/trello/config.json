@@ -1,5 +1,6 @@
 {
   "name": "Trello",
+  "url": "https://trello.com",
   "actions": {
     "create": "Create a Trello card",
     "view": "View in Trello"

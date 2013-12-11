@@ -1,5 +1,6 @@
 {
   "name": "GitLab Issues",
+  "url": "http://gitlab.org",
   "actions": {
     "create": "Create a GitLab issue",
     "view": "View on GitLab"
