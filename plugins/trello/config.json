@@ -1,11 +1,11 @@
 {
   "name": "Trello",
-  "description": "Create a Trello card",
   "actions": {
+    "create": "Create a Trello card",
     "view": "View in Trello"
   },
   "supportedTriggers": ["firstException", "unresolved", "exception"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "applicationKey",

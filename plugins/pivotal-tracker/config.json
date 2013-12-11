@@ -1,11 +1,11 @@
 {
   "name": "Pivotal Tracker",
   "actions": {
+    "create": "Create a Pivotal Tracker story",
     "view": "View in Pivotal Tracker"
   },
-  "description": "Create a Pivotal Tracker story",
   "supportedTriggers": ["firstException", "unresolved"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "projectId",

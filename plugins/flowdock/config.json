@@ -1,7 +1,10 @@
 {
   "name": "Flowdock",
-  "description": "Post to a Flowdock inbox",
+  "actions": {
+    "create": "Post to a Flowdock inbox"
+  },
   "supportedTriggers": "all",
+  "type": "communication",
   "fields": [
     {
       "name": "apiToken",

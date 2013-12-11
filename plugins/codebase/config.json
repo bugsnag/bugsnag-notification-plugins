@@ -1,11 +1,11 @@
 {
   "name": "Codebase",
-  "description": "Create a Codebase ticket",
   "actions": {
+    "create": "Create a Codebase ticket",
     "view": "View on Codebase"
   },
   "supportedTriggers": ["firstException", "unresolved"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "account",

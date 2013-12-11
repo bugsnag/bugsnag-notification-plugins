@@ -1,11 +1,11 @@
 {
   "name": "Atlassian Jira",
-  "description": "Create a JIRA issue",
   "actions": {
+    "create": "Create a JIRA issue",
     "view": "View in JIRA"
   },
   "supportedTriggers": ["firstException", "unresolved"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "host",

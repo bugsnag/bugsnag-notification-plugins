@@ -1,7 +1,10 @@
 {
   "name": "Twilio SMS",
-  "description": "Send an SMS with Twilio",
+  "actions": {
+    "create": "Send an SMS with Twilio",
+  },
   "supportedTriggers": "all",
+  "type": "communication",
   "fields": [
     {
       "name": "fromNumber",

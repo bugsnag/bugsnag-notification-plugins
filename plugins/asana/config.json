@@ -1,11 +1,11 @@
 {
   "name": "Asana",
-  "description": "Create an Asana task",
   "actions": {
+    "create": "Create an Asana task",
     "view": "View in Asana"
   },
   "supportedTriggers": ["firstException", "unresolved"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "apiKey",

@@ -1,11 +1,11 @@
 {
   "name": "GitLab Issues",
-  "description": "Create a GitLab issue",
   "actions": {
+    "create": "Create a GitLab issue",
     "view": "View on GitLab"
   },
   "supportedTriggers": ["firstException", "unresolved"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "private_token",

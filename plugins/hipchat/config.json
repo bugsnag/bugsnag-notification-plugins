@@ -1,7 +1,10 @@
 {
   "name": "HipChat",
-  "description": "Post to a HipChat chatroom",
+  "actions": {
+    "create": "Post to a HipChat chatroom"
+  },
   "supportedTriggers": "all",
+  "type": "communication",
   "fields": [
     {
       "name": "authToken",

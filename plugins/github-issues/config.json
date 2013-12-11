@@ -1,11 +1,11 @@
 {
   "name": "GitHub Issues",
-  "description": "Create a GitHub issue",
   "actions": {
+    "create": "Create a GitHub issue",
     "view": "View on Github"
   },
   "supportedTriggers": ["firstException", "unresolved"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "oauthToken",

@@ -224,15 +224,20 @@ and look similar to the following example:
     // The name of the plugin.
     "name": "HipChat",
     
-    // A simple description of the action that will be performed.
-    "description": "Post to a HipChat chatroom",
+    // A description of the action that will be performed.
+    "actions": {
+      "create": "Post to a HipChat chatroom",
+    },
     
     // We trigger notifications when certain events occur in bugsnag (see the 
     // Event Format documentation above). To signal which triggers your plugin
     // understands, set this to an array of trigger strings. 
     // eg. ["exception", "firstException"]. 
     "supportedTriggers": ["firstException"],
-    
+
+    // The type of plugin ("issueTracker", "communication", or "other")
+    "type": "communication",
+
     // An array of fields to present to the user on the Bugsnag.com dashboard.
     "fields": [{
         // The name of the field. This is how you will reference the field in 

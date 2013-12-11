@@ -1,7 +1,10 @@
 {
   "name": "Email",
-  "description": "Email project members",
+  "actions": {
+    "create": "Email project members"
+  },
   "supportedTriggers": "all",
+  "type": "communication",
   "fields": [
     {
       "name": "includeMetadata",

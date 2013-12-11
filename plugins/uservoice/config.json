@@ -1,11 +1,11 @@
 {
   "name": "UserVoice",
-  "description": "Create a UserVoice ticket",
   "actions": {
+    "create": "Create a UserVoice ticket",
     "view": "View on UserVoice"
   },
   "supportedTriggers": ["firstException", "unresolved"],
-  "issueTracker": true,
+  "type": "issueTracker",
   "fields": [
     {
       "name": "url",
