@@ -11,12 +11,14 @@
     {
       "name": "oauthToken",
       "label": "Access Token",
-      "description": "Your GitHub access token",
+      "description": "Your GitHub access token (40 characters)",
+      "pattern": "[0-9a-f]{40}",
       "link": "https://github.com/settings/tokens/new"
     },
     {
       "name": "repo",
-      "label": "Repository",
+      "label": "Repository (eg. rails/rails)",
+      "pattern": "[\\w-]+/[\\w-]+",
       "description": "Which GitHub repository to create the issue on, eg rails/rails"
     },
     {
