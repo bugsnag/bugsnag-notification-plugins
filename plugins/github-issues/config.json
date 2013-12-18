@@ -17,8 +17,8 @@
     },
     {
       "name": "repo",
-      "label": "Repository (eg. rails/rails)",
-      "pattern": "[\\w-]+/[\\w-]+",
+      "label": "Repository",
+      "pattern": ".+/.+",
       "description": "Which GitHub repository to create the issue on, eg rails/rails"
     },
     {
