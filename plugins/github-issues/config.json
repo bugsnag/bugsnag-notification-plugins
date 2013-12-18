@@ -18,7 +18,6 @@
     {
       "name": "repo",
       "label": "Repository",
-      "pattern": ".+/.+",
       "description": "Which GitHub repository to create the issue on, eg rails/rails"
     },
     {
