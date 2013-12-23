@@ -4,6 +4,7 @@ class GitLabIssue extends NotificationPlugin
   @getProject: (config, cb) =>
     @request
       .get("#{config.gitlab_url}/api/v3/projects/?per_page=100")
+      .timeout(4000)
       .set("User-Agent", "Bugsnag")
       .set("PRIVATE-TOKEN", config.private_token)
       .on "error", (err) ->

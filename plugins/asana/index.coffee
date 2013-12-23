@@ -30,6 +30,7 @@ class Asana extends NotificationPlugin
     getWorkspaceId = (cb) =>
       @request
         .get("#{BASE_URL}/workspaces")
+        .timeout(4000)
         .auth(config.apiKey, "")
         .on("error", (err) -> cb(err))
         .end (res) =>
@@ -45,6 +46,7 @@ class Asana extends NotificationPlugin
     getProjectId = (cb) =>
       @request
         .get("#{BASE_URL}/projects")
+        .timeout(4000)
         .auth(config.apiKey, "")
         .on("error", (err) -> cb(err))
         .end (res) =>
@@ -75,6 +77,7 @@ class Asana extends NotificationPlugin
       # Create the task
       @request
         .post("#{BASE_URL}/tasks")
+        .timeout(4000)
         .send(taskPayload)
         .type("form")
         .auth(config.apiKey, "")

@@ -25,6 +25,7 @@ class PivotalTracker extends NotificationPlugin
     # Send the request to the url
     @request
       .post("https://www.pivotaltracker.com/services/v3/projects/#{config.projectId}/stories")
+      .timeout(4000)
       .set("X-TrackerToken", config.apiToken)
       .type("form")
       .send(params)

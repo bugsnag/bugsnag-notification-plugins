@@ -9,6 +9,7 @@ class Bugify extends NotificationPlugin
 
     @request
       .post("#{config.url}/api/issues.json")
+      .timeout(4000)
       .auth(config.apiKey, "")
       .type("form")
       .send(payload)

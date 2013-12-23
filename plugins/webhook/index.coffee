@@ -7,6 +7,7 @@ class Webhook extends NotificationPlugin
     # Send the request to the url
     @request
       .post(config.url)
+      .timeout(4000)
       .type('json')
       .send(payload)
       .on "error", (err) ->

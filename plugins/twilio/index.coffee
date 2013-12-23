@@ -16,6 +16,7 @@ class Twilio extends NotificationPlugin
     # Send the request to hipchat
     @request
       .post("https://api.twilio.com/2010-04-01/Accounts/#{config.accountSid}/SMS/Messages.xml")
+      .timeout(4000)
       .send(params)
       .auth(config.accountSid, config.authToken)
       .type("form")

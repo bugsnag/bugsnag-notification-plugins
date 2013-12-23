@@ -12,6 +12,7 @@ class Lighthouse extends NotificationPlugin
     # Send the request to the url
     @request
       .post("#{config.url}/projects/#{config.projectId}/tickets.json")
+      .timeout(4000)
       .set("X-LighthouseToken", config.apiKey)
       .send(payload)
       .on "error", (err) ->

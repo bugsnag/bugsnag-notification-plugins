@@ -28,6 +28,7 @@ class Flowdock extends NotificationPlugin
 
     @request
       .post("#{BASE_URL}/messages/team_inbox/#{config.apiToken}")
+      .timeout(4000)
       .send(payload)
       .set("User-Agent", "Bugsnag")
       .on "error", (err) ->
