@@ -58,6 +58,7 @@ class OnTime extends NotificationPlugin
   @getProject: (config, callback) =>
     @request
       .get("#{config.url}/api/v2/projects?access_token=#{config.access_token}")
+      .timeout(4000)
         .set('Accept', 'application/json')
         .on "error", (err) ->
           callback(err)

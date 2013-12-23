@@ -35,6 +35,7 @@ class Hipchat extends NotificationPlugin
     # Send the request
     @request
       .post("#{BASE_URL}/rooms/message")
+      .timeout(4000)
       .send(payload)
       .type("form")
       .on "error", (err) ->

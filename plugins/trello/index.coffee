@@ -7,6 +7,7 @@ class Trello extends NotificationPlugin
   @getListId: (config, callback) ->
     @request
       .get("https://api.trello.com/1/boards/#{config?.boardId}/lists?key=#{config?.applicationKey}&token=#{config?.memberToken}")
+      .timeout(4000)
       .on("error", callback)
       .end (res) ->
         return callback(res.error) if res.error

@@ -14,6 +14,7 @@ class Campfire extends NotificationPlugin
     # Send the request to campfire
     @request
       .post("https://#{config.domain}.campfirenow.com/room/#{config.roomId}/speak.json")
+      .timeout(4000)
       .auth(config.authToken, "X")
       .redirects(0)
       .send

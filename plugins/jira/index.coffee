@@ -34,6 +34,7 @@ class Jira extends NotificationPlugin
     # Send the request
     @request
       .post("#{config.host}/rest/api/2/issue")
+      .timeout(4000)
       .auth(config.username, config.password)
       .set('Accept', 'application/json')
       .send(payload)

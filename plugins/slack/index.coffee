@@ -10,6 +10,7 @@ class SlackPlugin extends NotificationPlugin
 
     @request
       .post(config.url)
+      .timeout(4000)
       .type('json')
       .send(payload)
       .on "error", (err) ->

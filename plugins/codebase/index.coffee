@@ -14,6 +14,7 @@ class Codebase extends NotificationPlugin
     # Send the request to codebase
     @request
       .post("#{BASE_URL}/#{config.project}/tickets")
+      .timeout(4000)
       .set("Accept", "application/json")
       .auth("#{config.account}/#{config.username}", config.apiKey)
       .send(payload)

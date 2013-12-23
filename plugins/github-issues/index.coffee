@@ -13,6 +13,7 @@ class GithubIssue extends NotificationPlugin
     # Start building the request
     req = @request
       .post("#{BASE_URL}/repos/#{config.repo}/issues")
+      .timeout(4000)
       .set("User-Agent", "Bugsnag")
 
     # Authenticate the request

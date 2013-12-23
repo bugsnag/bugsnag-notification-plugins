@@ -26,6 +26,7 @@ class UserVoice extends NotificationPlugin
     url = if config.url.startsWith(/https?:\/\//) then config.url else "https://#{config.url}"
     @request
       .post("#{url}/api/v1/tickets.json")
+      .timeout(4000)
       .send(payload)
       .type("form")
       .on "error", (err) ->
