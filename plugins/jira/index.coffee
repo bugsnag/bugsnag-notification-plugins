@@ -1,4 +1,5 @@
 NotificationPlugin = require "../../notification-plugin"
+url = require "url"
 
 class Jira extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
@@ -21,9 +22,6 @@ class Jira extends NotificationPlugin
     """
   
   @receiveEvent: (config, event, callback) ->
-    # Normalize the hostname
-    host = config.host.replace(/\/$/, "")
-
     # Build the ticket payload
     payload =
       fields:
@@ -40,7 +38,7 @@ class Jira extends NotificationPlugin
 
     # Send the request
     @request
-      .post("#{host}/rest/api/2/issue")
+      .post(url.resolve(config.host, "/rest/api/2/issue"))
       .timeout(4000)
       .auth(config.username, config.password)
       .set('Accept', 'application/json')
@@ -53,6 +51,6 @@ class Jira extends NotificationPlugin
         callback null,
           id: res.body.id
           key: res.body.key
-          url: "#{host}/browse/#{res.body.key}"
+          url: url.resolve(config.host, "/browse/#{res.body.key}")
         
 module.exports = Jira
