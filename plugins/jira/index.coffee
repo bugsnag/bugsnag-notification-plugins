@@ -53,6 +53,6 @@ class Jira extends NotificationPlugin
         callback null,
           id: res.body.id
           key: res.body.key
-          url: "#{config.host}/browse/#{res.body.key}"
+          url: "#{host}/browse/#{res.body.key}"
         
 module.exports = Jira
