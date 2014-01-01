@@ -21,6 +21,9 @@ class Jira extends NotificationPlugin
     """
   
   @receiveEvent: (config, event, callback) ->
+    # Normalize the hostname
+    host = config.host.replace(/\/$/, "")
+
     # Build the ticket payload
     payload =
       fields:
@@ -31,9 +34,13 @@ class Jira extends NotificationPlugin
         issuetype:
           name: config.issueType
 
+    # Add an optional component to the request
+    if config.component?
+      payload.fields.components = [{name: config.component}]
+
     # Send the request
     @request
-      .post("#{config.host}/rest/api/2/issue")
+      .post("#{host}/rest/api/2/issue")
       .timeout(4000)
       .auth(config.username, config.password)
       .set('Accept', 'application/json')

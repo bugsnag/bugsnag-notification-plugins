@@ -1,5 +1,5 @@
 {
-  "name": "Atlassian Jira",
+  "name": "Atlassian JIRA",
   "url": "https://www.atlassian.com/software/jira",
   "actions": {
     "create": "Create a JIRA issue",
@@ -10,14 +10,25 @@
   "fields": [
     {
       "name": "host",
-      "label": "Host",
-      "description": "Host url of your instance",
-      "defaultValue": "https://company.atlassian.net"
+      "label": "Host URL",
+      "description": "URL of your JIRA instance, eg: https://example.atlassian.net",
+      "pattern": "https?:\/\/.+"
     },
     {
       "name": "projectKey",
       "label": "Project Key",
       "description": "The project key for the JIRA project"
+    },
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "Your JIRA username"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your JIRA password",
+      "type": "password"
     },
     {
       "name": "issueType",
@@ -26,15 +37,10 @@
       "defaultValue": "Bug"
     },
     {
-      "name": "username",
-      "label": "Username",
-      "description": "Username for basic auth"
-    },
-    {
-      "name": "password",
-      "label": "Password",
-      "description": "Password for basic auth",
-      "type": "password"
+      "name": "component",
+      "label": "Component",
+      "description": "The component to create the issue in",
+      "optional": true
     }
   ]
 }
