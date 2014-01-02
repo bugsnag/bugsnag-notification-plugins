@@ -33,7 +33,7 @@ class Jira extends NotificationPlugin
           name: config.issueType
 
     # Add an optional component to the request
-    if config.component?
+    if config.component
       payload.fields.components = [{name: config.component}]
 
     # Send the request
