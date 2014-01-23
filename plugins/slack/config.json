@@ -1,8 +1,8 @@
 {
-  "name": "Slack Webhook",
+  "name": "Slack",
   "url": "https://slack.com",
   "actions": {
-    "create": "Post to a Slack Webhook URL"
+    "create": "Post to a Slack channel"
   },
   "supportedTriggers": "all",
   "type": "communication",
