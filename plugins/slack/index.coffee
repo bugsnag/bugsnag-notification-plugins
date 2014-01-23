@@ -1,22 +1,43 @@
 NotificationPlugin = require "../../notification-plugin.js"
 
-class SlackPlugin extends NotificationPlugin
+class Slack extends NotificationPlugin
+  @errorAttachment = (event) ->
+    fallback: "Something happened",
+    fields: [
+      {
+        title: "Error"
+        value: (event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)
+      },
+      {
+        title: "Location",
+        value: event.error.stacktrace && @firstStacktraceLine(event.error.stacktrace)
+      }
+    ]
+
   @receiveEvent = (config, event, callback) ->
-    payload = [@title(event)]
-    payload = payload.concat event.error.message if event.error.message
-    payload = payload.concat "<#{event.error.url}>"
+    # Build the notification title
+    title = ["#{event.trigger.message} in #{event.error.releaseStage} from <#{event.project.url}|#{event.project.name}>"]
+    title.push("in #{event.error.context}")
+    title.push("<#{event.error.url}|(details)>")
 
-    payload = JSON.stringify({ text: payload.join("\n"), username: "Bugsnag" })
+    # Build the common payload
+    payload = {
+      username: "Bugsnag",
+      text: title.join(" "),
+      attachments: []
+    }
 
+    # Attach error information
+    payload.attachments.push(@errorAttachment(event)) if event.error
+
+    # Post to slack
     @request
       .post(config.url)
       .timeout(4000)
-      .type('json')
       .send(payload)
       .on "error", (err) ->
         callback(err)
       .end (res) ->
-        return callback(res.error) if res.error
-        callback()
+        callback(res.error)
 
-module.exports = SlackPlugin
+module.exports = Slack
