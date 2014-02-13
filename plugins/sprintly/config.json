@@ -26,7 +26,8 @@
         "name": "sprintlyStatus",
         "label": "Sprint.ly status",
         "description": "Define whether to put items created into 'backlog' or 'someday'",
-        "allowedValues": ["backlog", "someday"]
+        "allowedValues": ["backlog", "someday"],
+        "defaultValue": "backlog"
       }
     ]
 }
