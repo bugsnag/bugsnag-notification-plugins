@@ -5,6 +5,7 @@ class Sprintly extends NotificationPlugin
     user_email = config?.sprintlyEmail
     api_key = config?.apiKey
     project_id = config?.projectId
+    sprintly_status = config?.sprintlyStatus
 
     # Build the Sprint.ly API request
     # API documentation: https://sprintly.uservoice.com/knowledgebase/articles/98412-items
@@ -20,6 +21,7 @@ class Sprintly extends NotificationPlugin
       title: "#{event.error.exceptionClass} in #{event.error.context}"
       tags: "bugsnag"
       description: description
+      status: sprintly_status
 
     @request
       .post("https://sprint.ly/api/products/#{project_id}/items.json")

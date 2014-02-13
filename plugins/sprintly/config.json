@@ -21,6 +21,12 @@
         "name": "projectId",
         "label": "Sprint.ly Project ID",
         "description": "The ID of your Sprint.ly project"
+      },
+      {
+        "name": "sprintlyStatus",
+        "label": "Sprint.ly status",
+        "description": "Define whether to put items created into 'backlog' or 'someday'"
+        "allowedValues": ["backlog", "someday"],
       }
     ]
 }
