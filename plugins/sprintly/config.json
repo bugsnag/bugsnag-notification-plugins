@@ -1,21 +1,21 @@
 {
     "name": "Sprint.ly",
     "actions": {
-      "create": "Create a Sprint.ly defect placed in the backlog",
+      "create": "Create a Sprint.ly defect placed in the backlog"
     },
     "supportedTriggers": ["firstException"],
     "type": "issueTracker",
     "fields": [
       {
+        "name": "sprintlyEmail",
+        "label": "Sprint.ly Email",
+        "description": "The email address you have associated with your Sprint.ly account"
+      },
+      {
         "name": "apiKey",
         "label": "API Key",
         "description": "Your Sprint.ly API key",
         "link": "https://sprintly.uservoice.com/knowledgebase/articles/306704-getting-your-api-key"
-      },
-      {
-        "name": "sprintlyEmail",
-        "label": "Sprint.ly Email",
-        "description": "The email address you have associated with your Sprint.ly account"
       },
       {
         "name": "projectId",
