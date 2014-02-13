@@ -5,7 +5,6 @@
     },
     "supportedTriggers": ["firstException"],
     "type": "issueTracker",
-    // An array of fields to present to the user on the Bugsnag.com dashboard.
     "fields": [
       {
         "name": "apiKey",
