@@ -4,6 +4,7 @@
     "create": "Post to a Webhook URL"
   },
   "supportedTriggers": "all",
+  "type": "issueTracker",
   "fields": [
     {
       "name": "url",
