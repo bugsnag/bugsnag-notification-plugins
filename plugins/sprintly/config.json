@@ -1,7 +1,8 @@
 {
     "name": "Sprint.ly",
     "actions": {
-      "create": "Create a Sprint.ly defect placed in the backlog"
+      "create": "Create a Sprint.ly defect placed in the backlog",
+      "view": "View on Sprint.ly"
     },
     "supportedTriggers": ["firstException"],
     "type": "issueTracker",
