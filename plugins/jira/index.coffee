@@ -16,7 +16,9 @@ class Jira extends NotificationPlugin
 
     h1. Stacktrace
 
-        #{stacktraceLines(event.error.stacktrace).join("\n")}
+    {noformat}
+    #{stacktraceLines(event.error.stacktrace).join("\n")}
+    {noformat}
 
     [View full stacktrace|#{event.error.url}]
     """
@@ -36,6 +38,10 @@ class Jira extends NotificationPlugin
     if config.component
       payload.fields.components = [{name: config.component}]
 
+    # Add an optional custom fields to the request
+    if config.customFields
+      Object.merge(payload.fields, JSON.parse(config.customFields))
+
     # Send the request
     @request
       .post(url.resolve(config.host, "/rest/api/2/issue"))
@@ -46,7 +52,7 @@ class Jira extends NotificationPlugin
       .on "error", (err) ->
         callback(err)
       .end (res) ->
-        return callback(res.error) if res.error
+        return callback({status: res.error.status, message: res.error.message, body: res.body}) if res.error
 
         callback null,
           id: res.body.id
