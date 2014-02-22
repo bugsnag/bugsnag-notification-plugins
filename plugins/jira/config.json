@@ -41,6 +41,14 @@
       "label": "Component",
       "description": "The component to create the issue in",
       "optional": true
+    },
+    {
+      "name": "customFields",
+      "label": "Custom Fields",
+      "link": "https://developer.atlassian.com/display/JIRADEV/JIRA+REST+API+Example+-+Create+Issue#JIRARESTAPIExample-CreateIssue-Exampleofcreatinganissueusingcustomfields",
+      "description": "Additional JSON-encoded JIRA fields, eg {\"customfield_10024\": {\"value\": \"Engineering\"}}",
+      "type": "json",
+      "optional": true
     }
   ]
 }

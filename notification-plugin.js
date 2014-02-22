@@ -166,7 +166,7 @@ if (module.parent && module.parent.parent === null) {
   var plugin = require(module.parent.filename);
   plugin.fireTestEvent(config, function (err, data) {
     if(err) {
-      console.error("Error firing notification\n", err.stack);
+      console.error("Error firing notification\n", err);
     } else {
       console.log("Fired test event successfully\n", data);
     }
