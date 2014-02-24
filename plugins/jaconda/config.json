@@ -1,0 +1,27 @@
+{
+  "name": "Jaconda",
+  "url": "https://jaconda.im/",
+  "actions": {
+    "create": "Post to a Jaconda chatroom"
+  },
+  "supportedTriggers": "all",
+  "type": "communication",
+  "fields": [
+    {
+      "name": "host",
+      "label": "Host URL",
+      "description": "URL of your Jaconda instance, eg: https://acme.jaconda.im",
+      "pattern": "https?:\/\/.+"
+    },
+    {
+      "name": "apiToken",
+      "label": "API Token",
+      "description": "Your Jaconda API token"
+    },
+    {
+      "name": "roomId",
+      "label": "Chat Room",
+      "description": "The ID or name of the Jaconda chat room to send notifications to"
+    }
+  ]
+}
