@@ -26,11 +26,11 @@ class Jaconda extends NotificationPlugin
     payload = 
       message:
         text: @render details
-        kind: "chat"
+        sender_name: "Bugsnag"
 
     # Send the request
     @request
-      .post(url.resolve(config.host, "/api/v2/rooms/#{config.roomId}/messages.json"))
+      .post(url.resolve(config.host, "/api/v2/rooms/#{config.roomId}/notify.json"))
       .timeout(4000)
       .auth("#{config.apiToken}", "X")
       .send(payload)

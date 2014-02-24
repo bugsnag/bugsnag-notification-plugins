@@ -15,13 +15,15 @@
     },
     {
       "name": "apiToken",
-      "label": "API Token",
-      "description": "Your Jaconda API token"
+      "label": "Room Token",
+      "link": "http://help.jaconda.im/kb/faqs/what-is-room-id-and-room-token",
+      "description": "Your Jaconda room token"
     },
     {
       "name": "roomId",
       "label": "Chat Room",
-      "description": "The ID or name of the Jaconda chat room to send notifications to"
+      "link": "http://help.jaconda.im/kb/faqs/what-is-room-id-and-room-token",
+      "description": "The ID of the Jaconda chat room to send notifications to"
     }
   ]
 }
