@@ -1,0 +1,42 @@
+{
+  "name": "Bitbucket Issues",
+  "url": "https://bitbucket.org",
+  "actions": {
+    "create": "Create a Bitbucket issue",
+    "view": "View on Bitbucket"
+  },
+  "supportedTriggers": ["firstException", "unresolved"],
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "Your Bitbucket username"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your Bitbucket password",
+      "type": "password"
+    },
+    {
+      "name": "repo",
+      "label": "Repository",
+      "description": "Which Bitbucket repository to create the issue on, eg rails/rails"
+    },
+    {
+      "name": "kind",
+      "label": "Issue Kind",
+      "description": "The kind of issue to be created",
+      "allowedValues": ["bug", "task", "proposal", "enhancement"],
+      "defaultValue": "bug"
+    },
+    {
+      "name": "priority",
+      "label": "Issue Priority",
+      "description": "The priority of the issue to be created",
+      "allowedValues": ["blocker", "critical", "major", "minor", "trivial"],
+      "defaultValue": "critical"
+    }
+  ]
+}
