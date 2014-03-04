@@ -1,0 +1,33 @@
+{
+  "name": "Assembla",
+  "url": "http://assembla.com",
+  "actions": {
+    "create": "Create an Assembla ticket",
+    "view": "View in Assembla"
+  },
+  "supportedTriggers": ["firstException", "unresolved"],
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "space",
+      "label": "Space",
+      "description": "Your Assembla space as seen in the url. (https://www.assembla.com/spaces/:space_name/tickets)"
+    },
+    {
+      "name": "apiKey",
+      "label": "API Key",
+      "description": "Your Assembla API Key (https://www.assembla.com/user/edit/manage_clients)"
+    },
+    {
+      "name": "apiSecret",
+      "label": "API Secret",
+      "description": "Your Assembla API Secret (https://www.assembla.com/user/edit/manage_clients)"
+    },
+    {
+      "name": "tags",
+      "label": "Tags",
+      "description": "Which tags to add to tickets, comma delimited",
+      "optional": true
+    }
+  ]
+}
