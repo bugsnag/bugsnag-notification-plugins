@@ -42,7 +42,7 @@ class Assembla extends NotificationPlugin
           cb(new Error("Workspace not found with name '#{config.space}'"))
 
     validateTags = (space, cb) =>
-      if config.tags?
+      if config.tags
         tagNames = config.tags.split(",")
         @request.get("#{API_BASE_URL}/spaces/#{space.id}/tags.json")
           .timeout(4000)
