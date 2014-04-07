@@ -19,6 +19,7 @@ class GitLabIssue extends NotificationPlugin
   @receiveEvent: (config, event, callback) =>
     @getProject config, (err, project) =>
       return callback(err) if err
+      return callback("Unable to find project") unless project?
 
       # Build the ticket
       payload = 
