@@ -1,7 +1,7 @@
 {
   "name": "bugsnag-notification-plugins",
   "description": "Notification plugins (chat and issue tracking integrations) for Bugsnag.",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "repository": "https://github.com/bugsnag/bugsnag-notification-plugins.git",
   "dependencies": {
     "coffee-script": "~1.6.1",
