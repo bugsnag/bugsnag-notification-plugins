@@ -2,13 +2,15 @@ NotificationPlugin = require "../../notification-plugin"
 
 class GithubIssue extends NotificationPlugin
   BASE_URL = "https://api.github.com"
-  
+
   @receiveEvent: (config, event, callback) ->
     # Build the ticket
-    payload = 
+    payload =
       title: @title(event)
       body: @markdownBody(event)
-      labels: (config?.labels || "bugsnag").split(",").compact(true)
+      # Regex removes surrounding whitespace around commas while retaining inner whitespace
+      # and then creates an array of the strings
+      labels: (config?.labels || "bugsnag").trim().split(/\s*,\s*/).compact(true)
 
     # Start building the request
     req = @request
