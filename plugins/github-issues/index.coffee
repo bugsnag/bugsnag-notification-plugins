@@ -10,7 +10,7 @@ class GithubIssue extends NotificationPlugin
       body: @markdownBody(event)
       # Regex removes surrounding whitespace around commas while retaining inner whitespace
       # and then creates an array of the strings
-      labels: (config?.labels || "bugsnag").split(/\s*,\s*/).compact(true)
+      labels: (config?.labels || "bugsnag").trim().split(/\s*,\s*/).compact(true)
 
     # Start building the request
     req = @request
