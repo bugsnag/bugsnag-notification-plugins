@@ -4,13 +4,21 @@ class GithubIssue extends NotificationPlugin
   BASE_URL = "https://api.github.com"
 
   @receiveEvent: (config, event, callback) ->
+
+    # Create labels variable
+    payloadLabels = (config?.labels || "bugsnag")
+    # Check App Version Labeling
+    payloadLabels += ","+event.error.appVersion if config.labelAppVersion  and event.error.appVersion?
+    # Check Release Stage Labiling
+    payloadLabels += ","+event.error.releaseStage if config.labelReleaseStage and event.error.releaseStage?
+
     # Build the ticket
     payload =
       title: @title(event)
       body: @markdownBody(event)
       # Regex removes surrounding whitespace around commas while retaining inner whitespace
       # and then creates an array of the strings
-      labels: (config?.labels || "bugsnag").trim().split(/\s*,\s*/).compact(true)
+      labels: payloadLabels.trim().split(/\s*,\s*/).compact(true)
 
     # Start building the request
     req = @request
