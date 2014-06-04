@@ -5,6 +5,9 @@ class Jira extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
+  metaDataLines = (metaData) ->
+    ("  * #{k} - #{v}" for k,v of metaData)
+
   jiraBody = (event) ->
     """
     h1. #{event.trigger.message} in #{event.project.name}
@@ -21,6 +24,9 @@ class Jira extends NotificationPlugin
     {noformat}
 
     [View full stacktrace|#{event.error.url}]
+
+    Custom data:
+    #{metaDataLines(event.error.metaData).join("\n") if event.error.metaData}     
     """
 
   @receiveEvent: (config, event, callback) ->
