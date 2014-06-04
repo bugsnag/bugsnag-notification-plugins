@@ -4,7 +4,7 @@ url = require "url"
 class Jira extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-      
+
   jiraBody = (event) ->
     """
     h1. #{event.trigger.message} in #{event.project.name}
@@ -22,7 +22,7 @@ class Jira extends NotificationPlugin
 
     [View full stacktrace|#{event.error.url}]
     """
-  
+
   @receiveEvent: (config, event, callback) ->
     # Build the ticket payload
     payload =
@@ -42,9 +42,12 @@ class Jira extends NotificationPlugin
     if config.customFields
       Object.merge(payload.fields, JSON.parse(config.customFields))
 
+    # https://example.com/jira becomes https://example.com/jira/
+    config.host += "/" unless /\/$/.test(config.host)
+
     # Send the request
     @request
-      .post(url.resolve(config.host, "/rest/api/2/issue"))
+      .post(url.resolve(config.host, "rest/api/2/issue"))
       .timeout(4000)
       .auth(config.username, config.password)
       .set('Accept', 'application/json')
@@ -57,6 +60,6 @@ class Jira extends NotificationPlugin
         callback null,
           id: res.body.id
           key: res.body.key
-          url: url.resolve(config.host, "/browse/#{res.body.key}")
-        
+          url: url.resolve(config.host, "browse/#{res.body.key}")
+
 module.exports = Jira
