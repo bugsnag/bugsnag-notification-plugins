@@ -4,27 +4,27 @@ class PagerDuty extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)      
 
-  pagerDutyDescription = (event) ->
-    """
-    #{event.trigger.message}</b> in #{event.project.name}
+  metaDataLines = (metaData) ->
+    ("  * #{k} - #{v}" for k,v of metaData)      
 
-    #{event.error.exceptionClass} in #{event.error.context}
-    #{event.error.message if event.error.message}
 
-    View on bugsnag.com: #{event.error.url}
-
-    #{stacktraceLines(event.error.stacktrace).join("\n")}
-
-    View full stacktrace: #{event.error.url}
-
-    """
+  pagerDutyDetails = (event) ->
+    details = 
+      message : event.trigger.message
+      project : event.project.name
+      class : event.error.exceptionClass
+      url : event.error.url
+      stackTrace : stacktraceLines(event.error.stacktrace)
+      metaData : event.error.metaData    
+    details
 
   @receiveEvent: (config, event, callback) ->
     payload =
       service_key: config.serviceKey
       event_type: 'trigger'
       incident_key: event.error.url
-      description: pagerDutyDescription(event)
+      description: "#{event.error.exceptionClass} in #{event.error.context}"
+      details: pagerDutyDetails(event)
 
     # Send the request
     @request
