@@ -27,6 +27,12 @@ class Slack extends NotificationPlugin
       attachments: []
     }
 
+    # Build the channel
+    if config.channel
+      channel = config.channel
+      channel = "#" + channel unless channel.substring(0,1) is "#"
+      payload.channel = channel
+
     # Attach error information
     payload.attachments.push(@errorAttachment(event)) if event.error
 
