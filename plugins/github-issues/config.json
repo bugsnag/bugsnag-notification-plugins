@@ -26,6 +26,22 @@
       "description": "Comma separated list of labels to apply to the issue.",
       "optional": true,
       "defaultValue": "bugsnag"
+    },
+    {
+      "name": "labelAppVersion",
+      "label": "App Version Labeling",
+      "description": "Should we add App Version as issue label",
+      "type": "boolean",
+      "optional": true,
+      "defaultValue": false
+    },
+    {
+      "name": "labelReleaseStage",
+      "label": "Release Stage Labeling",
+      "description": "Should we add Release Stage as issue label",
+      "type": "boolean",
+      "optional": true,
+      "defaultValue": false
     }
   ]
 }
