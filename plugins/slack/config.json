@@ -11,6 +11,11 @@
       "name": "url",
       "label": "Slack Webhook URL",
       "description": "The Slack webhook URL you would like error data posted to."
+    },
+    {
+      "name": "channel",
+      "label": "Slack Channel",
+      "description": "The name of the Slack Channel you would like the error data posted to."
     }
   ]
 }
