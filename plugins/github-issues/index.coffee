@@ -15,23 +15,17 @@ class GithubIssue extends NotificationPlugin
       req.auth(config.username, config.password)
 
   @addCommentToIssue: (config, issueNumber, comment) ->
-    console.log "Add comment"
     @githubRequest(@request.post("#{@issueUrl(config, issueNumber)}/comments"), config)
       .send({body: comment})
-      .on "error", (err) ->
-        console.log err
-      .end (res) ->
-        console.log "Success comment!"
+      .on "error", console.error
+      .end()
 
   @ensureIssueOpen: (config, issueNumber, callback) ->
-    console.log "Ensure issue open"
     @githubRequest(@request.patch(@issueUrl(config, issueNumber)), config)
       .send({state: "open"})
       .on "error", (err) ->
-        console.log err
         callback(err)
       .end (res) ->
-        console.log "Success open!"
         callback(res.error)
 
   @openIssue: (config, event, callback) ->
