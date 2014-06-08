@@ -17,7 +17,7 @@ class GithubIssue extends NotificationPlugin
   @addCommentToIssue: (config, issueNumber, comment) ->
     @githubRequest(@request.post("#{@issueUrl(config, issueNumber)}/comments"), config)
       .send({body: comment})
-      .on "error", console.error
+      .on("error", console.error)
       .end()
 
   @ensureIssueOpen: (config, issueNumber, callback) ->
