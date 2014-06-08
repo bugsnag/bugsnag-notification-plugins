@@ -3,8 +3,38 @@ NotificationPlugin = require "../../notification-plugin"
 class GithubIssue extends NotificationPlugin
   BASE_URL = "https://api.github.com"
 
-  @receiveEvent: (config, event, callback) ->
+  @issuesUrl: (config) -> "#{BASE_URL}/repos/#{config.repo}/issues"
+  @issueUrl: (config, issueNumber) -> "#{@issuesUrl(config)}/#{issueNumber}"
 
+  @githubRequest: (req, config) ->
+    req.timeout(4000).set("User-Agent", "Bugsnag")
+
+    if config.oauthToken
+      req.set("Authorization", "token #{config.oauthToken}")
+    else
+      req.auth(config.username, config.password)
+
+  @addCommentToIssue: (config, issueNumber, comment) ->
+    console.log "Add comment"
+    @githubRequest(@request.post("#{@issueUrl(config, issueNumber)}/comments"), config)
+      .send({body: comment})
+      .on "error", (err) ->
+        console.log err
+      .end (res) ->
+        console.log "Success comment!"
+
+  @ensureIssueOpen: (config, issueNumber, callback) ->
+    console.log "Ensure issue open"
+    @githubRequest(@request.patch(@issueUrl(config, issueNumber)), config)
+      .send({state: "open"})
+      .on "error", (err) ->
+        console.log err
+        callback(err)
+      .end (res) ->
+        console.log "Success open!"
+        callback(res.error)
+
+  @openIssue: (config, event, callback) ->
     # Create labels variable
     payloadLabels = (config?.labels || "bugsnag")
     # Check App Version Labeling
@@ -16,24 +46,9 @@ class GithubIssue extends NotificationPlugin
     payload =
       title: @title(event)
       body: @markdownBody(event)
-      # Regex removes surrounding whitespace around commas while retaining inner whitespace
-      # and then creates an array of the strings
-      labels: payloadLabels.trim().split(/\s*,\s*/).compact(true)
+      labels: payloadLabels.split(/\s*,\s*/).compact(true)
 
-    # Start building the request
-    req = @request
-      .post("#{BASE_URL}/repos/#{config.repo}/issues")
-      .timeout(4000)
-      .set("User-Agent", "Bugsnag")
-
-    # Authenticate the request
-    if config.oauthToken
-      req.set("Authorization", "token #{config.oauthToken}")
-    else
-      req.auth(config.username, config.password)
-
-    # Send the request
-    req
+    @githubRequest(@request.post(@issuesUrl(config)), config)
       .send(payload)
       .on "error", (err) ->
         callback(err)
@@ -44,5 +59,12 @@ class GithubIssue extends NotificationPlugin
           id: res.body.id
           number: res.body.number
           url: res.body.html_url
+
+  @receiveEvent: (config, event, callback) ->
+    if event?.error?.createdIssue?.number
+      @ensureIssueOpen(config, event.error.createdIssue.number, callback)
+      @addCommentToIssue(config, event.error.createdIssue.number, @markdownBody(event))
+    else
+      @openIssue(config, event, callback)
 
 module.exports = GithubIssue
