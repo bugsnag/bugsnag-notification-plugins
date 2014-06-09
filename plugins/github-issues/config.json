@@ -37,6 +37,7 @@
     },
     {
       "name": "labelReleaseStage",
+      "label": "Release Stage Labeling",
       "description": "Label with release stage introduced in",
       "type": "boolean",
       "optional": true,
