@@ -29,7 +29,7 @@
     },
     {
       "name": "labelAppVersion",
-      "label": "Dynamic Labels",
+      "label": "App Version Labeling",
       "description": "Label with app version introduced in",
       "type": "boolean",
       "optional": true,
