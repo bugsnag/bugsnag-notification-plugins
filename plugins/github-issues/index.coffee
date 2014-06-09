@@ -40,7 +40,7 @@ class GithubIssue extends NotificationPlugin
     payload =
       title: @title(event)
       body: @markdownBody(event)
-      labels: payloadLabels.split(/\s*,\s*/).compact(true)
+      labels: payloadLabels.trim().split(/\s*,\s*/).compact(true)
 
     @githubRequest(@request.post(@issuesUrl(config)), config)
       .send(payload)
