@@ -30,7 +30,7 @@
     {
       "name": "labelAppVersion",
       "label": "App Version Labeling",
-      "description": "Should we add App Version as issue label",
+      "description": "Label with app version introduced in",
       "type": "boolean",
       "optional": true,
       "defaultValue": false
@@ -38,7 +38,7 @@
     {
       "name": "labelReleaseStage",
       "label": "Release Stage Labeling",
-      "description": "Should we add Release Stage as issue label",
+      "description": "Label with release stage introduced in",
       "type": "boolean",
       "optional": true,
       "defaultValue": false
