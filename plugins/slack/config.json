@@ -10,7 +10,8 @@
     {
       "name": "url",
       "label": "Slack Webhook URL",
-      "description": "The Slack webhook URL you would like error data posted to."
+      "description": "The Slack webhook URL you would like error data posted to.",
+      "link": "https://slack.com/services/new/bugsnag"
     },
     {
       "name": "channel",
