@@ -1,0 +1,14 @@
+{
+  "name": "PagerDuty",
+  "actions": {
+    "create": "Create a PagerDuty incident."
+  },
+  "supportedTriggers": "all",
+  "fields": [
+    {
+      "name": "serviceKey",
+      "label": "PagerDuty Service Key",
+      "description": "Enter your service API key here."
+    }
+  ]
+}
