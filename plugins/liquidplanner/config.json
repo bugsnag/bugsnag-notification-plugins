@@ -1,0 +1,34 @@
+{
+  "name": "Liquid Planner",
+  "url": "https://www.atlassian.com/software/jira",
+  "actions": {
+    "create": "Create a LiquidPlanner task"
+  },
+  "supportedTriggers": ["firstException", "unresolved"],
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "space_id",
+      "label": "Space ID",
+      "description": "The space id of your workspace"
+    },
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "Your Liquid Planner username"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your Liquid Planner password",
+      "type": "password"
+    },
+    {
+      "name": "host",
+      "label": "Host URL",
+      "description": "URL of Liquid Planner, only needed if it is not, https://app.liquidplanner.com",
+      "pattern": "https?:\/\/.+",
+      "optional": true
+    }
+  ]
+}
