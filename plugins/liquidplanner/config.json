@@ -1,6 +1,6 @@
 {
   "name": "Liquid Planner",
-  "url": "https://www.atlassian.com/software/jira",
+  "url": "https://app.liquidplanner.com",
   "actions": {
     "create": "Create a LiquidPlanner task"
   },
