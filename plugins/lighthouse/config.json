@@ -21,14 +21,15 @@
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your Lighthouse API Key (http://help.lighthouseapp.com/kb/api/how-do-i-get-an-api-token)"
+      "description": "Your Lighthouse API Key (http://help.lighthouseapp.com/kb/api/how-do-i-get-an-api-token)",
+      "type": "password"
     },
     {
       "name": "tags",
       "label": "Tags",
       "description": "Which tags to add to tickets, comma delimited",
       "optional": true,
-      "defaultValue": "bugsnag"      
+      "defaultValue": "bugsnag"
     }
   ]
 }

@@ -12,7 +12,8 @@
       "name": "apiKey",
       "label": "API Key",
       "description": "Your Asana API key",
-      "link": "http://app.asana.com/-/account_api"
+      "link": "http://app.asana.com/-/account_api",
+      "type": "password"
     },
     {
       "name": "workspaceName",

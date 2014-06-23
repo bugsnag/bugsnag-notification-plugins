@@ -16,7 +16,8 @@
     {
       "name": "apiToken",
       "label": "API Token",
-      "description": "Your Pivotal Tracker API Token, from your profile page."
+      "description": "Your Pivotal Tracker API Token, from your profile page.",
+      "type": "password"
     },
     {
       "name": "labels",

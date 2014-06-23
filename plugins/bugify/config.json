@@ -16,7 +16,8 @@
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your API key"
+      "description": "Your API key",
+      "type": "password"
     },
     {
       "name": "projectId",

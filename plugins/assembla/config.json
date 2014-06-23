@@ -17,13 +17,15 @@
       "name": "apiKey",
       "label": "API Key",
       "description": "Your Assembla API Key",
-      "link": "https://www.assembla.com/user/edit/manage_clients"
+      "link": "https://www.assembla.com/user/edit/manage_clients",
+      "type": "password"
     },
     {
       "name": "apiSecret",
       "label": "API Secret",
       "description": "Your Assembla API Secret",
-      "link": "https://www.assembla.com/user/edit/manage_clients"
+      "link": "https://www.assembla.com/user/edit/manage_clients",
+      "type": "password"
     },
     {
       "name": "tags",
