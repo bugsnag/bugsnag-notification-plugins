@@ -10,5 +10,6 @@ fs.readdirSync(PLUGINS_PATH).forEach(function (file) {
   var pluginPath = path.join(PLUGINS_PATH, file);
   if(fs.statSync(pluginPath).isDirectory()) {
     exports[file] = require(pluginPath);
+    exports[file].configFile = require(pluginPath + "/config");
   }
 });
