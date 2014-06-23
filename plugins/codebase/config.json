@@ -26,7 +26,8 @@
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your Codebase API Key"
+      "description": "Your Codebase API Key",
+      "type": "password"
     }
   ]
 }

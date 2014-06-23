@@ -17,7 +17,8 @@
       "name": "apiToken",
       "label": "Room Token",
       "link": "http://help.jaconda.im/kb/faqs/what-is-room-id-and-room-token",
-      "description": "Your Jaconda room token"
+      "description": "Your Jaconda room token",
+      "type": "password"
     },
     {
       "name": "roomId",

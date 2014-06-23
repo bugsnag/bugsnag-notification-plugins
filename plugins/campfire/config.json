@@ -10,7 +10,8 @@
     {
       "name": "authToken",
       "label": "Auth Token",
-      "description": "Your Campfire API auth token"
+      "description": "Your Campfire API auth token",
+      "type": "password"
     },
     {
       "name": "roomId",

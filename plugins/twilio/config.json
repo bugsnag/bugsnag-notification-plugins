@@ -25,7 +25,8 @@
     {
       "name": "authToken",
       "label": "Auth Token",
-      "description": "Your Token auth token"
+      "description": "Your Token auth token",
+      "type": "password"
     }
   ]
 }

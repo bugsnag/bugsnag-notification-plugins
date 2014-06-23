@@ -33,7 +33,8 @@
     {
       "name": "clientsecret",
       "label": "OnTime Private Client Secret",
-      "description": "You can find this value in OnTime->Tools->System Options->OnTime API Settings"
+      "description": "You can find this value in OnTime->Tools->System Options->OnTime API Settings",
+      "type": "password"
     },
     {
       "name": "username",
