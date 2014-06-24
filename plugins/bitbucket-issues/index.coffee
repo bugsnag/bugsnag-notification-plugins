@@ -2,7 +2,8 @@ NotificationPlugin = require "../../notification-plugin"
 url = require "url"
 qs = require 'qs'
 
-class BitbucketIssue extends NotificationPlugin     
+class BitbucketIssue extends NotificationPlugin
+  BASE_URL = "https://bitbucket.org"
   @receiveEvent: (config, event, callback) ->
 
     query_object =
@@ -13,7 +14,7 @@ class BitbucketIssue extends NotificationPlugin
 
     # Send the request
     @request
-      .post(url.resolve(config.url, "/api/1.0/repositories/#{config.repo}/issues"))
+      .post(url.resolve(BASE_URL, "/api/1.0/repositories/#{config.repo}/issues"))
       .timeout(4000)
       .auth(config.username, config.password)
       .set('Accept', 'application/json')
@@ -25,6 +26,6 @@ class BitbucketIssue extends NotificationPlugin
 
         callback null,
           id: res.body.local_id
-          url: url.resolve(config.url, "#{res.body.resource_uri}")
-        
+          url: url.resolve(BASE_URL, "#{res.body.resource_uri}")
+
 module.exports = BitbucketIssue
