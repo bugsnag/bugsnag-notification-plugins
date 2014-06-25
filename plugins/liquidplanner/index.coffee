@@ -27,7 +27,7 @@ class LiquidPlanner extends NotificationPlugin
           title: "Bugsnag entry"
           url: "#{event.error.url}"
 
-    config.host = BASE_URL if config.host
+    config.host = BASE_URL unless config.host
 
     # Send the request
     @request
