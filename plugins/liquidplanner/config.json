@@ -2,6 +2,7 @@
   "name": "Liquid Planner",
   "url": "https://app.liquidplanner.com",
   "actions": {
+    "view": "View on LiquidPlanner",
     "create": "Create a LiquidPlanner task"
   },
   "supportedTriggers": ["firstException", "unresolved"],
