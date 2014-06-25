@@ -11,12 +11,12 @@
     {
       "name": "space_id",
       "label": "Space ID",
-      "description": "The space id of your workspace"
+      "description": "The Space ID of your workspace. The ID is the number visible in the URL when viewing the workspace."
     },
     {
-      "name": "username",
-      "label": "Username",
-      "description": "Your Liquid Planner username"
+      "name": "email",
+      "label": "Email",
+      "description": "Your Liquid Planner email"
     },
     {
       "name": "password",
@@ -27,7 +27,7 @@
     {
       "name": "host",
       "label": "Host URL",
-      "description": "URL of Liquid Planner, only needed if it is not, https://app.liquidplanner.com",
+      "description": "URL of Liquid Planner, only needed if it's not https://app.liquidplanner.com",
       "pattern": "https?:\/\/.+",
       "optional": true
     }

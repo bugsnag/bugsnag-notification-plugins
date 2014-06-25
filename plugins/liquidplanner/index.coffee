@@ -23,17 +23,17 @@ class LiquidPlanner extends NotificationPlugin
       task:
         name: "#{event.error.exceptionClass} in #{event.error.context} from Bugsnag"
         description: description(event)
-        link: 
+        link:
           title: "Bugsnag entry"
           url: "#{event.error.url}"
-    
-    config.host = BASE_URL if config.host == undefined
+
+    config.host = BASE_URL unless config.host
 
     # Send the request
     @request
       .post(config.host + "/api/workspaces/" + config.space_id + "/tasks")
       .timeout(4000)
-      .auth(config.username, config.password)
+      .auth(config.email, config.password)
       .set('Accept', 'application/json')
       .send(payload)
       .on "error", (err) ->
