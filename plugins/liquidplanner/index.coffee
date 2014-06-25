@@ -33,7 +33,7 @@ class LiquidPlanner extends NotificationPlugin
     @request
       .post(config.host + "/api/workspaces/" + config.space_id + "/tasks")
       .timeout(4000)
-      .auth(config.username, config.password)
+      .auth(config.email, config.password)
       .set('Accept', 'application/json')
       .send(payload)
       .on "error", (err) ->
