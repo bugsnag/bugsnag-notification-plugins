@@ -17,8 +17,7 @@
     {
       "name": "projectKey",
       "label": "Project Key",
-      "description": "The project key for the JIRA project",
-      "type": "password"
+      "description": "The project key for the JIRA project"
     },
     {
       "name": "username",
