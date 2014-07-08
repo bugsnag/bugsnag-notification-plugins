@@ -22,6 +22,8 @@ class LiquidPlanner extends NotificationPlugin
     payload =
       task:
         name: "#{event.error.exceptionClass} in #{event.error.context} from Bugsnag"
+        custom_field_values:
+          Type: "Bug"
       note:
         note: description(event)
       link: 
