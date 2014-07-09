@@ -3,7 +3,8 @@
   "url": "https://github.com",
   "actions": {
     "create": "Create a GitHub issue",
-    "view": "View on Github"
+    "view": "View on Github",
+    "object": "Github Issue"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

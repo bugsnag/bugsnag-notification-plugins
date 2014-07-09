@@ -3,7 +3,8 @@
   "url": "http://lighthouseapp.com",
   "actions": {
     "create": "Create a Lighthouse ticket",
-    "view": "View in Lighthouse"
+    "view": "View in Lighthouse",
+    "object": "Lighthouse Ticket"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

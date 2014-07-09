@@ -3,7 +3,8 @@
   "url": "http://www.codebasehq.com",
   "actions": {
     "create": "Create a Codebase ticket",
-    "view": "View on Codebase"
+    "view": "View on Codebase",
+    "object": "Codebase Ticket"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

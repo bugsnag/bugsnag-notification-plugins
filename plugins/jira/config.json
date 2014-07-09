@@ -3,7 +3,8 @@
   "url": "https://www.atlassian.com/software/jira",
   "actions": {
     "create": "Create a JIRA issue",
-    "view": "View in JIRA"
+    "view": "View in JIRA",
+    "object": "JIRA Issue"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

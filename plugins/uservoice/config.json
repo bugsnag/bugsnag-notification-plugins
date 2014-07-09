@@ -3,7 +3,8 @@
   "url": "https://www.uservoice.com",
   "actions": {
     "create": "Create a UserVoice ticket",
-    "view": "View on UserVoice"
+    "view": "View on UserVoice",
+    "object": "Uservoice Ticket"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

@@ -3,7 +3,8 @@
   "url": "https://bitbucket.org",
   "actions": {
     "create": "Create a Bitbucket issue",
-    "view": "View on Bitbucket"
+    "view": "View on Bitbucket",
+    "object": "Bitbucket Issue"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

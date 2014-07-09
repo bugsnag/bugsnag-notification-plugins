@@ -3,7 +3,8 @@
   "url": "http://www.pivotaltracker.com",
   "actions": {
     "create": "Create a Pivotal Tracker story",
-    "view": "View in Pivotal Tracker"
+    "view": "View in Pivotal Tracker",
+    "object": "Pivotal Tracker Story"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
