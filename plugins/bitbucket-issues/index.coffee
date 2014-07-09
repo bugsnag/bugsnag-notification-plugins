@@ -26,6 +26,6 @@ class BitbucketIssue extends NotificationPlugin
 
         callback null,
           id: res.body.local_id
-          url: url.resolve(BASE_URL, "#{res.body.resource_uri}")
+          url: url.resolve(BASE_URL, "#{config.repo}/issue/#{res.body.local_id}")
 
 module.exports = BitbucketIssue
