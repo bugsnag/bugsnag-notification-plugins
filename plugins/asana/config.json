@@ -3,7 +3,8 @@
   "url": "https://asana.com",
   "actions": {
     "create": "Create an Asana task",
-    "view": "View in Asana"
+    "view": "View in Asana",
+    "object": "Asana Task"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

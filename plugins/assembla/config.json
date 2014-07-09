@@ -3,7 +3,8 @@
   "url": "http://assembla.com",
   "actions": {
     "create": "Create an Assembla ticket",
-    "view": "View in Assembla"
+    "view": "View in Assembla",
+    "object": "Assembla Ticket"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

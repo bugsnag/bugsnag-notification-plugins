@@ -3,7 +3,8 @@
   "url": "http://www.ontimenow.com",
   "actions": {
     "create": "Create an OnTime item",
-    "view": "View in OnTime"
+    "view": "View in OnTime",
+    "object": "OnTime Item"
   },
   "supportedTriggers": ["firstException", "unresolved", "exception"],
   "type": "issueTracker",

@@ -3,7 +3,8 @@
   "url": "https://trello.com",
   "actions": {
     "create": "Create a Trello card",
-    "view": "View in Trello"
+    "view": "View in Trello",
+    "object": "Trello Card"
   },
   "supportedTriggers": ["firstException", "unresolved", "exception"],
   "type": "issueTracker",

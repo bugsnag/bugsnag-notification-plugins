@@ -3,7 +3,8 @@
   "url": "http://gitlab.org",
   "actions": {
     "create": "Create a GitLab issue",
-    "view": "View on GitLab"
+    "view": "View on GitLab",
+    "object": "GitLab Issue"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",

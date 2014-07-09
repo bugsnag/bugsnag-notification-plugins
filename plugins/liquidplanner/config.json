@@ -3,7 +3,8 @@
   "url": "https://app.liquidplanner.com",
   "actions": {
     "view": "View on LiquidPlanner",
-    "create": "Create a LiquidPlanner task"
+    "create": "Create a LiquidPlanner task",
+    "object": "LiquidPlanner Task"
   },
   "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
