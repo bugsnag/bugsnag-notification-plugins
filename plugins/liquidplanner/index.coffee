@@ -8,6 +8,7 @@ class LiquidPlanner extends NotificationPlugin
 
   description = (event) ->
     """
+    <pre>
     #{event.trigger.message} in #{event.project.name}
 
     *#{event.error.exceptionClass}* in *#{event.error.context}*
@@ -15,6 +16,7 @@ class LiquidPlanner extends NotificationPlugin
 
     Stacktrace:
     #{stacktraceLines(event.error.stacktrace).join("\n")}
+    </pre>
     """
 
   @receiveEvent: (config, event, callback) ->
