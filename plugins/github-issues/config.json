@@ -14,7 +14,6 @@
       "label": "Access Token [view on github](https://github.com/settings/tokens/new)",
       "description": "Your GitHub access token (40 characters)",
       "pattern": "[0-9a-f]{40}",
-      // "link": "https://github.com/settings/tokens/new",
       "type": "password",
       "section": "authentication"
     },
