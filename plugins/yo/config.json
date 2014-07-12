@@ -1,0 +1,17 @@
+{
+  "name": "Yo",
+  "actions": {
+    "create": "Send a Yo to all of your Yo subscribers"
+  },
+  "supportedTriggers": ["firstException", "unresolved"],
+  "type": "communication",
+  "fields": [
+    {
+      "name": "api_token",
+      "label": "API Key",
+      "description": "Your Yo API key/token",
+      "type": "password",
+      "link": "http://yoapi.justyo.co/"
+    }
+  ]
+}
