@@ -6,7 +6,6 @@
     "view": "View on Codebase",
     "object": "Codebase Ticket"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {

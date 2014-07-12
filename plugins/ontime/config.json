@@ -6,7 +6,6 @@
     "view": "View in OnTime",
     "object": "OnTime Item"
   },
-  "supportedTriggers": ["firstException", "unresolved", "exception"],
   "type": "issueTracker",
   "fields": [
     {

@@ -6,50 +6,55 @@
     "view": "View in JIRA",
     "object": "JIRA Issue"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {
       "name": "host",
       "label": "Host URL",
       "description": "URL of your JIRA instance, eg: https://example.atlassian.net",
-      "pattern": "https?:\/\/.+"
+      "pattern": "https?:\/\/.+",
+      "section": "authentication"
     },
     {
       "name": "projectKey",
       "label": "Project Key",
-      "description": "The project key for the JIRA project"
+      "description": "The project key for the JIRA project",
+      "section": "authentication"
     },
     {
       "name": "username",
       "label": "Username",
-      "description": "Your JIRA username"
+      "description": "Your JIRA username",
+      "section": "authentication"
     },
     {
       "name": "password",
       "label": "Password",
       "description": "Your JIRA password",
-      "type": "password"
+      "type": "password",
+      "section": "authentication"
     },
     {
       "name": "issueType",
       "label": "Issue Type",
       "description": "The type of issue to be created",
-      "defaultValue": "Bug"
+      "defaultValue": "Bug",
+      "section": "fields"
     },
     {
       "name": "component",
       "label": "Component",
       "description": "The component to create the issue in",
-      "optional": true
+      "optional": true,
+      "section": "fields"
     },
     {
       "name": "customFields",
-      "label": "Custom Fields",
-      "link": "https://developer.atlassian.com/display/JIRADEV/JIRA+REST+API+Example+-+Create+Issue#JIRARESTAPIExample-CreateIssue-Exampleofcreatinganissueusingcustomfields",
+      "label": "Custom Fields [view JIRA docs](https://developer.atlassian.com/display/JIRADEV/JIRA+REST+API+Example+-+Create+Issue#JIRARESTAPIExample-CreateIssue-Exampleofcreatinganissueusingcustomfields)",
       "description": "Additional JSON-encoded JIRA fields, eg {\"customfield_10024\": {\"value\": \"Engineering\"}}",
       "type": "json",
-      "optional": true
+      "optional": true,
+      "section": "fields"
     }
   ]
 }

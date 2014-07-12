@@ -16,8 +16,7 @@
       {
         "name": "apiKey",
         "label": "API Key",
-        "description": "Your Sprint.ly API key",
-        "link": "https://sprintly.uservoice.com/knowledgebase/articles/306704-getting-your-api-key",
+        "description": "Your Sprint.ly API key [view on Sprint.ly](https://sprintly.uservoice.com/knowledgebase/articles/306704-getting-your-api-key)",
         "type": "password"
       },
       {

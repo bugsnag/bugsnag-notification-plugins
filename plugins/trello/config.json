@@ -6,20 +6,17 @@
     "view": "View in Trello",
     "object": "Trello Card"
   },
-  "supportedTriggers": ["firstException", "unresolved", "exception"],
   "type": "issueTracker",
   "fields": [
     {
       "name": "applicationKey",
-      "label": "Application Key",
-      "link": "https://trello.com/1/appKey/generate",
+      "label": "Application Key [view on Trello](https://trello.com/1/appKey/generate)",
       "description": "Your Trello Application Key.",
       "type": "password"
     },
     {
       "name": "memberToken",
-      "label": "Member Token",
-      "link": "https://trello.com/1/authorize?key={applicationKey}&name=Bugsnag&expiration=never&response_type=token&scope=read,write",
+      "label": "Member Token [view on Trello](https://trello.com/1/authorize?key={applicationKey}&name=Bugsnag&expiration=never&response_type=token&scope=read,write)",
       "description": "An authenticated token for the user who the Trello cards should be created by.",
       "type": "password"
     },

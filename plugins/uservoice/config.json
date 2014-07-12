@@ -6,7 +6,6 @@
     "view": "View on UserVoice",
     "object": "Uservoice Ticket"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {
