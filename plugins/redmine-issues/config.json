@@ -26,8 +26,7 @@
     {
       "name": "project",
       "label": "Project ID",
-      "description": "Which Redmine project to create the issue for",
-      "section": "authentication"
+      "description": "Which Redmine project to create the issue for"
     },
     {
       "name": "priority",
