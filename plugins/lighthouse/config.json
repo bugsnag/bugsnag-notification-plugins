@@ -20,8 +20,8 @@
     },
     {
       "name": "apiKey",
-      "label": "API Key",
-      "description": "Your Lighthouse API Key [view Lighthouse docs](http://help.lighthouseapp.com/kb/api/how-do-i-get-an-api-token)",
+      "label": "API Key [view Lighthouse docs](http://help.lighthouseapp.com/kb/api/how-do-i-get-an-api-token)",
+      "description": "Your Lighthouse API Key",
       "type": "password"
     },
     {

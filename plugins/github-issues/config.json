@@ -10,7 +10,7 @@
   "fields": [
     {
       "name": "oauthToken",
-      "label": "Access Token [view on github](https://github.com/settings/tokens/new)",
+      "label": "Access Token - [view on github](https://github.com/settings/tokens/new)",
       "description": "Your GitHub access token (40 characters)",
       "pattern": "[0-9a-f]{40}",
       "type": "password",

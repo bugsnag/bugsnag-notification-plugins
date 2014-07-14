@@ -15,14 +15,14 @@
     },
     {
       "name": "apiKey",
-      "label": "API Key",
-      "description": "Your Assembla API Key [view on Assembla](https://www.assembla.com/user/edit/manage_clients)",
+      "label": "API Key - [view on Assembla](https://www.assembla.com/user/edit/manage_clients)",
+      "description": "Your Assembla API Key",
       "type": "password"
     },
     {
       "name": "apiSecret",
-      "label": "API Secret",
-      "description": "Your Assembla API Secret [view on Assembla](https://www.assembla.com/user/edit/manage_clients)",
+      "label": "API Secret - [view on Assembla](https://www.assembla.com/user/edit/manage_clients)",
+      "description": "Your Assembla API Secret",
       "type": "password"
     },
     {

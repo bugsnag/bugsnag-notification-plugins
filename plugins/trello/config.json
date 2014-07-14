@@ -10,20 +10,20 @@
   "fields": [
     {
       "name": "applicationKey",
-      "label": "Application Key [view on Trello](https://trello.com/1/appKey/generate)",
+      "label": "Application Key - [view on Trello](https://trello.com/1/appKey/generate)",
       "description": "Your Trello Application Key.",
       "type": "password"
     },
     {
       "name": "memberToken",
-      "label": "Member Token [view on Trello](https://trello.com/1/authorize?key={applicationKey}&name=Bugsnag&expiration=never&response_type=token&scope=read,write)",
+      "label": "Member Token - [view on Trello](https://trello.com/1/authorize?key={applicationKey}&name=Bugsnag&expiration=never&response_type=token&scope=read,write)",
       "description": "An authenticated token for the user who the Trello cards should be created by.",
       "type": "password"
     },
     {
       "name": "boardId",
       "label": "Board Id",
-      "description": "The Id of the board you want to add the report to. The Id is a hex number visible in the URL when viewing the board."
+      "description": "The Id is a hex number visible in the URL when viewing the board."
     },
     {
       "name": "listName",
@@ -33,7 +33,7 @@
     {
       "name": "labels",
       "label": "Labels",
-      "description": "Comma separated list of label colors to apply to the card. Options: green, yellow, orange, red, purple, blue",
+      "description": "Comma separated list of label colors. Options: green, yellow, orange, red, purple, blue",
       "optional": true
     }
   ]

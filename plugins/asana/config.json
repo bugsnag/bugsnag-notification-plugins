@@ -10,8 +10,8 @@
   "fields": [
     {
       "name": "apiKey",
-      "label": "API Key",
-      "description": "Your Asana API key [view on Asana](http://app.asana.com/-/account_api)",
+      "label": "API Key - [view on Asana](http://app.asana.com/-/account_api)",
+      "description": "Your Asana API key",
       "type": "password"
     },
     {

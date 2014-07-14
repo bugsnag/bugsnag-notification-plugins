@@ -50,7 +50,7 @@
     },
     {
       "name": "customFields",
-      "label": "Custom Fields [view JIRA docs](https://developer.atlassian.com/display/JIRADEV/JIRA+REST+API+Example+-+Create+Issue#JIRARESTAPIExample-CreateIssue-Exampleofcreatinganissueusingcustomfields)",
+      "label": "Custom Fields - [view JIRA docs](https://developer.atlassian.com/display/JIRADEV/JIRA+REST+API+Example+-+Create+Issue#JIRARESTAPIExample-CreateIssue-Exampleofcreatinganissueusingcustomfields)",
       "description": "Additional JSON-encoded JIRA fields, eg {\"customfield_10024\": {\"value\": \"Engineering\"}}",
       "type": "json",
       "optional": true,
