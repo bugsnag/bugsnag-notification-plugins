@@ -6,7 +6,6 @@
     "view": "View in Bugify",
     "object": "Bugify Ticket"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {

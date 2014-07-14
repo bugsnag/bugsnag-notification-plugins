@@ -6,7 +6,6 @@
     "view": "View on Github",
     "object": "Github Issue"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {

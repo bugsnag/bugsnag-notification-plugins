@@ -6,7 +6,6 @@
     "view": "View in Pivotal Tracker",
     "object": "Pivotal Tracker Story"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {

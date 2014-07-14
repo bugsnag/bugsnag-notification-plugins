@@ -6,7 +6,6 @@
     "view": "View in Assembla",
     "object": "Assembla Ticket"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {
@@ -17,15 +16,13 @@
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your Assembla API Key",
-      "link": "https://www.assembla.com/user/edit/manage_clients",
+      "description": "Your Assembla API Key [view on Assembla](https://www.assembla.com/user/edit/manage_clients)",
       "type": "password"
     },
     {
       "name": "apiSecret",
       "label": "API Secret",
-      "description": "Your Assembla API Secret",
-      "link": "https://www.assembla.com/user/edit/manage_clients",
+      "description": "Your Assembla API Secret [view on Assembla](https://www.assembla.com/user/edit/manage_clients)",
       "type": "password"
     },
     {

@@ -6,14 +6,12 @@
     "view": "View in Asana",
     "object": "Asana Task"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your Asana API key",
-      "link": "http://app.asana.com/-/account_api",
+      "description": "Your Asana API key [view on Asana](http://app.asana.com/-/account_api)",
       "type": "password"
     },
     {

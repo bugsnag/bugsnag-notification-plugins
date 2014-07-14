@@ -6,7 +6,6 @@
     "create": "Create a LiquidPlanner task",
     "object": "LiquidPlanner Task"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {

@@ -6,38 +6,42 @@
     "view": "View on Bitbucket",
     "object": "Bitbucket Issue"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {
       "name": "username",
       "label": "Username",
-      "description": "Your Bitbucket username"
+      "description": "Your Bitbucket username",
+      "section": "authentication"
     },
     {
       "name": "password",
       "label": "Password",
       "description": "Your Bitbucket password",
-      "type": "password"
+      "type": "password",
+      "section": "authentication"
     },
     {
       "name": "repo",
       "label": "Repository",
-      "description": "Which Bitbucket repository to create the issue on, eg rails/rails"
+      "description": "Which Bitbucket repository to create the issue on, eg rails/rails",
+      "section": "authentication"
     },
     {
       "name": "kind",
       "label": "Issue Kind",
       "description": "The kind of issue to be created",
       "allowedValues": ["bug", "task", "proposal", "enhancement"],
-      "defaultValue": "bug"
+      "defaultValue": "bug",
+      "section": "tags"
     },
     {
       "name": "priority",
       "label": "Issue Priority",
       "description": "The priority of the issue to be created",
       "allowedValues": ["blocker", "critical", "major", "minor", "trivial"],
-      "defaultValue": "critical"
+      "defaultValue": "critical",
+      "section": "tags"
     }
   ]
 }
