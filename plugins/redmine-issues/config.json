@@ -6,7 +6,6 @@
     "view": "View on Redmine",
     "object": "Redmine Issue"
   },
-  "supportedTriggers": ["firstException", "unresolved"],
   "type": "issueTracker",
   "fields": [
     {

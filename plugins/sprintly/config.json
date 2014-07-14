@@ -5,7 +5,6 @@
       "view": "View on Sprint.ly",
       "object": "Sprint.ly Defect"
     },
-    "supportedTriggers": ["firstException"],
     "type": "issueTracker",
     "fields": [
       {
