@@ -2,7 +2,7 @@
   "name": "Redmine Issues",
   "url": "http://www.redmine.org/",
   "actions": {
-    "create": "Create a Remdine issue",
+    "create": "Create a Redmine issue",
     "view": "View on Redmine",
     "object": "Redmine Issue"
   },
