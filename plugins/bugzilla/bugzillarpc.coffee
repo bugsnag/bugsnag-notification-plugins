@@ -24,12 +24,9 @@ class BugzillaRPC
       summary: NotificationPlugin.title(event)
       version: 'unspecified'
       description: NotificationPlugin.markdownTemplate(event)
-      op_sys: config['op-sys']
-      platform: config.platform
+      op_sys: 'All'
+      platform: 'All'
       priority: config.priority
-      severity: config.severity
-      assigned_to: config['assigned-to']
-      status: config.status
     ]
 
 module.exports = BugzillaRPC;
