@@ -1,5 +1,3 @@
-url = require 'url'
-
 NotificationPlugin = require '../../notification-plugin'
 bugzillaRPC = require './bugzillarpc'
 
