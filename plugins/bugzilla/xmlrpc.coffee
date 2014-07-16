@@ -20,24 +20,24 @@ class XmlRpc
     request.end (response) =>
       return callback(response.error) if response.error
       xmlResponseParser.parse response, (xmlError, xmljson) =>
-        @handleErrors(xmlError, xmljson.methodResponse.fault)
+        callback(xmlError) if xmlError
+        if fault = xmljson.methodResponse.fault
+          errorMsg = fault.value.struct.member[0].value.string
+          errorCode = fault.value.struct.member[1].value.int
+          callback(new Error("#{errorMsg} (code: #{errorCode})"))
+
         if tokenCallback
           tokenCallback(@extractToken(xmljson))
         else
-          id = xmljson.methodResponse.params.param.value.struct.member.value.int
+          id = @extractId(xmljson)
           callback null,
             id: id,
             url: "#{@host}/show_bug.cgi?id=#{id}"
 
-
-  handleErrors: (xmlError, fault) ->
-    callback(xmlError) if xmlError
-    if fault
-      errorMsg = fault.value.struct.member[0].value.string
-      errorCode = fault.value.struct.member[1].value.int
-      callback(new Error("#{errorMsg} (code: #{errorCode})"))
-
   extractToken: (xmljson) ->
     xmljson.methodResponse.params.param.value.struct.member[1].value.string
+
+  extractId: (xmljson) ->
+    xmljson.methodResponse.params.param.value.struct.member.value.int
 
 module.exports = XmlRpc;
