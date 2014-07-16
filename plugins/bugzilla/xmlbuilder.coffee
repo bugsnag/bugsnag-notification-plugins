@@ -1,3 +1,5 @@
+escape = require 'escape-html'
+
 class XmlBuilder
 
   @buildRequestBody: (methodName, params) ->
@@ -31,7 +33,7 @@ class XmlBuilder
       when 'number'
         value += '<int>' + val + '</int>'
       when 'string'
-        value += '<string>' + val + '</string>'
+        value += '<string>' + escape(val) + '</string>'
       when 'boolean'
         value += '<boolean>' + val + '</boolean>'
       when "object"

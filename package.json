@@ -11,7 +11,8 @@
     "async": "~0.2.6",
     "xml2js": "~0.2.6",
     "handlebars": "~1.0.12",
-    "qs": "~0.6.6"
+    "qs": "~0.6.6",
+    "escape-html": "~1.0.1"
   },
   "main": "./index.js",
   "devDependencies": {
