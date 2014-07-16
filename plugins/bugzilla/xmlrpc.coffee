@@ -4,9 +4,7 @@ xmlResponseParser = require './xmlparser'
 
 class XmlRpc
 
-  host: 'https://bugzilla.mozilla.org/'
-
-  setHost: (@host) ->
+  constructor: (@host) ->
 
   buildRequest: (xmlBody) ->
     NotificationPlugin.request
@@ -42,4 +40,4 @@ class XmlRpc
   extractToken: (xmljson) ->
     xmljson.methodResponse.params.param.value.struct.member[1].value.string
 
-module.exports = new XmlRpc;
+module.exports = XmlRpc;

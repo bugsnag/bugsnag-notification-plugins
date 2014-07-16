@@ -1,14 +1,14 @@
 url = require 'url'
 
 NotificationPlugin = require '../../notification-plugin'
-xmlRpc = require './xmlRpc'
+XmlRpc = require './xmlRpc'
 
 class BugzillaRPC
 
   @createBug: (config, event, callback) ->
-    xmlRpc.host = url.resolve(config.host, config.project)
+    xmlRpc = new XmlRpc(url.resolve(config.host, config.project))
 
-    @login config, callback, (token) ->
+    @login xmlRpc, config, callback, (token) =>
       bug_params = [
         Bugzilla_token: token
         product: config.product
@@ -22,7 +22,7 @@ class BugzillaRPC
       ]
       xmlRpc.methodCall('Bug.create', bug_params, callback)
 
-  @login: (config, callback, tokenCallback) ->
+  @login: (xmlRpc, config, callback, tokenCallback) ->
     login_params = [ login: config.login, password: config.password ]
     xmlRpc.methodCall('User.login', login_params, callback, tokenCallback)
 
