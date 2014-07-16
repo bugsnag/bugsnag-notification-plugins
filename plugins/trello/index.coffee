@@ -2,7 +2,8 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Trello extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
+    console.log line for line in stacktrace when line.inProject
+    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject isnt false)
 
   @getListId: (config, callback) ->
     @request
