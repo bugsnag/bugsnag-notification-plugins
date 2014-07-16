@@ -5,6 +5,7 @@ qs = require 'qs'
 class BitbucketIssue extends NotificationPlugin
   BASE_URL = "https://bitbucket.org"
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
 
     query_object =
       "title": @title(event)

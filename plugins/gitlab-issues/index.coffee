@@ -15,14 +15,16 @@ class GitLabIssue extends NotificationPlugin
         project = res.body?.find? (el) -> [el.name, el.name_with_namespace, el.path, el.path_with_namespace].indexOf config.projectName != -1
 
         cb null, project
-    
+
   @receiveEvent: (config, event, callback) =>
+    return if event?.trigger?.type == "reopened"
+    
     @getProject config, (err, project) =>
       return callback(err) if err
       return callback("Unable to find project") unless project?
 
       # Build the ticket
-      payload = 
+      payload =
         title: @title(event)
         description: @markdownBody(event)
         # Regex removes surrounding whitespace around commas while retaining inner whitespace

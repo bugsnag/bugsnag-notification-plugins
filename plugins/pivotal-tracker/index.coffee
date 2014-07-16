@@ -7,12 +7,14 @@ class PivotalTracker extends NotificationPlugin
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+    
     # Build the request
     params =
       "story[name]": "#{event.error.exceptionClass} in #{event.error.context}"
       "story[story_type]": "bug"
       "story[labels]": (config?.labels || "bugsnag").trim()
-      "story[description]":      
+      "story[description]":
         """
         *#{event.error.exceptionClass}* in *#{event.error.context}*
         #{event.error.message if event.error.message}

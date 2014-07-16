@@ -30,6 +30,7 @@ class Assembla extends NotificationPlugin
     """
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
 
     getSpace = (cb) =>
       @request.get("#{API_BASE_URL}/spaces.json")

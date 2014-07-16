@@ -2,8 +2,10 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Lighthouse extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+    
     # Build the ticket payload
-    payload = 
+    payload =
       ticket:
         title: @title(event)
         body: @markdownBody(event)

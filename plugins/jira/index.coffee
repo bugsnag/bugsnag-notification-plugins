@@ -24,10 +24,11 @@ class Jira extends NotificationPlugin
     """
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
     # Build the ticket payload
     payload =
       fields:
-        project: 
+        project:
           key: config.projectKey
         summary: "#{event.error.exceptionClass} in #{event.error.context}"
         description: jiraBody(event)

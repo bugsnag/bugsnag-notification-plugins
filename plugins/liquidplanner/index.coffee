@@ -20,6 +20,8 @@ class LiquidPlanner extends NotificationPlugin
     """
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+    
     # Build the task info.
     payload =
       task:
@@ -28,7 +30,7 @@ class LiquidPlanner extends NotificationPlugin
           Type: "Bug"
       note:
         note: description(event)
-      link: 
+      link:
         title: "Bugsnag entry"
         url: "#{event.error.url}"
 

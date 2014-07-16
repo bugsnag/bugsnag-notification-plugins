@@ -15,6 +15,8 @@ class Trello extends NotificationPlugin
         callback null, res.body.find((el) -> el.name == config?.listName)?.id
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+    
     # Would be nice to save this list Id for repeated calls
     @getListId config, (err, listId) =>
       return callback(err) if err

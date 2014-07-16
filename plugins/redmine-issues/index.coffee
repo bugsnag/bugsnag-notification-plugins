@@ -26,6 +26,7 @@ class Redmine extends NotificationPlugin
       priority_id: priorityMap[config.priority]
 
   @receiveEvent = (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
 
     # Handle unknown error
     handleError = (err) ->

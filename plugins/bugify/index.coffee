@@ -2,6 +2,8 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Bugify extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+    
     payload =
       subject: @title(event)
       description: @markdownBody(event)

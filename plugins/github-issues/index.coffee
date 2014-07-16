@@ -55,7 +55,7 @@ class GithubIssue extends NotificationPlugin
           url: res.body.html_url
 
   @receiveEvent: (config, event, callback) ->
-    if event?.trigger?.type == "unresolved"
+    if event?.trigger?.type == "reopened"
       if event?.error?.createdIssue?.number
         @ensureIssueOpen(config, event.error.createdIssue.number, callback)
         @addCommentToIssue(config, event.error.createdIssue.number, @markdownBody(event))

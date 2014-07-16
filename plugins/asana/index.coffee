@@ -11,7 +11,7 @@ class Asana extends NotificationPlugin
       ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
     else
       ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace[0..4])
-  
+
   renderBody = (event) ->
     """
     #{event.error.exceptionClass} in #{event.error.context}
@@ -26,6 +26,8 @@ class Asana extends NotificationPlugin
     """
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+    
     # Look up workspace id from project name
     getWorkspaceId = (cb) =>
       @request

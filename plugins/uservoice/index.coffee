@@ -5,8 +5,10 @@ class UserVoice extends NotificationPlugin
     ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+    
     # Build the payload
-    payload = 
+    payload =
       name: "Bugsnag"
       client: config.apiKey
       email: "bugsnag@bugsnag.com"

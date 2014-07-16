@@ -54,8 +54,10 @@ class OnTime extends NotificationPlugin
             callback null
           else
             callback 'Unable to obtain access token.'
-  
+
   @getProject: (config, callback) =>
+    return if event?.trigger?.type == "reopened"
+    
     @request
       .get("#{config.url}/api/v2/projects?access_token=#{config.access_token}")
       .timeout(4000)
@@ -102,7 +104,7 @@ class OnTime extends NotificationPlugin
       # Step 2. Get project
       @getProject config, (err) =>
         return callback(err) if err
-        
+
         # Step 3. Create item
         @postItem config, event, (err) =>
           return callback(err) if err
