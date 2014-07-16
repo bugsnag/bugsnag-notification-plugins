@@ -8,31 +8,36 @@ class XmlRpc
 
   setHost: (@host) ->
 
-  methodCall: (request, methodName, params, callback) ->
+  buildRequest: (xmlBody) ->
+    NotificationPlugin.request
+      .post(@host + '/xmlrpc.cgi')
+      .type('text/xml')
+      .send(xmlBody)
+      .on 'error', (err) ->
+        callback(err)
+
+  methodCall: (methodName, params, callback, tokenCallback) ->
     xmlBody = xmlBuilder.buildRequestBody(methodName, params)
-    request = request.post(@host + '/xmlrpc.cgi').type('text/xml').send(xmlBody)
-    request.on 'error', (err) ->
-      throw err
+    request = @buildRequest(xmlBody)
     request.end (response) =>
-      @getResponse(response, callback)
+      return callback(response.error) if response.error
+      xmlResponseParser.parse response, (xmlError, xmljson) =>
+        @handleErrors(xmlError, xmljson.methodResponse.fault)
+        if tokenCallback
+          tokenCallback(@extractToken(xmljson))
+        else
+          id = xmljson.methodResponse.params.param.value.struct.member.value.int
+          callback null,
+            id: id,
+            url: "#{@host}/show_bug.cgi?id=#{id}"
 
-  getResponse: (response, callback) ->
-    xmlResponseParser.parse response, (err, xmljson) =>
-      throw err if err
 
-      if fault = xmljson.methodResponse.fault
-        @handleFault(fault)
-
-      if callback
-        token = @extractToken(xmljson)
-        callback(token)
-
-  handleFault: (fault) ->
-    faultMeta = (idx) ->
-      fault.value.struct.member[idx].value
-    errorMsg = faultMeta(0).string
-    errorCode = faultMeta(1).int
-    throw new Error("#{errorMsg} (code: #{errorCode})")
+  handleErrors: (xmlError, fault) ->
+    callback(xmlError) if xmlError
+    if fault
+      errorMsg = fault.value.struct.member[0].value.string
+      errorCode = fault.value.struct.member[1].value.int
+      callback(new Error("#{errorMsg} (code: #{errorCode})"))
 
   extractToken: (xmljson) ->
     xmljson.methodResponse.params.param.value.struct.member[1].value.string

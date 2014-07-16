@@ -4,7 +4,6 @@ bugzillaRPC = require './bugzillarpc'
 class Bugzilla extends NotificationPlugin
 
   @receiveEvent: (config, event, callback) ->
-    bugzillaRPC.login @request, config, (token) =>
-      bugzillaRPC.createBug @request, config, token, event
+    bugzillaRPC.createBug(config, event, callback)
 
 module.exports = Bugzilla
