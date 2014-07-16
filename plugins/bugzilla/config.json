@@ -1,0 +1,98 @@
+{
+  "name": "Bugzilla",
+  "url": "http://www.bugzilla.org/",
+  "actions": {
+    "create": "Create a Bugzilla issue",
+    "view": "View on Bugzilla",
+    "object": "Bugzilla Issue"
+  },
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "host",
+      "label": "URL",
+      "description": "Your Bugzilla server address",
+      "pattern": "https?:\/\/.+",
+      "section": "authentication"
+    },
+    {
+      "name": "project",
+      "label": "Project Name",
+      "description": "Which Bugzilla project to create the issue for",
+      "section": "authentication"
+    },
+    {
+      "name": "login",
+      "label": "Login",
+      "description": "Your Bugzilla login",
+      "section": "authentication"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your Bugzilla password",
+      "type": "password",
+      "section": "authentication"
+    },
+    {
+      "name": "product",
+      "label": "Product",
+      "description": "The name of your product",
+      "section": "additional"
+    },
+    {
+      "name": "component",
+      "label": "Component",
+      "description": "The name of a component in the product above",
+      "section": "additional"
+    },
+    {
+      "name": "op-sys",
+      "label": "OS",
+      "description": "Your operating system",
+      "allowedValues": ["All", "Windows", "Mac OS", "Linux", "Other"],
+      "defaultValue": "All",
+      "section": "additional"
+    },
+    {
+      "name": "platform",
+      "label": "Platform",
+      "description": "The hardware platform against which report bugs",
+      "allowedValues": ["All", "PC", "Macintosh", "Other"],
+      "defaultValue": "All",
+      "section": "additional"
+    },
+    {
+      "name": "priority",
+      "label": "Priority",
+      "description": "The priority of the bug",
+      "allowedValues": ["Highest", "High", "Normal", "Low", "Lowest"],
+      "defaultValue": "Normal",
+      "section": "additional"
+    },
+    {
+      "name": "severity",
+      "label": "Severity",
+      "description": "How severe the bug is",
+      "allowedValues": ["blocker", "critical", "major", "normal", "minor", "trivial", "enhancement"],
+      "defaultValue": "normal",
+      "section": "additional"
+    },
+    {
+      "name": "assigned-to",
+      "optional": true,
+      "label": "Product",
+      "description": "The name of your product",
+      "section": "additional"
+    },
+    {
+      "name": "status",
+      "optional": true,
+      "label": "Status",
+      "description": "The status that a bug should start out as",
+      "allowedValues": ["CONFIRMED", "IN_PROGRESS", "RESOLVED"],
+      "defaultValue": "CONFIRMED",
+      "section": "additional"
+    }
+  ]
+}
