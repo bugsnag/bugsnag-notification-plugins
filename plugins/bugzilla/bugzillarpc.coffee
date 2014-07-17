@@ -2,7 +2,7 @@ Handlebars = require 'handlebars'
 fs = require 'fs'
 
 NotificationPlugin = require '../../notification-plugin'
-XmlRpc = require './xmlRpc'
+XmlRpc = require './xmlrpc'
 
 class BugzillaRPC
 
