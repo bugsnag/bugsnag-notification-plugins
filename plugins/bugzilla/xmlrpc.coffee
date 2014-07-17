@@ -1,5 +1,5 @@
 NotificationPlugin = require '../../notification-plugin'
-xmlBuilder = require './xmlBuilder'
+xmlBuilder = require './xmlbuilder'
 xmlResponseParser = require './xmlparser'
 
 class XmlRpc
