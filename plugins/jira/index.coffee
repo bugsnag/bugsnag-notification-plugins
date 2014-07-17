@@ -2,10 +2,6 @@ NotificationPlugin = require "../../notification-plugin"
 url = require "url"
 
 class Jira extends NotificationPlugin
-  stacktraceLines = (stacktrace) ->
-    stacktrace = NotificationPlugin.getInProjectStacktrace stacktrace
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace)
-
   jiraBody = (event) ->
     """
     h1. #{event.trigger.message} in #{event.project.name}
@@ -18,7 +14,7 @@ class Jira extends NotificationPlugin
     h1. Stacktrace
 
     {noformat}
-    #{stacktraceLines(event.error.stacktrace).join("\n")}
+    #{NotificationPlugin.basicStacktrace(event.error.stacktrace)}
     {noformat}
 
     [View full stacktrace|#{event.error.url}]

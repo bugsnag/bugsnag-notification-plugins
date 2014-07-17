@@ -22,7 +22,7 @@ class UserVoice extends NotificationPlugin
           #{event.error.url}
 
           Stacktrace:
-          #{stacktraceLines(event.error.stacktrace).join("\n")}
+          #{@basicStacktrace(event.error.stacktrace)}
           """
 
     # Send the request

@@ -42,6 +42,12 @@ var NotificationPlugin = (function () {
     return stacktraceLine.file + ":" + stacktraceLine.lineNumber + " - " + stacktraceLine.method
   };
 
+  NotificationPlugin.basicStacktrace = function (stacktrace) {
+    return this.getInProjectStacktrace(stacktrace).map(function (line) {
+      return this.stacktraceLineString(line);
+    }, this).join("\n");
+  };
+
   // Returns the first line of a stacktrace (formatted)
   NotificationPlugin.firstStacktraceLine = function (stacktrace) {
     return this.stacktraceLineString(this.getInProjectStacktrace(stacktrace)[0]);

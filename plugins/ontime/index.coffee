@@ -19,7 +19,7 @@ class OnTime extends NotificationPlugin
     #{event.error.message if event.error.message}.<br /><br />
     <a href=#{event.error.url}>View bug on bugsnag.com</a><br /><br /><br />
     Stacktrace:<br />
-        #{stacktraceLines(event.error.stacktrace).join("\n")}<br /><br />
+        #{NotificationPlugin.basicStacktrace(event.error.stacktrace)}<br /><br />
     <a href=#{event.error.url}>View full stacktrace</a><br />
     """
 
