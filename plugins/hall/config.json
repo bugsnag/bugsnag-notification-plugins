@@ -1,0 +1,17 @@
+{
+  "name": "Hall",
+  "url": "https://hall.com",
+  "actions": {
+    "create": "Post to a Hall group"
+  },
+  "supportedTriggers": "all",
+  "type": "communication",
+  "fields": [
+    {
+      "name": "apiToken",
+      "label": "API Token",
+      "description": "Your Hall group API token",
+      "type": "password"
+    }
+  ]
+}
