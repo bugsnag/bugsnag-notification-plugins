@@ -1,0 +1,50 @@
+{
+  "name": "Bugzilla",
+  "url": "http://www.bugzilla.org/",
+  "actions": {
+    "create": "Create a Bugzilla issue",
+    "view": "View on Bugzilla",
+    "object": "Bugzilla Issue"
+  },
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "host",
+      "label": "URL",
+      "description": "Your Bugzilla server address",
+      "pattern": "https?:\/\/.+",
+      "section": "authentication"
+    },
+    {
+      "name": "login",
+      "label": "Login",
+      "description": "Your Bugzilla login",
+      "section": "authentication"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your Bugzilla password",
+      "type": "password",
+      "section": "authentication"
+    },
+    {
+      "name": "product",
+      "label": "Product",
+      "description": "The name of your product",
+      "section": "additional"
+    },
+    {
+      "name": "component",
+      "label": "Component",
+      "description": "The name of a component in the product above"
+    },
+    {
+      "name": "priority",
+      "label": "Priority",
+      "description": "The priority of the bug",
+      "allowedValues": ["Highest", "High", "Normal", "Low", "Lowest"],
+      "defaultValue": "Normal"
+    }
+  ]
+}
