@@ -8,10 +8,6 @@ class OnTime extends NotificationPlugin
     "&client_secret=#{config.clientsecret}" +
     "&username=#{config.username}&password=#{config.password}"
 
-  stacktraceLines = (stacktrace) ->
-    stacktrace = NotificationPlugin.getInProjectStacktrace stacktrace
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace)
-
   itemDescription = (event) ->
     """
     #{event.trigger.message} in #{event.project.name}.<br />

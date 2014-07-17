@@ -1,10 +1,6 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class UserVoice extends NotificationPlugin
-  stacktraceLines = (stacktrace) ->
-    stacktrace = NotificationPlugin.getInProjectStacktrace stacktrace
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace)
-
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
     
