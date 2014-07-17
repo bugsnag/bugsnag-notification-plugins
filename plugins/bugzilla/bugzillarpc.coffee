@@ -1,4 +1,3 @@
-url = require 'url'
 Handlebars = require 'handlebars'
 fs = require 'fs'
 
@@ -8,7 +7,7 @@ XmlRpc = require './xmlRpc'
 class BugzillaRPC
 
   @createBug: (config, event, callback) ->
-    xmlRpc = new XmlRpc(url.resolve(config.host, config.project))
+    xmlRpc = new XmlRpc(config.host)
 
     @login xmlRpc, config, callback, (token) =>
       bug_params = [

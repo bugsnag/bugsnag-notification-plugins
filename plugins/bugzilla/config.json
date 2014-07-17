@@ -16,12 +16,6 @@
       "section": "authentication"
     },
     {
-      "name": "project",
-      "label": "Project Name",
-      "description": "Which Bugzilla project to create the issue for",
-      "section": "authentication"
-    },
-    {
       "name": "login",
       "label": "Login",
       "description": "Your Bugzilla login",
@@ -43,16 +37,14 @@
     {
       "name": "component",
       "label": "Component",
-      "description": "The name of a component in the product above",
-      "section": "additional"
+      "description": "The name of a component in the product above"
     },
     {
       "name": "priority",
       "label": "Priority",
       "description": "The priority of the bug",
       "allowedValues": ["Highest", "High", "Normal", "Low", "Lowest"],
-      "defaultValue": "Normal",
-      "section": "additional"
+      "defaultValue": "Normal"
     }
   ]
 }
