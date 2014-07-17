@@ -31,8 +31,7 @@
     {
       "name": "product",
       "label": "Product",
-      "description": "The name of your product",
-      "section": "additional"
+      "description": "The name of your product"
     },
     {
       "name": "component",
