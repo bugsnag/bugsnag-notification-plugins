@@ -9,7 +9,8 @@ class OnTime extends NotificationPlugin
     "&username=#{config.username}&password=#{config.password}"
 
   stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
+    stacktrace = NotificationPlugin.getInProjectStacktrace stacktrace
+    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace)
 
   itemDescription = (event) ->
     """

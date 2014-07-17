@@ -4,7 +4,8 @@ class LiquidPlanner extends NotificationPlugin
   BASE_URL = "https://app.liquidplanner.com"
 
   stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
+    stacktrace = NotificationPlugin.getInProjectStacktrace stacktrace
+    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace)
 
   description = (event) ->
     """

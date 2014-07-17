@@ -56,9 +56,9 @@ class Flowdock extends NotificationPlugin
 
       <p><strong>Stacktrace summary</strong></p>
       <table>
-      {{#each error.stacktrace}}
+      {{#inProject error.stacktrace}}
         <tr><td><tt>{{file}}:{{lineNumber}} - {{method}}</tt></td></tr>
-      {{/each}}
+      {{/inProject}}
       </table>
     {{else}}
       {{trigger.message}} in <a href="{{project.url}}">{{project.name}}</a>

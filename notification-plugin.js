@@ -2,6 +2,12 @@ require("sugar");
 fs = require("fs");
 Handlebars = require("handlebars");
 
+Handlebars.registerHelper("inProject", function (stack, options) {
+  return NotificationPlugin.getInProjectStacktrace(stack).map(function (line) {
+    return options.fn(line);
+  }).join('');
+});
+
 //
 // The base Bugsnag NotificationPlugin class
 // Extend this class to create your own Bugsnag notification plugins:
@@ -36,15 +42,26 @@ var NotificationPlugin = (function () {
     return stacktraceLine.file + ":" + stacktraceLine.lineNumber + " - " + stacktraceLine.method
   };
 
+  // Returns the first line of a stacktrace (formatted)
   NotificationPlugin.firstStacktraceLine = function (stacktrace) {
-    for(var i=0; i<stacktrace.length; i++) {
-      var line = stacktrace[i];
-      if(line.inProject) {
-        return this.stacktraceLineString(line);
-      }
+    return this.stacktraceLineString(this.getInProjectStacktrace(stacktrace)[0]);
+  };
+
+  // Utility to determine whether a stacktrace line is `inProject`
+  NotificationPlugin.inProjectStacktraceLine = function (line) {
+    return line != null && "inProject" in line && line.inProject;
+  };
+
+  // Utility for getting all the stacktrace lines that are `inProject`
+  NotificationPlugin.getInProjectStacktrace = function (stacktrace) {
+    var filtered;
+
+    // If there are no 'inProject' stacktrace lines
+    if ( ! (filtered = stacktrace.filter(this.inProjectStacktraceLine)).length) {
+      filtered = stacktrace.slice(0, 3);
     }
 
-    return this.stacktraceLineString(stacktrace[0]);
+    return filtered;
   };
 
   NotificationPlugin.title = function (event) {

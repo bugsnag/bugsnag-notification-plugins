@@ -1,9 +1,6 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class Trello extends NotificationPlugin
-  stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-
   @getListId: (config, callback) ->
     @request
       .get("https://api.trello.com/1/boards/#{config?.boardId}/lists?key=#{config?.applicationKey}&token=#{config?.memberToken}")
@@ -28,15 +25,7 @@ class Trello extends NotificationPlugin
         "name": "#{event.error.exceptionClass} in #{event.error.context}"
         "due": null
         "labels": config?.labels?.split(',')
-        "desc":
-          """
-          *#{event.error.exceptionClass}* in *#{event.error.context}*
-          #{event.error.message if event.error.message}
-          #{event.error.url}
-
-          *Stacktrace:*
-          #{stacktraceLines(event.error.stacktrace).join("\n")}
-          """
+        "desc": @markdownBody event
 
       @request
         .post("https://api.trello.com/1/cards")

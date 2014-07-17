@@ -4,7 +4,8 @@ NotificationPlugin = require "../../notification-plugin"
 
 class PivotalTracker extends NotificationPlugin
   stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
+    stacktrace = NotificationPlugin.getInProjectStacktrace stacktrace
+    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace)
 
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
