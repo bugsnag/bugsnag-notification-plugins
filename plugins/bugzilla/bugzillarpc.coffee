@@ -1,4 +1,6 @@
 url = require 'url'
+Handlebars = require 'handlebars'
+fs = require 'fs'
 
 NotificationPlugin = require '../../notification-plugin'
 XmlRpc = require './xmlRpc'
@@ -15,7 +17,7 @@ class BugzillaRPC
         component: config.component
         summary: NotificationPlugin.title(event)
         version: 'unspecified'
-        description: NotificationPlugin.markdownTemplate(event)
+        description: @render(event)
         op_sys: 'All'
         platform: 'All'
         priority: config.priority
@@ -25,5 +27,7 @@ class BugzillaRPC
   @login: (xmlRpc, config, callback, tokenCallback) ->
     login_params = [ login: config.login, password: config.password ]
     xmlRpc.methodCall('User.login', login_params, callback, tokenCallback)
+
+  @render: Handlebars.compile(fs.readFileSync(__dirname + '/template.hbs', 'utf8'))
 
 module.exports = BugzillaRPC;
