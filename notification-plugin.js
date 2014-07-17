@@ -2,8 +2,8 @@ require("sugar");
 fs = require("fs");
 Handlebars = require("handlebars");
 
-Handlebars.registerHelper("inProject", function (stack, options) {
-  return NotificationPlugin.getInProjectStacktrace(stack).map(function (line) {
+Handlebars.registerHelper("eachSummaryFrame", function (stack, options) {
+  return NotificationPlugin.getSummaryStacktrace(stack).map(function (line) {
     return options.fn(line);
   }).join('');
 });
@@ -43,14 +43,14 @@ var NotificationPlugin = (function () {
   };
 
   NotificationPlugin.basicStacktrace = function (stacktrace) {
-    return this.getInProjectStacktrace(stacktrace).map(function (line) {
+    return this.getSummaryStacktrace(stacktrace).map(function (line) {
       return this.stacktraceLineString(line);
     }, this).join("\n");
   };
 
   // Returns the first line of a stacktrace (formatted)
   NotificationPlugin.firstStacktraceLine = function (stacktrace) {
-    return this.stacktraceLineString(this.getInProjectStacktrace(stacktrace)[0]);
+    return this.stacktraceLineString(this.getSummaryStacktrace(stacktrace)[0]);
   };
 
   // Utility to determine whether a stacktrace line is `inProject`
@@ -59,7 +59,7 @@ var NotificationPlugin = (function () {
   };
 
   // Utility for getting all the stacktrace lines that are `inProject`
-  NotificationPlugin.getInProjectStacktrace = function (stacktrace) {
+  NotificationPlugin.getSummaryStacktrace = function (stacktrace) {
     var filtered;
 
     // If there are no 'inProject' stacktrace lines
