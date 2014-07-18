@@ -2,38 +2,27 @@ NotificationPlugin = require "../../notification-plugin.js"
 
 Handlebars = require "handlebars"
 url = require "url"
+cookie = require "cookie"
 
 class YouTrack extends NotificationPlugin
 
   resolveUrl = (config, path) ->
     url.resolve config.url, path
 
-  parseCookie = (cookie) ->
-    obj = {}
-    chunks = cookie.split ';'
-    chunks.forEach (chunk) ->
-      pair = chunk.split '='
-      obj[pair[0]] = pair[1]
-    obj
+  handleCookies = (res) ->
+    res.headers['set-cookie'].map((item) ->
+      parsed = cookie.parse item
+      key = Object.keys(parsed)[0]
+      cookie.serialize key, parsed[key],
+        path: parsed.Path
+    ).join '; '
 
-  parseCookies = (res) ->
-    cookies = res.headers['set-cookie']
-    cookies.map parseCookie
-
-  stringifyCookies = (cookies) ->
-    buff = ['$Version=0']
-    cookies.forEach (cookie) ->
-      keys = Object.keys cookie
-      buff.push "#{keys[0]}=#{cookie[keys[0]]}"
-      buff.push "$Path=#{cookie.Path}"
-    buff.join('; ')
-
-  @loginUrl = (config) -> resolveUrl config, 'rest/user/login'
-  @ticketUrl = (config) -> resolveUrl config, 'rest/issue'
+  loginUrl = (config) -> resolveUrl config, 'rest/user/login'
+  ticketUrl = (config) -> resolveUrl config, 'rest/issue'
 
   @fetchToken = (config, callback) ->
     @request
-      .post @loginUrl(config)
+      .post loginUrl(config)
       .type 'form'
       .send
         login: config.username
@@ -42,11 +31,11 @@ class YouTrack extends NotificationPlugin
         callback err
       .end (res) ->
         return callback res.error if res.error
-        callback null, stringifyCookies parseCookies res
+        callback null, handleCookies res
 
   @createTicket = (config, event, token, callback) ->
     @request
-      .put @ticketUrl config
+      .put ticketUrl config
       .type 'form' # This isn't documented
       .set 'Cookie', token
       .query
@@ -58,7 +47,7 @@ class YouTrack extends NotificationPlugin
       .end (res) ->
         return callback res.error if res.error
         callback null,
-          url: res.header['location']
+          url: res.header.location
 
   @receiveEvent = (config, event, callback) ->
     @fetchToken config, ((err, token) ->
