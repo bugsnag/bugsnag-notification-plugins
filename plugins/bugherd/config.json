@@ -12,6 +12,7 @@
       "name": "apiKey",
       "label": "API Key",
       "description": "Your BugHerd API Key",
+      "type": "password",
       "section": "authentication"
     },
     {
