@@ -1,0 +1,15 @@
+<h2>{{trigger.message}} in {{project.name}}</h2>
+
+<p><strong>{{error.exceptionClass}}</strong> in <strong>{{error.context}}</strong><br>
+{{#if error.message}}{{error.message}}{{/if}}</p>
+
+<p><a href="{{error.url}}">View on bugsnag.com</a></p>
+
+<h2>Stacktrace</h2>
+<code>
+{{#each error.stacktrace}}{{#if inProject}}
+{{file}}:{{lineNumber}} - {{method}}<br>
+{{/if}}{{/each}}
+</code>
+
+<p><a href="{{error.url}}">View full stacktrace</a></p>
