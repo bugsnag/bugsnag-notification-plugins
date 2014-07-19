@@ -24,6 +24,7 @@
       "name": "password",
       "label": "Password",
       "description": "Your account's secure password",
+      "type": "password",
       "section": "authentication"
     },
     {
