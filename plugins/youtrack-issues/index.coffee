@@ -50,10 +50,9 @@ class YouTrack extends NotificationPlugin
           url: res.header.location
 
   @receiveEvent = (config, event, callback) ->
-    @fetchToken config, ((err, token) ->
+    @fetchToken config, (err, token) =>
       return callback err if err # Unable to authenticate
       @createTicket config, event, token, callback
-    ).bind @
 
   @render = Handlebars.compile(
     """
