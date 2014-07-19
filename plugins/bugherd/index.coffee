@@ -25,6 +25,8 @@ module.exports = class BugHerd extends NotificationPlugin
       {{#if error.message}}{{error.message}}{{/if}}
       ({{error.exceptionClass}} in {{error.context}})
 
+      {{error.url}}
+
       Stacktrace:{{#each error.stacktrace}}{{#if inProject}}
       {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}
     """
