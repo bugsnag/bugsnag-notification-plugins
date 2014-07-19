@@ -1,9 +1,6 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class UserVoice extends NotificationPlugin
-  stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
     
@@ -21,7 +18,7 @@ class UserVoice extends NotificationPlugin
           #{event.error.url}
 
           Stacktrace:
-          #{stacktraceLines(event.error.stacktrace).join("\n")}
+          #{@basicStacktrace(event.error.stacktrace)}
           """
 
     # Send the request

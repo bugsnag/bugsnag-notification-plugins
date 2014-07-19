@@ -1,9 +1,6 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class PagerDuty extends NotificationPlugin
-  stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-
   pagerDutyDetails = (event) ->
     details =
       message : event.trigger.message

@@ -3,9 +3,6 @@ xml2js = require "xml2js"
 NotificationPlugin = require "../../notification-plugin"
 
 class PivotalTracker extends NotificationPlugin
-  stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
     
@@ -21,7 +18,7 @@ class PivotalTracker extends NotificationPlugin
         #{event.error.url}
 
         *Stacktrace:*
-        #{stacktraceLines(event.error.stacktrace).join("\n")}
+        #{@basicStacktrace(event.error.stacktrace)}
         """
 
     # Send the request to the url

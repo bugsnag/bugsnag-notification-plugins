@@ -4,7 +4,7 @@
 {{#if error.message}}{{error.message}}{{/if}}
 
 ## Stacktrace
-{{#each error.stacktrace}}{{#if inProject}}
-    {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}
+{{#eachSummaryFrame error.stacktrace}}
+    {{file}}:{{lineNumber}} - {{method}}{{/eachSummaryFrame}}
 
 View full stacktrace on bugsnag.com: {{error.url}}

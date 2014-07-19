@@ -63,8 +63,8 @@ class Redmine extends NotificationPlugin
 
     h2. Stacktrace
 
-    <pre>{{#each error.stacktrace}}{{#if inProject}}
-    {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}</pre>
+    <pre>{{#eachSummaryFrame error.stacktrace}}
+    {{file}}:{{lineNumber}} - {{method}}{{/eachSummaryFrame}}</pre>
 
     "View full stacktrace":{{error.url}}
     """

@@ -3,9 +3,6 @@ NotificationPlugin = require "../../notification-plugin"
 class LiquidPlanner extends NotificationPlugin
   BASE_URL = "https://app.liquidplanner.com"
 
-  stacktraceLines = (stacktrace) ->
-    ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-
   description = (event) ->
     """
     <pre>
@@ -15,7 +12,7 @@ class LiquidPlanner extends NotificationPlugin
     #{event.error.message if event.error.message}
 
     Stacktrace:
-    #{stacktraceLines(event.error.stacktrace).join("\n")}
+    #{NotificationPlugin.basicStacktrace(event.error.stacktrace)}
     </pre>
     """
 

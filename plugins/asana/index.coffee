@@ -5,13 +5,6 @@ NotificationPlugin = require "../../notification-plugin"
 class Asana extends NotificationPlugin
   BASE_URL = "https://app.asana.com/api/1.0"
 
-  stacktraceLines = (stacktrace) ->
-    anyInProject = stacktrace.some (el) -> el.inProject
-    if anyInProject
-      ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace when line.inProject)
-    else
-      ("#{line.file}:#{line.lineNumber} - #{line.method}" for line in stacktrace[0..4])
-
   renderBody = (event) ->
     """
     #{event.error.exceptionClass} in #{event.error.context}
@@ -22,7 +15,7 @@ class Asana extends NotificationPlugin
     #{event.error.url}
 
     Stacktrace:
-    #{stacktraceLines(event.error.stacktrace).join("\n")}
+    #{NotificationPlugin.basicStacktrace(event.error.stacktrace)}
     """
 
   @receiveEvent: (config, event, callback) ->
