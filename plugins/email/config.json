@@ -17,6 +17,18 @@
       "label": "Include Full Stacktrace",
       "description": "Includes full stack trace with every email (not recommended)",
       "type": "boolean"
+    },
+    {
+      "name": "dailySummaryEmail",
+      "label": "Daily Summary Email",
+      "description": "Daily Summary Email",
+      "type": "boolean"
+    },
+    {
+      "name": "weeklySummaryEmail",
+      "label": "Weekly Summary Email",
+      "description": "Weekly Summary Email",
+      "type": "boolean"
     }
   ]
 }
