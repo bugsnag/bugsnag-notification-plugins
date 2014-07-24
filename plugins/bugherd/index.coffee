@@ -27,8 +27,8 @@ module.exports = class BugHerd extends NotificationPlugin
 
       {{error.url}}
 
-      Stacktrace:{{#each error.stacktrace}}{{#if inProject}}
-      {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}
+      Stacktrace:{{#eachSummaryFrame error.stacktrace}}
+      {{file}}:{{lineNumber}} - {{method}}{{/eachSummaryFrame}}
     """
   )
 
