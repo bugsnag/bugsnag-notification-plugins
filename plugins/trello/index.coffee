@@ -9,7 +9,7 @@ class Trello extends NotificationPlugin
       .end (res) ->
         return callback(res.error) if res.error
 
-        callback null, res.body.find((el) -> el.name == config?.listName)?.id
+        callback null, res.body?.find((el) -> el.name == config?.listName)?.id
 
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
