@@ -65,8 +65,8 @@ class YouTrack extends NotificationPlugin
 
     == Stacktrace ==
 
-    {html}<pre>{{#each error.stacktrace}}{{#if inProject}}
-    {{file}}:{{lineNumber}} - {{method}}{{/if}}{{/each}}</pre>{html}
+    {html}<pre>{{#eachSummaryFrame error.stacktrace}}
+    {{file}}:{{lineNumber}} - {{method}}{{/eachSummaryFrame}}</pre>{html}
 
     [View full stacktrace|{{error.url}}]
     """
