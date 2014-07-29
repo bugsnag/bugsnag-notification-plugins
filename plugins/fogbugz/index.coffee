@@ -1,4 +1,5 @@
 NotificationPlugin = require '../../notification-plugin'
+Handlebars = require 'handlebars'
 {parseString} = require 'xml2js'
 
 module.exports = class FogBugz extends NotificationPlugin
