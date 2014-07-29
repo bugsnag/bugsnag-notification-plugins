@@ -44,7 +44,7 @@
     {
       "name": "area",
       "label": "Area Name",
-      "description": "Your area name",
+      "description": "The area name to apply to the case",
       "section": "authentication"
     },
     {
