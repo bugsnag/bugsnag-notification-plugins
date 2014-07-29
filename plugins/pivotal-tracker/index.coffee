@@ -1,14 +1,15 @@
 xml2js = require "xml2js"
+require "sugar"
 
 NotificationPlugin = require "../../notification-plugin"
 
 class PivotalTracker extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
-    
+
     # Build the request
     params =
-      "story[name]": "#{event.error.exceptionClass} in #{event.error.context}"
+      "story[name]": "#{event.error.exceptionClass} in #{event.error.context}".truncate(5000)
       "story[story_type]": "bug"
       "story[labels]": (config?.labels || "bugsnag").trim()
       "story[description]":
@@ -19,7 +20,7 @@ class PivotalTracker extends NotificationPlugin
 
         *Stacktrace:*
         #{@basicStacktrace(event.error.stacktrace)}
-        """
+        """.truncate(20000)
 
     # Send the request to the url
     @request
