@@ -30,7 +30,7 @@
     {
       "name": "projectId",
       "label": "Project Id",
-      "description": "Your project's unique identifier",
+      "description": "Your project's unique id, e.g. 190",
       "section": "authentication"
     }
   ]
