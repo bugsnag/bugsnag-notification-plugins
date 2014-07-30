@@ -15,24 +15,9 @@
       "section": "authentication"
     },
     {
-      "name": "email",
-      "label": "Email Address",
-      "description": "Your account's email address",
-      "optional": true,
-      "section": "authentication"
-    },
-    {
-      "name": "password",
-      "label": "Password",
-      "description": "Your account's secure password",
-      "optional": true,
-      "section": "authentication"
-    },
-    {
       "name": "token",
-      "label": "Pre-generated Token [generate]({url}/api.asp?cmd=logon&email={email}&password={password})",
-      "description": "The pre-generated token, for faster creation (experimental).",
-      "optional": true,
+      "label": "Auth Token [Click here to Generate (Enter your username & password in the URL)]({url}/api.asp?cmd=logon&email=EMAIL_HERE&password=PASSWORD_HERE)",
+      "description": "An active account auth token",
       "section": "authentication"
     },
     {
