@@ -45,7 +45,6 @@ module.exports = class FogBugz extends NotificationPlugin
       callback err
     .end (res) ->
       return callback res.error if res.error
-      console.log res
 
       parseString res.text, (err, obj) ->
         id = obj?.response?.case?[0].$?.ixBug
