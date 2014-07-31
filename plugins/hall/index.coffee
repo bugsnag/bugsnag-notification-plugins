@@ -16,16 +16,28 @@ class Hall extends NotificationPlugin
   # Gets the body of the chat message
   @messageBody: Handlebars.compile(
     '{{#if error.message}}' +
-      '{{error.message}} (<a href="{{error.url}}">details</a>)' +
+      '&nbsp;&nbsp;&nbsp;{{error.exceptionClass}}: {{error.message}} (<a href="{{error.url}}">details</a>)' +
+      '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;<code>{{stack_trace_line}}</code>{{/if}}' +
     '{{else}}' +
       '<b>{{trigger.message}}</b> from <a href="{{project.url}}">{{project.name}}</a>' +
     '{{/if}}'
   )
 
+  @messageTitle: Handlebars.compile(
+    '{{trigger.message}} in {{error.releaseStage}} from {{project.name}}' +
+    '{{#if error}}' +
+      ' in {{error.context}}' +
+    '{{/if}}'
+  )
+
   # Build the request body
   @messagePayload = (config, event) ->
-    title: @title event
-    message: @messageBody event
+    title: @messageTitle event
+    message: @messageBody
+      error: event.error
+      stack_trace_line: event.error.stacktrace && @firstStacktraceLine(event.error.stacktrace)
+      trigger: event.trigger
+      project: event.project
     picture: BUGSNAG_AVATAR
 
   # Fire the event
