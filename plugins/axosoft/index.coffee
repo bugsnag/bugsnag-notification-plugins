@@ -1,6 +1,6 @@
 NotificationPlugin = require "../../notification-plugin"
 
-class OnTime extends NotificationPlugin
+class Axosoft extends NotificationPlugin
 
   accessTokenRequestParameters = (config) ->
     "grant_type=password&scope=read write" +
@@ -74,7 +74,7 @@ class OnTime extends NotificationPlugin
             config.projectId = ids[0]
             callback null
           else
-            callback 'Project name must exist in OnTime and be a unique value.'
+            callback 'Project name must exist in Axosoft and be a unique value.'
 
   @postItem: (config, event, callback) =>
     itemType = config.itemType.split " "
@@ -106,4 +106,4 @@ class OnTime extends NotificationPlugin
         @postItem config, event, (err) =>
           return callback(err) if err
 
-module.exports = OnTime
+module.exports = Axosoft

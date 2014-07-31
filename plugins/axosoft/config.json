@@ -1,0 +1,51 @@
+{
+  "name": "Axosoft",
+  "url": "http://www.axosoft.com/",
+  "actions": {
+    "create": "Create an Axosoft item",
+    "view": "View in Axosoft",
+    "object": "Axosoft Item"
+  },
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "url",
+      "label": "Axosoft URL",
+      "description": "Your Axosoft URL, eg https://company.axosoft.com"
+    },
+    {
+      "name": "project",
+      "label": "Project Name",
+      "description": "The name of your Axosoft project. It must be a unique value."
+    },
+    {
+      "name": "itemType",
+      "label": "Item Type",
+      "description": "The type of item to be created. These are the default values, you might have renamed them.",
+      "allowedValues": ["Defects (Bugs)", "Features (Product Backlog)", "Tasks (Custom Items)", "Incidents (Help Desk)"],
+      "defaultValue": "Defects (Bugs)"
+    },
+    {
+      "name": "clientid",
+      "label": "Axosoft Private Client Id",
+      "description": "You can find this value in Axosoft->Tools->System Options->Axosoft API Settings"
+    },
+    {
+      "name": "clientsecret",
+      "label": "Axosoft Private Client Secret",
+      "description": "You can find this value in Axosoft->Tools->System Options->Axosoft API Settings",
+      "type": "password"
+    },
+    {
+      "name": "username",
+      "label": "Username",
+      "description": "Your Axosoft username"
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "description": "Your Axosoft password",
+      "type": "password"
+    }
+  ]
+}
