@@ -1,5 +1,5 @@
 {
-  "name": "FogBugz Cases",
+  "name": "FogBugz",
   "url": "http://www.fogcreek.com/fogbugz",
   "actions": {
     "create": "Create a FogBugz case",
@@ -18,6 +18,7 @@
       "name": "token",
       "label": "Auth Token [Click here to Generate (Enter your username & password in the URL)]({url}/api.asp?cmd=logon&email=EMAIL_HERE&password=PASSWORD_HERE)",
       "description": "An active account auth token",
+      "type": "password",
       "section": "authentication"
     },
     {
