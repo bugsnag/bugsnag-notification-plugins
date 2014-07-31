@@ -1,0 +1,56 @@
+{
+  "name": "FogBugz Cases",
+  "url": "http://www.fogcreek.com/fogbugz",
+  "actions": {
+    "create": "Create a FogBugz case",
+    "view": "View on FogBugz",
+    "object": "FogBugz Case"
+  },
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "url",
+      "label": "URL",
+      "description": "Your FogBugz URL (ie. https://example.fogbugz.com)",
+      "section": "authentication"
+    },
+    {
+      "name": "token",
+      "label": "Auth Token [Click here to Generate (Enter your username & password in the URL)]({url}/api.asp?cmd=logon&email=EMAIL_HERE&password=PASSWORD_HERE)",
+      "description": "An active account auth token",
+      "section": "authentication"
+    },
+    {
+      "name": "project",
+      "label": "Project Name",
+      "description": "Your project name",
+      "section": "authentication"
+    },
+    {
+      "name": "area",
+      "label": "Area Name",
+      "description": "The area name to apply to the case",
+      "section": "authentication"
+    },
+    {
+      "name": "priorityId",
+      "label": "Priority",
+      "description": "The priority ID to apply to the case",
+      "section": "tags"
+    },
+    {
+      "name": "tags",
+      "label": "Tags",
+      "description": "Additional tags to apply to the case",
+      "optional": true,
+      "section": "tags"
+    },
+    {
+      "name": "assignTo",
+      "label": "Assign To",
+      "description": "Name of user to assign to the case",
+      "optional": true,
+      "section": "tags"
+    }
+  ]
+}
