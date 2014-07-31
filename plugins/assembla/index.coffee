@@ -35,28 +35,10 @@ class Assembla extends NotificationPlugin
           return cb(null, space) for space in res.body when space.wiki_name is config.space
           cb(new Error("Workspace not found with name '#{config.space}'"))
 
-    validateTags = (space, cb) =>
-      if config.tags
-        tagNames = config.tags.split(",")
-        @request.get("#{API_BASE_URL}/spaces/#{space.id}/tags.json")
-          .timeout(4000)
-          .set("Content-type", "application/json")
-          .set("X-Api-key", config.apiKey)
-          .set("X-Api-secret", config.apiSecret)
-          .end (res) =>
-            # Validate that the space contains the target tags
-            if tagNames.every((tagName) -> res.body?.some?((tag) -> tag.name is tagName))
-              cb(null, space: space, tagNames: tagNames)
-            else
-              cb(new Error("Tags not found in space '#{config.tags}'. Valid tags: '#{tag.name for tag in res.body}'"))
-      else
-        cb(null, space: space, tagNames: [])
-
-
-    async.waterfall [getSpace, validateTags], (err, results) =>
+    async.waterfall [getSpace], (err, space) =>
       return callback(err) if err?
 
-      {space, tagNames} = results
+      tagNames = config.tags.split(",")
 
       # Build the ticket payload
       payload =
