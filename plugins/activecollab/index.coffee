@@ -35,6 +35,8 @@ module.exports = class ActiveCollab extends NotificationPlugin
         callback null, matches[0]
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == 'reopened'
+
     @getProject config, (err, project) =>
       return callback err if err
 
