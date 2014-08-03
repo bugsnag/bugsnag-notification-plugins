@@ -22,9 +22,9 @@
       "section": "authentication"
     },
     {
-      "name": "project",
-      "label": "Project Name",
-      "description": "Which project to create the task for (ie. Example Project)",
+      "name": "projectSlug",
+      "label": "Project Slug",
+      "description": "Which project to create the task for (ie. example-project)",
       "section": "authentication"
     },
     {
