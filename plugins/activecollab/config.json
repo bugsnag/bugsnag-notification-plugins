@@ -1,0 +1,47 @@
+{
+  "name": "activeCollab Tasks",
+  "url": "https://activecollab.com/",
+  "actions": {
+    "create": "Create an activeCollab Task",
+    "view": "View on activeCollab",
+    "object": "activeCollab Task"
+  },
+  "type": "issueTracker",
+  "fields": [
+    {
+      "name": "apiToken",
+      "label": "API Token",
+      "description": "Your API Token (Available in your 'API Subscription' settings)",
+      "type": "password",
+      "section": "authentication"
+    },
+    {
+      "name": "apiUrl",
+      "label": "API Url",
+      "description": "Your API url (ie. https://acme.manageprojects.com/api.php)",
+      "section": "authentication"
+    },
+    {
+      "name": "project",
+      "label": "Project Name",
+      "description": "Which project to create the task for (ie. Example Project)",
+      "section": "authentication"
+    },
+    {
+      "name": "priority",
+      "label": "Priority",
+      "description": "The priority of the task",
+      "allowedValues": ["Highest", "High", "Normal", "Low", "Lowest"],
+      "defaultValue": "Normal",
+      "section": "tags"
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "description": "The visibility of the task [More info...](https://activecollab.com/help/books/getting-started/visibility.html)",
+      "allowedValues": ["Normal", "Private"],
+      "defaultValue": "Normal",
+      "section": "tags"
+    }
+  ]
+}
