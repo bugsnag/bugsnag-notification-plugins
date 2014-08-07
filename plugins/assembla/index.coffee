@@ -38,7 +38,7 @@ class Assembla extends NotificationPlugin
     async.waterfall [getSpace], (err, space) =>
       return callback(err) if err?
 
-      tagNames = config.tags.split(",")
+      tagNames = config.tags?.split(",")
 
       # Build the ticket payload
       payload =
