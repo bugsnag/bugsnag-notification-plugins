@@ -38,8 +38,8 @@
     },
     {
       "name": "username",
-      "label": "Username",
-      "description": "Your Axosoft username"
+      "label": "Login ID",
+      "description": "Your Axosoft login (your email address, by default)"
     },
     {
       "name": "password",
