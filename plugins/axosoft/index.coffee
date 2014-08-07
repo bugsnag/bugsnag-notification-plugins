@@ -103,7 +103,7 @@ class Axosoft extends NotificationPlugin
         return callback(err) if err
 
         # Step 3. Create item
-        @postItem config, event, (err) =>
-          return callback(err) if err
+        @postItem config, event, (err, data) =>
+          callback err, data
 
 module.exports = Axosoft
