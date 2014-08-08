@@ -6,7 +6,7 @@ class XmlRpc
 
   constructor: (@host) ->
 
-  buildRequest: (xmlBody) ->
+  buildRequest: (xmlBody, callback) ->
     NotificationPlugin.request
       .post(@host + '/xmlrpc.cgi')
       .type('text/xml')
@@ -16,7 +16,7 @@ class XmlRpc
 
   methodCall: (methodName, params, callback, tokenCallback) ->
     xmlBody = xmlBuilder.buildRequestBody(methodName, params)
-    request = @buildRequest(xmlBody)
+    request = @buildRequest(xmlBody, callback)
     request.end (response) =>
       return callback(response.error) if response.error
       xmlResponseParser.parse response, (xmlError, xmljson) =>
