@@ -16,7 +16,7 @@ class Slack extends NotificationPlugin
 
   @receiveEvent = (config, event, callback) ->
     # Build the notification title
-    title = ["#{event.trigger.message} in #{event.error.releaseStage} from <#{event.project.url}|#{event.project.name}>"]
+    title = ["#{event.trigger.message} in #{event.error.releaseStage} from <#{event.project.url} | #{event.project.name}>"]
     title.push("in #{event.error.context}")
     title.push("<#{event.error.url}|(details)>")
 
