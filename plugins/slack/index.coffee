@@ -2,17 +2,24 @@ NotificationPlugin = require "../../notification-plugin.js"
 
 class Slack extends NotificationPlugin
   @errorAttachment = (event) ->
-    fallback: "Something happened",
-    fields: [
-      {
-        title: "Error"
-        value: (event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)
-      },
-      {
-        title: "Location",
-        value: event.error.stacktrace && @firstStacktraceLine(event.error.stacktrace)
-      }
-    ]
+    attachment =
+      fallback: "Something happened",
+      fields: [
+        {
+          title: "Error"
+          value: (event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)
+        },
+        {
+          title: "Location",
+          value: event.error.stacktrace && @firstStacktraceLine(event.error.stacktrace)
+        }
+      ]
+    switch event.error.severity
+      when "error"
+        attachment.color = "#E45F58"
+      when "warning"
+        attachment.color = "#FD9149"
+    attachment
 
   @receiveEvent = (config, event, callback) ->
     # Build the notification title
