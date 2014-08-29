@@ -19,6 +19,8 @@ class Slack extends NotificationPlugin
         attachment.color = "#E45F58"
       when "warning"
         attachment.color = "#FD9149"
+      when "info"
+        attachment.color = "#20A6DF"
     attachment
 
   @receiveEvent = (config, event, callback) ->
