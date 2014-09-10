@@ -2,7 +2,7 @@ NotificationPlugin = require "../../notification-plugin"
 Handlebars = require 'handlebars'
 
 class Hipchat extends NotificationPlugin
-  BASE_URL = "https://api.hipchat.com/v1"
+  API_BASE_URL = "https://api.hipchat.com/"
 
   @receiveEvent: (config, event, callback) ->
     # Build the message
@@ -23,25 +23,39 @@ class Hipchat extends NotificationPlugin
       # Non-error events
       message =  "<b>#{event.trigger.message}</b> from <a href=\"#{event.project.url}\">#{event.project.name}</a>"
 
+    if config.authToken.length == 40
+      apiVer = 2
+    else
+      apiVer = 1
+
     # Build the payload
     payload =
       from: "Bugsnag"
       message: @render details
-      auth_token: config.authToken
-      room_id: config.roomId
       notify: config.notify || false
       color: config.color || "yellow"
 
+    url = "#{BASE_URL}v#{apiVer}"
+
+    if apiVer == 2
+      url += "/room/#{config.roomId}/notification?auth_token=#{config.authToken}"
+    else
+      payload.auth_token = config.authToken
+      payload.room_id = config.roomId
+      url += "/rooms/message"
+
     # Send the request
-    @request
-      .post("#{BASE_URL}/rooms/message")
-      .timeout(4000)
-      .send(payload)
-      .type("form")
-      .on "error", (err) ->
-        callback(err)
-      .end (res) ->
-        callback(res.error)
+    resp = @request.post(url).timeout(4000).send(payload)
+
+    if apiVer == 2
+      resp.set("Content-Type", "application/json")
+    else
+      resp.type("form")
+
+    resp.on "error", (err) ->
+      callback(err)
+    .end (res) ->
+      callback(res.error)
 
   @render: Handlebars.compile(
     '<b>{{title}}</b> from <a href="{{project.url}}">{{project.name}}</a>' +
@@ -51,6 +65,5 @@ class Hipchat extends NotificationPlugin
       '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;<code>{{stack_trace_line}}</code>{{/if}}' +
     '{{/if}}'
   )
-
 
 module.exports = Hipchat
