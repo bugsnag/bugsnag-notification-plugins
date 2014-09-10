@@ -25,6 +25,7 @@ class HipchatV2 extends NotificationPlugin
 
     # Build the payload
     payload =
+      from: "Bugsnag"
       message: @render details
       notify: config.notify || false
       color: config.color || "yellow"
