@@ -35,7 +35,7 @@ class Hipchat extends NotificationPlugin
       notify: config.notify || false
       color: config.color || "yellow"
 
-    url = "#{BASE_URL}v#{apiVer}"
+    url = "#{API_BASE_URL}v#{apiVer}"
 
     if apiVer == 2
       url += "/room/#{config.roomId}/notification?auth_token=#{config.authToken}"
