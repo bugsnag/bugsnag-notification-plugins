@@ -1,0 +1,37 @@
+{
+  "name": "HipChat v2 (beta)",
+  "url": "https://www.hipchat.com",
+  "actions": {
+    "create": "Post to a HipChat chatroom"
+  },
+  "supportedTriggers": "all",
+  "type": "communication",
+  "fields": [
+    {
+      "name": "authToken",
+      "label": "Auth Token",
+      "description": "Your HipChat API (v2) auth token",
+      "type": "password"
+    },
+    {
+      "name": "roomId",
+      "label": "Chat Room",
+      "description": "The ID or name of the HipChat chat room to send notifications to"
+    },
+    {
+      "name": "notify",
+      "label": "Notify",
+      "description": "Should we trigger a notification for people in the room?",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "color",
+      "label": "Background Color",
+      "description": "The background color for HipChat notifications",
+      "optional": true,
+      "allowedValues": ["yellow", "red", "green", "purple", "random"],
+      "defaultValue": "yellow"
+    }
+  ]
+}
