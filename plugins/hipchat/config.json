@@ -10,7 +10,7 @@
     {
       "name": "authToken",
       "label": "Auth Token",
-      "description": "Your HipChat API (v1 or v2) auth token",
+      "description": "Your HipChat API auth token",
       "type": "password"
     },
     {
