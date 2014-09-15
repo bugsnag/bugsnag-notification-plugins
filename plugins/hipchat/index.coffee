@@ -32,7 +32,7 @@ class Hipchat extends NotificationPlugin
     payload =
       from: "Bugsnag"
       message: @render details
-      notify: config.notify || false
+      notify: ["1", "true", true].indexOf(config.notify) != -1
       color: config.color || "yellow"
 
     url = "#{API_BASE_URL}v#{apiVer}"
@@ -40,6 +40,7 @@ class Hipchat extends NotificationPlugin
     if apiVer == 2
       url += "/room/#{config.roomId}/notification?auth_token=#{config.authToken}"
     else
+      payload.notify = "1" if payload.notify
       payload.auth_token = config.authToken
       payload.room_id = config.roomId
       url += "/rooms/message"
