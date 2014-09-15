@@ -33,7 +33,7 @@ NotificationPlugin = (->
   # Fired when a new event is triggered for notification
   # Plugins MUST override this method
   NotificationPlugin.receiveEvent = (config, event, callback) ->
-    throw new Error("Plugins must override receiveEvent")return
+    throw new Error("Plugins must override receiveEvent")
 
 
   # Utility methods for generating notification content
