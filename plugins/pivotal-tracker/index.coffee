@@ -15,33 +15,24 @@ class PivotalTracker extends NotificationPlugin
   @notesUrl: (config, storyId) ->
     @storyUrl(config, storyId) + "/notes"
 
-  @ensureIssueOpen: (config, storyId, callback) ->
-    params =
-      "story[current_state]": "unstarted"
-
-    @request
-      .put(@storyUrl(config, storyId))
+  @pivotalRequest: (req, config) ->
+    req
       .timeout(4000)
       .set("X-TrackerToken", config.apiToken)
       .type("form")
-      .send(params)
       .buffer(true)
+
+  @ensureIssueOpen: (config, storyId, callback) ->
+    @pivotalRequest(@request.put(@storyUrl(config, storyId)), config)
+      .send({"story[current_state]": "unstarted"})
       .on "error", (err) ->
         callback(err)
       .end (res) ->
         return callback(res.error) if res.error
 
   @addCommentToIssue: (config, storyId, comment) ->
-    params =
-      "note[text]": comment
-
-    @request
-      .post(@notesUrl(config, storyId))
-      .timeout(4000)
-      .set("X-TrackerToken", config.apiToken)
-      .type("form")
-      .send(params)
-      .buffer(true)
+    @pivotalRequest(@request.post(@notesUrl(config, storyId)), config)
+      .send({"note[text]": comment})
       .on("error", console.error)
       .end()
 
@@ -62,13 +53,8 @@ class PivotalTracker extends NotificationPlugin
         """.truncate(20000)
 
     # Send the request to the url
-    @request
-      .post(@storiesUrl(config))
-      .timeout(4000)
-      .set("X-TrackerToken", config.apiToken)
-      .type("form")
+    @pivotalRequest(@request.post(@storiesUrl(config)), config)
       .send(params)
-      .buffer(true)
       .on "error", (err) ->
         callback(err)
       .end (res) ->
