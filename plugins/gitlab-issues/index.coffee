@@ -4,17 +4,22 @@ class GitLabIssue extends NotificationPlugin
   @baseUrl: (config) ->
     "#{config.gitlab_url}/api/v3/projects/"
 
-  @issuesUrl: (config, id) ->
-    @baseUrl(config) + id + '/issues'
+  @issuesUrl: (config, projectId) ->
+    @baseUrl(config) + projectId + '/issues'
+
+  @issueUrl: (config, projectId, issueId) ->
+    @issuesUrl(config, projectId) + '/' + issueId
+
+  @notesUrl: (config, projectId, issueId) ->
+    @issueUrl(config, projectId, issueId) + '/notes'
 
   @findProjectId: (config, projects) ->
+    project = {}
     project = projects.filter (p) ->
-      p.name == encodeURIComponent(config.project_name)
+      p.name == encodeURIComponent(config.project_slug.split("/").slice(-1)[0])
     project[0].id
 
-  @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "reopened"
-
+  @openIssue: (config, event, callback) ->
     # Build the ticket
     payload =
       title: @title(event)
@@ -25,7 +30,8 @@ class GitLabIssue extends NotificationPlugin
       .set("User-Agent", "Bugsnag")
       .set("PRIVATE-TOKEN", config.private_token)
       .end (res) =>
-        @request.post(@issuesUrl(config, @findProjectId(config, res.body)))
+        projectId = @findProjectId(config, res.body)
+        @request.post(@issuesUrl(config, projectId))
           .send(payload)
           .set("User-Agent", "Bugsnag")
           .set("PRIVATE-TOKEN", config.private_token)
@@ -34,6 +40,35 @@ class GitLabIssue extends NotificationPlugin
             return callback(res.error) if res.error
             callback null,
               id: res.body.id
-              url: "#{config.gitlab_url}/#{config.project_name}/issues/#{res.body.id}"
+              projectId: projectId
+              url: "#{config.gitlab_url}/#{config.project_slug}/issues/#{res.body.id}"
+
+  @ensureIssueOpen: (config, projectId, issueId, callback) ->
+    @request.put(@issueUrl(config, projectId, issueId))
+      .send({state_event: "reopen"})
+      .set("User-Agent", "Bugsnag")
+      .set("PRIVATE-TOKEN", config.private_token)
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        callback(res.error)
+
+  @addCommentToIssue: (config, event, id, comment) ->
+    @request.post(@notesUrl(config, event, id))
+      .send({body: comment})
+      .set("User-Agent", "Bugsnag")
+      .set("PRIVATE-TOKEN", config.private_token)
+      .on("error", console.error)
+      .end()
+
+  @receiveEvent: (config, event, callback) ->
+    if event?.trigger?.type == "reopened"
+      if event.error?.createdIssue?.id
+        projectId = event.error.createdIssue.projectId
+        issueId = event.error.createdIssue.id
+        @ensureIssueOpen(config, projectId, issueId, callback)
+        @addCommentToIssue(config, projectId, issueId, @markdownBody(event))
+    else
+      @openIssue(config, event, callback)
 
 module.exports = GitLabIssue

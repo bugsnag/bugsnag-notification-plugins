@@ -21,9 +21,9 @@
       "description": "The base URL to your GitLab installation (e.g. https://gitlab.com)"
     },
     {
-      "name": "project_name",
+      "name": "project_slug",
       "label": "Repository Name",
-      "description": "Which GitLab repository to create the issue on, eg my_project"
+      "description": "Which GitLab repository to create the issue on, eg rails/rails"
     },
     {
       "name": "labels",
