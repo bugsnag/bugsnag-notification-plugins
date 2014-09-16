@@ -16,7 +16,7 @@ class GitLabIssue extends NotificationPlugin
   @findProjectId: (config, projects) ->
     project = {}
     project = projects.filter (p) ->
-      p.name == encodeURIComponent(config.project_slug.split("/").slice(-1)[0])
+      p.name == encodeURIComponent(config.project_id.split("/").slice(-1)[0])
     project[0].id
 
   @gitlabRequest: (req, config) ->
@@ -40,7 +40,7 @@ class GitLabIssue extends NotificationPlugin
             callback null,
               id: res.body.id
               projectId: projectId
-              url: "#{config.gitlab_url}/#{config.project_slug}/issues/#{res.body.id}"
+              url: "#{config.gitlab_url}/#{config.project_id}/issues/#{res.body.id}"
 
   @ensureIssueOpen: (config, projectId, issueId, callback) ->
     @gitlabRequest(@request.put(@issueUrl(config, projectId, issueId)), config)
