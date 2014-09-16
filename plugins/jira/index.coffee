@@ -53,7 +53,7 @@ class Jira extends NotificationPlugin
       .on "error", (err) ->
         callback(err)
       .end (res) ->
-        return callback({status: res.error.status, message: res.error.message, body: res.body}) if res.error
+        return callback({status: res.error.status, message: Object.values(res.body.errors).first(), body: res.body}) if res.error
 
         callback null,
           id: res.body.id
