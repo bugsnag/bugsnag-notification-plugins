@@ -1,7 +1,18 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class GitLabIssue extends NotificationPlugin
-  @receiveEvent: (config, event, callback) =>
+  @baseUrl: (config) ->
+    "#{config.gitlab_url}/api/v3/projects/"
+
+  @issuesUrl: (config, id) ->
+    @baseUrl(config) + id + '/issues'
+
+  @findProjectId: (config, projects) ->
+    project = projects.filter (p) ->
+      p.name == encodeURIComponent(config.project_name)
+    project[0].id
+
+  @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
 
     # Build the ticket
@@ -10,18 +21,11 @@ class GitLabIssue extends NotificationPlugin
       description: @markdownBody(event)
       labels: (config?.labels || "bugsnag")
 
-    baseUrl = "#{config.gitlab_url}/api/v3/projects/"
-
-    @request.get(baseUrl)
+    @request.get(@baseUrl(config))
       .set("User-Agent", "Bugsnag")
       .set("PRIVATE-TOKEN", config.private_token)
       .end (res) =>
-        projectId = 0
-        res.body.map (project) ->
-          if project.name == encodeURIComponent(config.project_name)
-            projectId = project.id
-
-        @request.post(baseUrl + projectId + '/issues')
+        @request.post(@issuesUrl(config, @findProjectId(config, res.body)))
           .send(payload)
           .set("User-Agent", "Bugsnag")
           .set("PRIVATE-TOKEN", config.private_token)
