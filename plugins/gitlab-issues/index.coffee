@@ -19,6 +19,9 @@ class GitLabIssue extends NotificationPlugin
       p.name == encodeURIComponent(config.project_slug.split("/").slice(-1)[0])
     project[0].id
 
+  @gitlabRequest: (req, config) ->
+    req.set("User-Agent", "Bugsnag").set("PRIVATE-TOKEN", config.private_token)
+
   @openIssue: (config, event, callback) ->
     # Build the ticket
     payload =
@@ -26,15 +29,11 @@ class GitLabIssue extends NotificationPlugin
       description: @markdownBody(event)
       labels: (config?.labels || "bugsnag")
 
-    @request.get(@baseUrl(config))
-      .set("User-Agent", "Bugsnag")
-      .set("PRIVATE-TOKEN", config.private_token)
+    @gitlabRequest(@request.get(@baseUrl(config)), config)
       .end (res) =>
         projectId = @findProjectId(config, res.body)
-        @request.post(@issuesUrl(config, projectId))
+        @gitlabRequest(@request.post(@issuesUrl(config, projectId)), config)
           .send(payload)
-          .set("User-Agent", "Bugsnag")
-          .set("PRIVATE-TOKEN", config.private_token)
           .on("error", callback)
           .end (res) ->
             return callback(res.error) if res.error
@@ -44,20 +43,16 @@ class GitLabIssue extends NotificationPlugin
               url: "#{config.gitlab_url}/#{config.project_slug}/issues/#{res.body.id}"
 
   @ensureIssueOpen: (config, projectId, issueId, callback) ->
-    @request.put(@issueUrl(config, projectId, issueId))
+    @gitlabRequest(@request.put(@issueUrl(config, projectId, issueId)), config)
       .send({state_event: "reopen"})
-      .set("User-Agent", "Bugsnag")
-      .set("PRIVATE-TOKEN", config.private_token)
       .on "error", (err) ->
         callback(err)
       .end (res) ->
         callback(res.error)
 
   @addCommentToIssue: (config, event, id, comment) ->
-    @request.post(@notesUrl(config, event, id))
+    @gitlabRequest(@request.post(@notesUrl(config, event, id)), config)
       .send({body: comment})
-      .set("User-Agent", "Bugsnag")
-      .set("PRIVATE-TOKEN", config.private_token)
       .on("error", console.error)
       .end()
 
