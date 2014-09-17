@@ -2,22 +2,16 @@ NotificationPlugin = require "../../notification-plugin"
 
 class GitLabIssue extends NotificationPlugin
   @baseUrl: (config) ->
-    "#{config.gitlab_url}/api/v3/projects/"
+    "#{config.gitlab_url}/api/v3/projects"
 
-  @issuesUrl: (config, projectId) ->
-    @baseUrl(config) + projectId + '/issues'
+  @issuesUrl: (config) ->
+    "#{@baseUrl(config)}/#{encodeURIComponent(config.project_id)}/issues"
 
-  @issueUrl: (config, projectId, issueId) ->
-    @issuesUrl(config, projectId) + '/' + issueId
+  @issueUrl: (config, issueId) ->
+    @issuesUrl(config) + "/" + issueId
 
-  @notesUrl: (config, projectId, issueId) ->
-    @issueUrl(config, projectId, issueId) + '/notes'
-
-  @findProjectId: (config, projects) ->
-    project = {}
-    project = projects.filter (p) ->
-      p.name == encodeURIComponent(config.project_id.split("/").slice(-1)[0])
-    project[0].id
+  @notesUrl: (config, issueId) ->
+    @issueUrl(config, issueId) + "/notes"
 
   @gitlabRequest: (req, config) ->
     req.set("User-Agent", "Bugsnag").set("PRIVATE-TOKEN", config.private_token)
@@ -29,29 +23,25 @@ class GitLabIssue extends NotificationPlugin
       description: @markdownBody(event)
       labels: (config?.labels || "bugsnag")
 
-    @gitlabRequest(@request.get(@baseUrl(config)), config)
-      .end (res) =>
-        projectId = @findProjectId(config, res.body)
-        @gitlabRequest(@request.post(@issuesUrl(config, projectId)), config)
-          .send(payload)
-          .on("error", callback)
-          .end (res) ->
-            return callback(res.error) if res.error
-            callback null,
-              id: res.body.id
-              projectId: projectId
-              url: "#{config.gitlab_url}/#{config.project_id}/issues/#{res.body.id}"
+    @gitlabRequest(@request.post(@issuesUrl(config)), config)
+      .send(payload)
+      .on("error", callback)
+      .end (res) ->
+        return callback(res.error) if res.error
+        callback null,
+          id: res.body.id
+          url: "#{config.gitlab_url}/#{config.project_id}/issues/#{res.body.id}"
 
-  @ensureIssueOpen: (config, projectId, issueId, callback) ->
-    @gitlabRequest(@request.put(@issueUrl(config, projectId, issueId)), config)
+  @ensureIssueOpen: (config, issueId, callback) ->
+    @gitlabRequest(@request.put(@issueUrl(config, issueId)), config)
       .send({state_event: "reopen"})
       .on "error", (err) ->
         callback(err)
       .end (res) ->
         callback(res.error)
 
-  @addCommentToIssue: (config, event, id, comment) ->
-    @gitlabRequest(@request.post(@notesUrl(config, event, id)), config)
+  @addCommentToIssue: (config, issueId, comment) ->
+    @gitlabRequest(@request.post(@notesUrl(config, issueId)), config)
       .send({body: comment})
       .on("error", console.error)
       .end()
@@ -59,11 +49,10 @@ class GitLabIssue extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
     if event?.trigger?.type == "reopened"
       if event.error?.createdIssue?.id
-        projectId = event.error.createdIssue.projectId
-        issueId = event.error.createdIssue.id
-        @ensureIssueOpen(config, projectId, issueId, callback)
-        @addCommentToIssue(config, projectId, issueId, @markdownBody(event))
+        @ensureIssueOpen(config, event.error.createdIssue.id, callback)
+        @addCommentToIssue(config, event.error.createdIssue.id, @markdownBody(event))
     else
+      console.log config
       @openIssue(config, event, callback)
 
 module.exports = GitLabIssue
