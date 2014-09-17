@@ -1,4 +1,4 @@
-NotificationPlugin = require '../../notification-plugin.js'
+NotificationPlugin = require '../../notification-plugin'
 url = require 'url'
 
 class Hall extends NotificationPlugin

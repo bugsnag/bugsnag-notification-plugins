@@ -1,4 +1,4 @@
-NotificationPlugin = require "../../notification-plugin.js"
+NotificationPlugin = require "../../notification-plugin"
 
 class Slack extends NotificationPlugin
   @errorAttachment = (event) ->
