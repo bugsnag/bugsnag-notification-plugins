@@ -2,14 +2,24 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Campfire extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
-    # Build the message
-    message = "#{event.trigger.message} in #{event.error.releaseStage} from #{event.project.name}!"
-    if event.error
+
+    if event.trigger.type == 'projectSpiking'
+      message = "Spike of #{event.trigger.rate} exceptions/minute from #{event.project.name}."
+
+      message += " Most recent error:"
       message += " #{event.error.exceptionClass}" if event.error.exceptionClass
-      message += ": #{event.error.message}" if event.error.message
-      message += " (#{event.error.url})"
+      message += " #{event.error.message}" if event.error.message
+      message += ". (#{event.project.url})"
+
     else
-      message += " (#{event.project.url})"
+      # Build the message
+      message = "#{event.trigger.message} in #{event.error.releaseStage} from #{event.project.name}!"
+      if event.error
+        message += " #{event.error.exceptionClass}" if event.error.exceptionClass
+        message += ": #{event.error.message}" if event.error.message
+        message += " (#{event.error.url})"
+      else
+        message += " (#{event.project.url})"
 
     # Send the request to campfire
     @request
