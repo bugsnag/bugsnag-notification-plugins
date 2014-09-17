@@ -6,7 +6,7 @@ class BitbucketIssue extends NotificationPlugin
   BASE_URL = "https://bitbucket.org"
 
   @issuesUrl: (config) ->
-    "#{BASE_URL}/api/1.0/repositories/#{config.username}/#{config.repo}/issues"
+    "#{BASE_URL}/api/1.0/repositories/#{config.repo}/issues"
 
   @issueUrl: (config, issueId) ->
     @issuesUrl(config) + "/" + issueId
@@ -41,6 +41,7 @@ class BitbucketIssue extends NotificationPlugin
       "kind": config.kind
       "priority": config.priority
 
+    console.log @issuesUrl(config)
     # Send the request
     @bitbucketRequest(@request.post(@issuesUrl(config)), config)
       .send(qs.stringify(query_object))
@@ -51,7 +52,7 @@ class BitbucketIssue extends NotificationPlugin
 
         callback null,
           id: res.body.local_id
-          url: url.resolve(BASE_URL, "#{config.username}/#{config.repo}/issue/#{res.body.local_id}")
+          url: url.resolve(BASE_URL, "#{config.repo}/issue/#{res.body.local_id}")
 
   @receiveEvent: (config, event, callback) ->
     if event?.trigger?.type == "reopened"
