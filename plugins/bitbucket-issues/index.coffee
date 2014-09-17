@@ -5,6 +5,35 @@ qs = require 'qs'
 class BitbucketIssue extends NotificationPlugin
   BASE_URL = "https://bitbucket.org"
 
+  @issuesUrl: (config) ->
+    "#{BASE_URL}/api/1.0/repositories/#{config.username}/#{config.repo}/issues"
+
+  @issueUrl: (config, issueId) ->
+    @issuesUrl(config) + "/" + issueId
+
+  @commentsUrl: (config, issueId) ->
+    @issueUrl(config, issueId) + "/comments"
+
+  @bitbucketRequest: (req, config) ->
+    req
+      .timeout(4000)
+      .auth(config.username, config.password)
+      .set('Accept', 'application/json')
+
+  @ensureIssueOpen: (config, issueId, callback) ->
+    @bitbucketRequest(@request.put(@issueUrl(config, issueId)), config)
+      .send(qs.stringify({status: "open"}))
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        callback(res.error)
+
+  @addCommentToIssue: (config, issueId, comment) ->
+    @bitbucketRequest(@request.post(@commentsUrl(config, issueId)), config)
+      .send(qs.stringify({content: comment}))
+      .on("error", console.error)
+      .end()
+
   @openIssue: (config, event, callback) ->
     query_object =
       "title": @title(event)
@@ -13,11 +42,7 @@ class BitbucketIssue extends NotificationPlugin
       "priority": config.priority
 
     # Send the request
-    @request
-      .post(url.resolve(BASE_URL, "/api/1.0/repositories/#{config.username}/#{config.repo}/issues"))
-      .timeout(4000)
-      .auth(config.username, config.password)
-      .set('Accept', 'application/json')
+    @bitbucketRequest(@request.post(@issuesUrl(config)), config)
       .send(qs.stringify(query_object))
       .on "error", (err) ->
         callback(err)
@@ -26,7 +51,7 @@ class BitbucketIssue extends NotificationPlugin
 
         callback null,
           id: res.body.local_id
-          url: url.resolve(BASE_URL, "#{config.repo}/issue/#{res.body.local_id}")
+          url: url.resolve(BASE_URL, "#{config.username}/#{config.repo}/issue/#{res.body.local_id}")
 
   @receiveEvent: (config, event, callback) ->
     if event?.trigger?.type == "reopened"
