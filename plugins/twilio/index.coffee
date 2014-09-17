@@ -4,9 +4,11 @@ class Twilio extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
     # Build the message
     message = "[#{event.project.name}] #{event.trigger.message}"
-    if event.error
+    if event.trigger.type == 'projectSpiking'
+      message += ": #{event.trigger.rate} exceptions/minute"
+    else if event.error
       message += ": #{event.error.exceptionClass} in #{event.error.context}"
-    
+
     # Build the request
     params = 
       From: config.fromNumber
