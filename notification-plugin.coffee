@@ -125,6 +125,13 @@ NotificationPlugin = (->
         type: "firstException"
         message: "New exception"
 
+    if config.spike
+      delete config.spike
+      event.trigger =
+        type: "projectSpiking"
+        message: "Project Spiking"
+        rate: 103
+
     @receiveEvent config, event, callback
     return
 
