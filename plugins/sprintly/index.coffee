@@ -17,12 +17,20 @@ class Sprintly extends NotificationPlugin
     req.auth(config.sprintlyEmail, config.apiKey)
 
   @ensureIssueOpen: (config, issueId, callback) ->
-    @sprintlyRequest(@request.post(@issueUrl(config, issueId)), config)
-      .send(qs.stringify({status: "in-progress"}))
+    @sprintlyRequest(@request.get(@issueUrl(config, issueId)), config)
       .on "error", (err) ->
         callback(err)
-      .end (res) ->
-        callback(res.error)
+      .end (res) =>
+        status = res.body.status
+        if status
+          if status == "completed" || status == "accepted"
+            status = "someday"
+          @sprintlyRequest(@request.post(@issueUrl(config, issueId)), config)
+            .send(qs.stringify({status: status}))
+            .on "error", (err) ->
+              callback(err)
+            .end (res) ->
+              callback(res.error)
 
   @addCommentToIssue: (config, issueId, comment) ->
     @sprintlyRequest(@request.post(@commentsUrl(config, issueId)), config)
@@ -59,11 +67,11 @@ class Sprintly extends NotificationPlugin
           url: res.body.short_url
 
   @receiveEvent: (config, event, callback) ->
-    if event?.trigger?.type == "reopened"
-      if event?.error?.createdIssue?.number
-        @ensureIssueOpen(config, event.error.createdIssue.number, callback)
-        @addCommentToIssue(config, event.error.createdIssue.number, @markdownBody(event))
-    else
-      @openIssue(config, event, callback)
+    # if event?.trigger?.type == "reopened"
+    #   if event?.error?.createdIssue?.number
+        @ensureIssueOpen(config, 14, callback)
+    #     @addCommentToIssue(config, event.error.createdIssue.number, @markdownBody(event))
+    # else
+    #   @openIssue(config, event, callback)
 
 module.exports = Sprintly
