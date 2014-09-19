@@ -20,8 +20,60 @@ class Jira extends NotificationPlugin
     [View full stacktrace|#{event.error.url}]
     """
 
-  @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "reopened"
+  @baseUrl: (config) ->
+    url.resolve(config.host, "/rest/api/2")
+
+  @issuesUrl: (config) ->
+    @baseUrl(config) + "/issue"
+
+  @issueUrl: (config, issueId) ->
+    "#{@issuesUrl(config)}/#{issueId}"
+
+  @getTransitionUrl: (config, issueId) ->
+    @issueUrl(config, issueId) + "/transitions"
+
+  @postTransitionUrl: (config, issueId) ->
+    @issueUrl(config, issueId) + "/transitions?expand=transitions.fields"
+
+  @commentUrl: (config, issueId) ->
+    @issueUrl(config, issueId) + "/comment"
+
+  @jiraRequest: (req, config) ->
+    req
+      .timeout(4000)
+      .auth(config.username, config.password)
+      .set('Accept', 'application/json')
+
+  @ensureIssueOpen: (config, issueId, callback) ->
+    @jiraRequest(@request.get(@getTransitionUrl(config, issueId)), config)
+      .on "error", (err) ->
+        callback(err)
+      .end (res) =>
+        callback(res.error) if res.error
+
+        transition = res.body.transitions.filter((obj) -> obj.name == 'Reopen')[0]
+        return unless transition
+
+        payload = {
+          "transition": { "id": transition.id }
+        }
+
+        @jiraRequest(@request.post(@postTransitionUrl(config, issueId)), config)
+          .send(payload)
+          .on "error", (err) ->
+            callback(err)
+          .end (res) ->
+            callback(res.error) if res.error
+
+  @addCommentToIssue: (config, issueId, comment) ->
+    @jiraRequest(@request.post(@commentUrl(config, issueId)), config)
+      .send({body: comment})
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        callback(res.error) if res.error
+
+  @openIssue: (config, event, callback) ->
     # Build the ticket payload
     payload =
       fields:
@@ -44,11 +96,7 @@ class Jira extends NotificationPlugin
     config.host += "/" unless /\/$/.test(config.host)
 
     # Send the request
-    @request
-      .post(url.resolve(config.host, "rest/api/2/issue"))
-      .timeout(4000)
-      .auth(config.username, config.password)
-      .set('Accept', 'application/json')
+    @jiraRequest(@request.post(@issuesUrl(config)), config)
       .send(payload)
       .on "error", (err) ->
         callback(err)
@@ -59,5 +107,13 @@ class Jira extends NotificationPlugin
           id: res.body.id
           key: res.body.key
           url: url.resolve(config.host, "browse/#{res.body.key}")
+
+  @receiveEvent: (config, event, callback) ->
+    if event?.trigger?.type == "reopened"
+      if event?.error?.createdIssue?.id
+        @ensureIssueOpen(config, event.error.createdIssue.id, callback)
+        @addCommentToIssue(config, event.error.createdIssue.id, jiraBody(event))
+    else
+      @openIssue(config, event, callback)
 
 module.exports = Jira
