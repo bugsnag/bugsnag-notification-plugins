@@ -1,4 +1,5 @@
 NotificationPlugin = require "../../notification-plugin"
+Handlebars = require 'handlebars'
 url = require "url"
 
 class Jaconda extends NotificationPlugin
@@ -13,6 +14,8 @@ class Jaconda extends NotificationPlugin
         stack_trace_line: event.error.stacktrace && @firstStacktraceLine(event.error.stacktrace)
         project: event.project
         error: event.error
+        spiking: event.trigger.type == 'projectSpiking'
+        rate: event.trigger.rate
 
     else
 
@@ -43,11 +46,16 @@ class Jaconda extends NotificationPlugin
           id: res.body.message.id
 
   @render: Handlebars.compile(
-    '<b>{{title}}</b> from <a href="{{project.url}}">{{project.name}}</a>' +
-    '{{#if error}}' +
-      ' in <b>{{error.context}}</b> (<a href="{{error.url}}">details</a>)' +
-      '<br>&nbsp;&nbsp;&nbsp;{{error_string}}' +
-      '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;<code>{{stack_trace_line}}</code>{{/if}}' +
+    '{{#if spiking}}' +
+      'Spike of <b>{{rate}}</b> exceptions/minute in <a href="{{project.url}}">{{project.name}}</a><br/>' +
+      'Most recent error: {{error_string}} (<a href="{{error.url}}">details</a>)' +
+    '{{else}}' +
+      '<b>{{title}}</b> from <a href="{{project.url}}">{{project.name}}</a>' +
+      '{{#if error}}' +
+        ' in <b>{{error.context}}</b> (<a href="{{error.url}}">details</a>)' +
+        '<br>&nbsp;&nbsp;&nbsp;{{error_string}}' +
+        '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;<code>{{stack_trace_line}}</code>{{/if}}' +
+      '{{/if}}' +
     '{{/if}}'
   )
 

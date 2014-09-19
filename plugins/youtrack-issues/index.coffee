@@ -1,4 +1,4 @@
-NotificationPlugin = require "../../notification-plugin.js"
+NotificationPlugin = require "../../notification-plugin"
 
 Handlebars = require "handlebars"
 url = require "url"

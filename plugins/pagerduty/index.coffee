@@ -11,12 +11,22 @@ class PagerDuty extends NotificationPlugin
     details
 
   @receiveEvent: (config, event, callback) ->
-    payload =
-      service_key: config.serviceKey
-      event_type: 'trigger'
-      incident_key: event.error.url
-      description: "#{event.error.exceptionClass} in #{event.error.context}"
-      details: pagerDutyDetails(event)
+
+    if event.trigger.type == 'projectSpiking'
+      payload =
+        service_key: config.serviceKey
+        event_type: 'trigger'
+        incident_key: event.project.url
+        description: "Spike of #{event.trigger.rate} exceptions/minute in #{event.project.name}"
+        details: pagerDutyDetails(event)
+
+    else
+      payload =
+        service_key: config.serviceKey
+        event_type: 'trigger'
+        incident_key: event.error.url
+        description: "#{event.error.exceptionClass} in #{event.error.context}"
+        details: pagerDutyDetails(event)
 
     # Send the request
     @request

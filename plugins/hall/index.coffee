@@ -1,4 +1,5 @@
-NotificationPlugin = require '../../notification-plugin.js'
+NotificationPlugin = require '../../notification-plugin'
+Handlebars = require 'handlebars'
 url = require 'url'
 
 class Hall extends NotificationPlugin
@@ -30,15 +31,32 @@ class Hall extends NotificationPlugin
     '{{/if}}'
   )
 
+  @spikingTitle: Handlebars.compile(
+    'Spike of {{trigger.rate}} exceptions/minute from {{project.name}}'
+  )
+
+  @spikingMessage: Handlebars.compile(
+    'Most recent error: {{error.exceptionClass}}: {{error.message}} (<a href="{{error.url}}">details</a>)'
+  )
+
   # Build the request body
   @messagePayload = (config, event) ->
-    title: @messageTitle event
-    message: @messageBody
-      error: event.error
-      stack_trace_line: event.error.stacktrace && @firstStacktraceLine(event.error.stacktrace)
-      trigger: event.trigger
-      project: event.project
-    picture: BUGSNAG_AVATAR
+    if event.trigger.type == 'projectSpiking'
+      title: @spikingTitle event
+      message: @spikingMessage
+        error: event.error
+        trigger: event.trigger
+        project: event.project
+      picture: BUGSNAG_AVATAR
+
+    else
+      title: @messageTitle event
+      message: @messageBody
+        error: event.error
+        stack_trace_line: event.error.stacktrace && @firstStacktraceLine(event.error.stacktrace)
+        trigger: event.trigger
+        project: event.project
+      picture: BUGSNAG_AVATAR
 
   # Fire the event
   @receiveEvent = (config, event, callback) ->

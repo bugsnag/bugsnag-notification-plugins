@@ -1,4 +1,4 @@
-NotificationPlugin = require "../../notification-plugin.js"
+NotificationPlugin = require "../../notification-plugin"
 
 class Slack extends NotificationPlugin
   @errorAttachment = (event) ->
@@ -26,9 +26,14 @@ class Slack extends NotificationPlugin
   @receiveEvent = (config, event, callback) ->
     # Build the notification title
     projectName = event.project.name.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-    title = ["#{event.trigger.message} in #{event.error.releaseStage} from <#{event.project.url}|#{projectName}>"]
-    title.push("in #{event.error.context}")
-    title.push("<#{event.error.url}|(details)>")
+
+    if event.trigger.type == 'projectSpiking'
+      title = ["Spike of #{event.trigger.rate} exceptions/minute from <#{event.project.url}|#{projectName}>"]
+
+    else
+      title = ["#{event.trigger.message} in #{event.error.releaseStage} from <#{event.project.url}|#{projectName}>"]
+      title.push("in #{event.error.context}")
+      title.push("<#{event.error.url}|(details)>")
 
     # Build the common payload
     payload = {

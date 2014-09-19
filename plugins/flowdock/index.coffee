@@ -6,6 +6,7 @@ class Flowdock extends NotificationPlugin
 
   @receiveEvent: (config, event, callback) ->
 
+
     subject = "#{event.trigger.message} in #{event.project.name}"
     if event.error && event.error && event.error.releaseStage
       subject += " (#{event.error.releaseStage})"
@@ -14,6 +15,11 @@ class Flowdock extends NotificationPlugin
              event.error.url
            else
              event.project.url
+
+    if event.trigger.type == 'projectSpiking'
+      subject = 'Spike detected'
+      link = event.project.url
+      event.spiking = true
 
     # Flowdock projects can only contain alphanumeric characters, "_" and " "
     project = event.project.name.replace(/[^\w_]+/g, ' ')
@@ -39,29 +45,36 @@ class Flowdock extends NotificationPlugin
         callback(res.error)
 
   @render: Handlebars.compile '
-    {{#if error}}
-      <p>
-        <a href="{{error.url}}">
-          <strong>{{error.exceptionClass}} in {{error.context}}</strong>
-        </a>
-        <br/>
-        {{error.message}}
-      </p>
-      {{#if error.releaseStage}}
-        <p>Release stage: {{error.releaseStage}}</p>
-      {{/if}}
-      {{#if error.appVersion}}
-        <p>App version: {{error.appVersion}}</p>
-      {{/if}}
-
-      <p><strong>Stacktrace summary</strong></p>
-      <table>
-      {{#eachSummaryFrame error.stacktrace}}
-        <tr><td><tt>{{file}}:{{lineNumber}} - {{method}}</tt></td></tr>
-      {{/eachSummaryFrame}}
-      </table>
+    {{#if spiking}}
+      <p>Spike of <strong>{{trigger.rate}}</strong> exceptions/minute in
+      <a href="{{project.url}}">{{project.name}}</a></p>
+      <p>Most recent error: {{error.exceptionClass}} {{error.message}}
+      (<a href="{{error.url}}">details</a>)</p>
     {{else}}
-      {{trigger.message}} in <a href="{{project.url}}">{{project.name}}</a>
+      {{#if error}}
+        <p>
+          <a href="{{error.url}}">
+            <strong>{{error.exceptionClass}} in {{error.context}}</strong>
+          </a>
+          <br/>
+          {{error.message}}
+        </p>
+        {{#if error.releaseStage}}
+          <p>Release stage: {{error.releaseStage}}</p>
+        {{/if}}
+        {{#if error.appVersion}}
+          <p>App version: {{error.appVersion}}</p>
+        {{/if}}
+
+        <p><strong>Stacktrace summary</strong></p>
+        <table>
+        {{#eachSummaryFrame error.stacktrace}}
+          <tr><td><tt>{{file}}:{{lineNumber}} - {{method}}</tt></td></tr>
+        {{/eachSummaryFrame}}
+        </table>
+      {{else}}
+        {{trigger.message}} in <a href="{{project.url}}">{{project.name}}</a>
+      {{/if}}
     {{/if}}
     '
 
