@@ -132,6 +132,16 @@ NotificationPlugin = (->
         message: "Project Spiking"
         rate: 103
 
+    if config.comment
+      delete config.comment
+      event.trigger =
+        type: "comment"
+        message: "Comment Added"
+      event.comment =
+        message: "I think this should be easy to fix"
+      event.user =
+        name: "John Smith"
+
     @receiveEvent config, event, callback
     return
 
