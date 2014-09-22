@@ -39,11 +39,27 @@ class Hall extends NotificationPlugin
     'Most recent error: {{error.exceptionClass}}: {{error.message}} (<a href="{{error.url}}">details</a>)'
   )
 
+  @commentMessage: Handlebars.compile(
+    '{{user.name}} commented on {{error.exceptionClass}}: {{error.message}} (<a href="{{error.url}}">details</a>)' +
+    '<br/>&nbsp;&nbsp;&nbsp;"{{comment.message}}"'
+  )
+
   # Build the request body
   @messagePayload = (config, event) ->
     if event.trigger.type == 'projectSpiking'
       title: @spikingTitle event
       message: @spikingMessage
+        error: event.error
+        trigger: event.trigger
+        project: event.project
+      picture: BUGSNAG_AVATAR
+
+    else if event.trigger.type == 'comment'
+      title: @messageTitle event
+      message: @commentMessage
+        user: event.user
+        comment:
+          message: event.comment.message.truncate(80)
         error: event.error
         trigger: event.trigger
         project: event.project
