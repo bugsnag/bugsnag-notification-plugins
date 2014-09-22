@@ -16,7 +16,11 @@ class Hipchat extends NotificationPlugin
         error: event.error
         spiking: event.trigger.type == 'projectSpiking'
         rate: event.trigger.rate
+        comment: event.comment
+        user: event.user
 
+      if details.comment.message
+        details.comment.message = details.comment.message.truncate(80)
 
     else
 
@@ -59,15 +63,20 @@ class Hipchat extends NotificationPlugin
       callback(res.error)
 
   @render: Handlebars.compile(
-    '{{#if spiking}}' +
-      'Spike of <b>{{rate}}</b> exceptions/minute in <a href="{{project.url}}">{{project.name}}</a><br/>' +
-      'Most recent error: {{error_string}} (<a href="{{error.url}}">details</a>)' +
+    '{{#if comment}}' +
+      '<b>{{user.name}}</b> commented on <b>{{error_string}}</b> (<a href="{{error.url}}">details</a>)' +
+      '<br>&nbsp;&nbsp;&nbsp;"{{comment.message}}"' +
     '{{else}}' +
-      '<b>{{title}}</b> from <a href="{{project.url}}">{{project.name}}</a>' +
-      '{{#if error}}' +
-        ' in <b>{{error.context}}</b> (<a href="{{error.url}}">details</a>)' +
-        '<br>&nbsp;&nbsp;&nbsp;{{error_string}}' +
-        '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;<code>{{stack_trace_line}}</code>{{/if}}' +
+      '{{#if spiking}}' +
+        'Spike of <b>{{rate}}</b> exceptions/minute in <a href="{{project.url}}">{{project.name}}</a><br/>' +
+        'Most recent error: {{error_string}} (<a href="{{error.url}}">details</a>)' +
+      '{{else}}' +
+        '<b>{{title}}</b> from <a href="{{project.url}}">{{project.name}}</a>' +
+        '{{#if error}}' +
+          ' in <b>{{error.context}}</b> (<a href="{{error.url}}">details</a>)' +
+          '<br>&nbsp;&nbsp;&nbsp;{{error_string}}' +
+          '{{#if stack_trace_line}}<br>&nbsp;&nbsp;&nbsp;<code>{{stack_trace_line}}</code>{{/if}}' +
+        '{{/if}}' +
       '{{/if}}' +
     '{{/if}}'
   )
