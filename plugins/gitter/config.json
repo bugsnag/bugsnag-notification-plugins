@@ -1,0 +1,22 @@
+{
+  "name": "Gitter",
+  "url": "https://www.gitter.im",
+  "actions": {
+    "create": "Post to a Gitter chatroom"
+  },
+  "supportedTriggers": "all",
+  "type": "communication",
+  "fields": [
+    {
+      "name": "token",
+      "label": "Gitter token - [view on gitter](https://developer.gitter.im/apps)",
+      "description": "Your Gitter token",
+      "type": "password"
+    },
+    {
+      "name": "repo",
+      "label": "Repository",
+      "description": "The name of the chat room for a GitHub repository, e.g. rails/rails"
+    }
+  ]
+}
