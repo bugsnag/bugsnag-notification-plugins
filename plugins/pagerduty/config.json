@@ -1,7 +1,8 @@
 {
   "name": "PagerDuty",
   "actions": {
-    "create": "Create a PagerDuty incident."
+    "create": "Create a PagerDuty incident.",
+    "new": "Add Account"
   },
   "supportedTriggers": "all",
   "fields": [

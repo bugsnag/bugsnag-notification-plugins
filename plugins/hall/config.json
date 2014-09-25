@@ -2,7 +2,8 @@
   "name": "Hall",
   "url": "https://hall.com",
   "actions": {
-    "create": "Post to a Hall group"
+    "create": "Post to a Hall group",
+    "new": "Add Room"
   },
   "supportedTriggers": "all",
   "type": "communication",

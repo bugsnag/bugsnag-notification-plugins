@@ -2,7 +2,8 @@
   "name": "Campfire",
   "url": "https://campfirenow.com",
   "actions": {
-    "create": "Post to a Campfire chatroom"
+    "create": "Post to a Campfire chatroom",
+    "new": "Add Room"
   },
   "supportedTriggers": "all",
   "type": "communication",

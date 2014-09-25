@@ -2,7 +2,8 @@
   "name": "Twilio SMS",
   "url": "http://www.twilio.com",
   "actions": {
-    "create": "Send an SMS with Twilio"
+    "create": "Send an SMS with Twilio",
+    "new": "Add Account"
   },
   "supportedTriggers": "all",
   "type": "communication",

@@ -1,7 +1,8 @@
 {
   "name": "Email",
   "actions": {
-    "create": "Email project members"
+    "create": "Email project members",
+    "new": "Add Room"
   },
   "supportedTriggers": "all",
   "type": "communication",

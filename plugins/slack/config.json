@@ -2,7 +2,8 @@
   "name": "Slack",
   "url": "https://slack.com",
   "actions": {
-    "create": "Post to a Slack channel"
+    "create": "Post to a Slack channel",
+    "new": "Add Room"
   },
   "supportedTriggers": "all",
   "type": "communication",
