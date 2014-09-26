@@ -19,7 +19,7 @@ class Hipchat extends NotificationPlugin
         comment: event.comment
         user: event.user
 
-      if details.comment.message
+      if details.comment?.message
         details.comment.message = details.comment.message.truncate(80)
 
     else
