@@ -83,6 +83,6 @@ class Hall extends NotificationPlugin
       .on 'error', (err) ->
         callback err
       .end (res) ->
-        callback res.error if res.error or null
+        callback res.error
 
 module.exports = Hall
