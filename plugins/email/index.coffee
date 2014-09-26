@@ -8,7 +8,7 @@ class Email extends NotificationPlugin
     sidekiq = config.sidekiq
     delete config.sidekiq
 
-    sidekiq.enqueue SIDEKIQ_WORKER, [event.trigger.type, event.error.id, config, event.trigger.message],
+    sidekiq.enqueue SIDEKIQ_WORKER, [event.trigger.type, event.error.id, config, event.trigger.message, event],
       retry: false
       queue: SIDEKIQ_QUEUE
 

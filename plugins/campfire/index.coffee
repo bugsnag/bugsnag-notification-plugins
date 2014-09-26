@@ -11,6 +11,13 @@ class Campfire extends NotificationPlugin
       message += " #{event.error.message}" if event.error.message
       message += ". (#{event.project.url})"
 
+    else if event.trigger.type == 'comment'
+      message = "#{event.user.name} commented on "
+      message += " #{event.error.exceptionClass}" if event.error.exceptionClass
+      message += " #{event.error.message}" if event.error.message
+      message += "\"#{event.comment.message.truncate(80)}\""
+      message += ". (#{event.error.url})"
+
     else
       # Build the message
       message = "#{event.trigger.message} in #{event.error.releaseStage} from #{event.project.name}!"
