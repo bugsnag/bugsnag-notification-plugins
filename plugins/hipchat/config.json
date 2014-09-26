@@ -31,6 +31,7 @@
       "label": "Background Color",
       "description": "The background color for HipChat notifications",
       "optional": true,
+      "type": "select",
       "allowedValues": ["yellow", "red", "green", "purple", "random"],
       "defaultValue": "yellow"
     }

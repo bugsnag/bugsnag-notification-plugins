@@ -32,6 +32,7 @@
       "name": "priority",
       "label": "Issue Priority",
       "description": "The priority of the issue to be created",
+      "type": "select",
       "allowedValues": ["low", "normal", "high", "urgent", "immediate"],
       "defaultValue": "normal",
       "section": "tags"

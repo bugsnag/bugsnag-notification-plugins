@@ -22,6 +22,7 @@
       "name": "itemType",
       "label": "Item Type",
       "description": "The type of item to be created. These are the default values, you might have renamed them.",
+      "type": "select",
       "allowedValues": ["Defects (Bugs)", "Features (Product Backlog)", "Tasks (Custom Items)", "Incidents (Help Desk)"],
       "defaultValue": "Defects (Bugs)"
     },

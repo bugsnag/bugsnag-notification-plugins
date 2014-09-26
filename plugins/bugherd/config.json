@@ -25,6 +25,7 @@
       "name": "priority",
       "label": "Priority",
       "description": "The priority of the task",
+      "type": "select",
       "allowedValues": ["not set", "minor", "normal", "important", "critical"],
       "defaultValue": "not set",
       "section": "tags"
@@ -40,6 +41,7 @@
       "name": "status",
       "label": "Status",
       "description": "Tag the new task (eg. ui, admin)",
+      "type": "select",
       "allowedValues": ["backlog", "todo", "doing", "done", "closed"],
       "defaultValue": "backlog",
       "section": "tags"

@@ -37,6 +37,7 @@
       "name": "priority",
       "label": "Priority",
       "description": "The priority of the ticket to be created",
+      "type": "select",
       "allowedValues": ["lowest", "low", "normal", "high", "highest"],
       "defaultValue": "normal",
       "section": "tags"

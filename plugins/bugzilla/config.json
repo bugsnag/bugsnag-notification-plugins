@@ -42,6 +42,7 @@
       "name": "priority",
       "label": "Priority",
       "description": "The priority of the bug",
+      "type": "select",
       "allowedValues": ["Highest", "High", "Normal", "Low", "Lowest"],
       "defaultValue": "Normal"
     }

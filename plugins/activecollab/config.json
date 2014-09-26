@@ -31,6 +31,7 @@
       "name": "priority",
       "label": "Priority",
       "description": "The priority of the task",
+      "type": "select",
       "allowedValues": ["Highest", "High", "Normal", "Low", "Lowest"],
       "defaultValue": "Normal",
       "section": "tags"
@@ -39,6 +40,7 @@
       "name": "visibility",
       "label": "Visibility",
       "description": "The visibility of the task [More info...](https://activecollab.com/help/books/getting-started/visibility.html)",
+      "type": "select",
       "allowedValues": ["Normal", "Private"],
       "defaultValue": "Normal",
       "section": "tags"

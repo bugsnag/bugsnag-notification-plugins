@@ -31,6 +31,7 @@
       "name": "kind",
       "label": "Issue Kind",
       "description": "The kind of issue to be created",
+      "type": "select",
       "allowedValues": ["bug", "task", "proposal", "enhancement"],
       "defaultValue": "bug",
       "section": "tags"
@@ -39,6 +40,7 @@
       "name": "priority",
       "label": "Issue Priority",
       "description": "The priority of the issue to be created",
+      "type": "select",
       "allowedValues": ["blocker", "critical", "major", "minor", "trivial"],
       "defaultValue": "critical",
       "section": "tags"
