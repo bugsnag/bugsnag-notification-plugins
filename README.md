@@ -85,7 +85,7 @@ plugin directly on the command line. In your new plugin directory
 Command line options represent the customizable per-project settings as
 defined in your `config.json` file.
 
-**NOTE:** You should ensure you have run `npm install` in the top level
+> Note: You should ensure you have run `npm install` in the top level
 directory first, to install the dependencies for the project.
 
 
