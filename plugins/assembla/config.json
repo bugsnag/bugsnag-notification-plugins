@@ -30,6 +30,13 @@
       "label": "Tags",
       "description": "Which tags to add to tickets, comma delimited",
       "optional": true
+    },
+    {
+      "name": "customFields",
+      "label": "Custom Fields - [view Assembla docs](https://helpdesk.assembla.com/customer/portal/articles/694350-custom-fields)",
+      "description": "Additional JSON-encoded Assembla fields, eg {\"list\": \"FixMe\", \"type\": "defect"}",
+      "type": "json",
+      "optional": true
     }
   ]
 }

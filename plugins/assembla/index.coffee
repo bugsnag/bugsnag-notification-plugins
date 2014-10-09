@@ -47,6 +47,9 @@ class Assembla extends NotificationPlugin
           description: renderBody(event)
           tags: tagNames
 
+      if config.customFields
+        payload.ticket.custom_fields = JSON.parse(config.customFields)
+
       # Create the ticket
       @request
         .post("#{API_BASE_URL}/spaces/#{space.id}/tickets.json")
