@@ -47,6 +47,13 @@
       "optional": true,
       "defaultValue": false,
       "section": "labeling"
+    },
+    {
+      "name": "url",
+      "label": "URL",
+      "description": "The GitHub Enterprise URL (e.g. https://github.local/api/v3)",
+      "optional": true,
+      "section": "enterprise"
     }
   ]
 }
