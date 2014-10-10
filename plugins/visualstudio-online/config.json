@@ -1,0 +1,37 @@
+{
+    "name": "Visual studio online",
+    "url": "https://www.visualstudio.com",
+    "actions": {
+        "create": "Create a bug on visualstudio.com",
+        "view": "View on visualstudio.com",
+        "object": "Bug"
+    },
+    "type": "issueTracker",
+    "fields": [
+        {
+            "name": "username",
+            "label": "Username",
+            "description": "Your username [alternate credentials]",
+            "section": "authentication"
+        },
+        {
+            "name": "password",
+            "label": "Password",
+            "description": "Your password [alternate credentials]",
+            "type": "password",
+            "section": "authentication"
+        },
+        {
+            "name": "account",
+            "label": "Account",
+            "description": "The name of your account (ie : xxxx.visualstudio.com)",
+            "section": "authentication"
+        },
+        {
+            "name": "project",
+            "label": "Project",
+            "description": "Project in which to create the bug",
+            "section": "authentication"
+        }
+    ]
+}
