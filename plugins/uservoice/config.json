@@ -16,7 +16,7 @@
     {
       "name": "apiKey",
       "label": "API Key",
-      "description": "Your UserVoice API key (Settings -> Channels -> Add API client)",
+      "description": "Your UserVoice API key (Settings -> Integrations -> Uservoice API Keys)",
       "type": "password"
     }
   ]
