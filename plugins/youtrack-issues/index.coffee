@@ -61,7 +61,7 @@ class YouTrack extends NotificationPlugin
     '''{{error.exceptionClass}}''' in '''{{error.context}}'''
     {{#if error.message}}{{error.message}}{{/if}}
 
-    [View on bugsnag.com|{{error.url}}]
+    [View on Bugsnag|{{error.url}}]
 
     == Stacktrace ==
 

@@ -11,7 +11,7 @@ class Asana extends NotificationPlugin
 
     #{event.error.message if event.error.message}
 
-    View on bugsnag.com:
+    View on Bugsnag:
     #{event.error.url}
 
     Stacktrace:
@@ -20,7 +20,7 @@ class Asana extends NotificationPlugin
 
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
-    
+
     # Look up workspace id from project name
     getWorkspaceId = (cb) =>
       @request

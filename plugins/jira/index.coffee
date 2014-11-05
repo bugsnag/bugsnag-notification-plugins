@@ -9,7 +9,7 @@ class Jira extends NotificationPlugin
     *#{event.error.exceptionClass}* in *#{event.error.context}*
     #{event.error.message if event.error.message}
 
-    [View on bugsnag.com|#{event.error.url}]
+    [View on Bugsnag|#{event.error.url}]
 
     h1. Stacktrace
 

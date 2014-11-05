@@ -12,7 +12,7 @@ class Assembla extends NotificationPlugin
 
     #{event.error.message if event.error.message}
 
-    [[url:#{event.error.url}|View on bugsnag.com]]
+    [[url:#{event.error.url}|View on Bugsnag]]
 
     Stacktrace:
     <pre><code>
