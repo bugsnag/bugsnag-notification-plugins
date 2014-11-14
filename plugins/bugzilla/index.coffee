@@ -4,8 +4,21 @@ url = require "url"
 xmlrpc = require "xmlrpc"
 
 class Bugzilla extends NotificationPlugin
+  authedRequest = (config, method, payload, callback) ->
+    client = xmlrpc.createClient(url: url.resolve(config.host, "xmlrpc.cgi"), cookies: true)
+    client.methodCall "User.login", [login: config.login, password: config.password], (err, response) ->
+      return callback({status: 401, code: err.faultCode, message: err.faultString}) if err
+
+      client.methodCall method, [payload], (err, response) ->
+        return callback({status: 400, code: err.faultCode, message: err.faultString}) if err
+
+        callback null, response
+
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
+
+    # Normalize the url: https://example.com/bugzilla becomes https://example.com/bugzilla/
+    config.host += "/" unless /\/$/.test(config.host)
 
     # Build the ticket payload
     payload =
@@ -18,19 +31,12 @@ class Bugzilla extends NotificationPlugin
       platform: 'All'
       priority: config.priority
 
-    # https://example.com/bugzilla becomes https://example.com/bugzilla/
-    config.host += "/" unless /\/$/.test(config.host)
+    # Create the new bug
+    authedRequest config, "Bug.create", payload, (err, response) ->
+      return callback(err) if err
 
-    # Login and send the request
-    client = xmlrpc.createClient(url: url.resolve(config.host, "xmlrpc.cgi"), cookies: true)
-    client.methodCall "User.login", [login: config.login, password: config.password], (err, response) ->
-      return callback({status: 401, code: err.faultCode, message: err.faultString}) if err
-
-      client.methodCall "Bug.create", [payload], (err, response) ->
-        return callback({status: 400, code: err.faultCode, message: err.faultString}) if err
-
-        callback null,
-          id: response.id,
-          url: url.resolve(config.host, "show_bug.cgi?id=#{response.id}")
+      callback null,
+        id: response.id,
+        url: url.resolve(config.host, "show_bug.cgi?id=#{response.id}")
 
 module.exports = Bugzilla
