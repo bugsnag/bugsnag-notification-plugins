@@ -187,7 +187,7 @@ if module.parent and module.parent.parent is null
   try
     NotificationPlugin.validateConfig config, path.dirname(module.parent.filename) + "/config.json"
   catch err
-    console.error err.message
+    return console.error err.message
 
   # Fire a test event
   plugin = require(module.parent.filename)
