@@ -5,7 +5,10 @@ xmlrpc = require "xmlrpc"
 
 class Bugzilla extends NotificationPlugin
   authedRequest = (config, method, payload, callback) ->
-    client = xmlrpc.createClient(url: url.resolve(config.host, "xmlrpc.cgi"), cookies: true)
+    host = if /\/$/.test(config.host) then config.host else config.host + "/"
+    createClient = if config.host.startsWith("https://") then xmlrpc.createSecureClient else xmlrpc.createClient
+
+    client = createClient(url: url.resolve(host, "xmlrpc.cgi"), cookies: true)
     client.methodCall "User.login", [login: config.login, password: config.password], (err, response) ->
       return callback({status: 401, code: err.faultCode, message: err.faultString}) if err
 
