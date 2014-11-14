@@ -29,6 +29,7 @@ NotificationPlugin = (->
   # Load templates
   NotificationPlugin.markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md.hbs", "utf8"))
   NotificationPlugin.htmlTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.html.hbs", "utf8"))
+  NotificationPlugin.textTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.text.hbs", "utf8"))
 
   # Fired when a new event is triggered for notification
   # Plugins MUST override this method
@@ -72,6 +73,9 @@ NotificationPlugin = (->
 
   NotificationPlugin.htmlBody = (event) ->
     @htmlTemplate event
+
+  NotificationPlugin.textBody = (event) ->
+    @textTemplate event
 
 
   # Utility methods for http requests

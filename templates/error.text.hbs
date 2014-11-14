@@ -1,0 +1,11 @@
+# {{trigger.message}} in {{project.name}}
+
+{{error.exceptionClass}} in {{error.context}}
+{{#if error.message}}{{error.message}}{{/if}}
+
+# Stacktrace
+{{#eachSummaryFrame error.stacktrace}}
+{{file}}:{{lineNumber}} - {{method}}{{/eachSummaryFrame}}
+
+View full stacktrace on Bugsnag:
+{{error.url}}
