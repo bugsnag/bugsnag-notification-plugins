@@ -5,6 +5,8 @@ xmlrpc = require "xmlrpc"
 
 class Bugzilla extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "reopened"
+
     # Build the ticket payload
     payload =
       product: config.product
@@ -19,14 +21,13 @@ class Bugzilla extends NotificationPlugin
     # https://example.com/bugzilla becomes https://example.com/bugzilla/
     config.host += "/" unless /\/$/.test(config.host)
 
-    client = xmlrpc.createClient(url: url.resolve(config.host, "xmlrpc.cgi"), cookies: true)
     # Login and send the request
+    client = xmlrpc.createClient(url: url.resolve(config.host, "xmlrpc.cgi"), cookies: true)
     client.methodCall "User.login", [login: config.login, password: config.password], (err, response) ->
-      return callback({status: err.faultCode, message: err.faultString}) if err
+      return callback({status: 401, code: err.faultCode, message: err.faultString}) if err
 
-      # return cb(err) if err
       client.methodCall "Bug.create", [payload], (err, response) ->
-        return callback({status: err.faultCode, message: err.faultString}) if err
+        return callback({status: 400, code: err.faultCode, message: err.faultString}) if err
 
         callback null,
           id: response.id,
