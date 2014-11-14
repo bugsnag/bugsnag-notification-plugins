@@ -11,14 +11,14 @@
     {
       "name": "host",
       "label": "URL",
-      "description": "Your Bugzilla server address",
+      "description": "Your Bugzilla server address, eg http://example.com/bugzilla",
       "pattern": "https?:\/\/.+",
       "section": "authentication"
     },
     {
       "name": "login",
       "label": "Login",
-      "description": "Your Bugzilla login",
+      "description": "Your Bugzilla email address",
       "section": "authentication"
     },
     {
@@ -31,19 +31,17 @@
     {
       "name": "product",
       "label": "Product",
-      "description": "The name of your product"
+      "description": "The name of the Product to create bugs in"
     },
     {
       "name": "component",
       "label": "Component",
-      "description": "The name of a component in the product above"
+      "description": "The name of a Component to create bugs in"
     },
     {
       "name": "priority",
       "label": "Priority",
       "description": "The priority of the bug",
-      "type": "select",
-      "allowedValues": ["Highest", "High", "Normal", "Low", "Lowest"],
       "defaultValue": "Normal"
     }
   ]
