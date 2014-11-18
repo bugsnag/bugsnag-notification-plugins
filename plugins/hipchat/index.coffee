@@ -41,7 +41,7 @@ class Hipchat extends NotificationPlugin
       color: config.color || "yellow"
 
     # Send the request
-    response = if config.authToken.length == 40
+    if config.authToken.length == 40
       @request
         .post(getApiUrl(config, "v2/room/#{config.roomId}/notification"))
         .set("Content-Type", "application/json")
