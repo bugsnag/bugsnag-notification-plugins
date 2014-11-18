@@ -1,16 +1,10 @@
 NotificationPlugin = require "../../notification-plugin"
 Handlebars = require 'handlebars'
-url = require "url"
 
 class Hipchat extends NotificationPlugin
   API_BASE_URL = "https://api.hipchat.com/"
 
   getApiUrl = (config, path) ->
-    if config.authToken.length == 40
-      apiVer = 2
-    else
-      apiVer = 1
-
     if config.host?
       host = if /\/$/.test(config.host) then config.host else config.host + "/"
     else
