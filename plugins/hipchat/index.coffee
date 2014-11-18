@@ -13,8 +13,6 @@ class Hipchat extends NotificationPlugin
     "#{host}#{path}?auth_token=#{config.authToken}"
 
   @receiveEvent: (config, event, callback) ->
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
-
     # Build the message
     if event.error
       details =
