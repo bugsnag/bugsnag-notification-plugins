@@ -1,13 +1,28 @@
 NotificationPlugin = require "../../notification-plugin"
 Handlebars = require 'handlebars'
+url = require "url"
 
 class Hipchat extends NotificationPlugin
   API_BASE_URL = "https://api.hipchat.com/"
 
+  getApiUrl = (config, path) ->
+    if config.authToken.length == 40
+      apiVer = 2
+    else
+      apiVer = 1
+
+    if config.host?
+      host = if /\/$/.test(config.host) then config.host else config.host + "/"
+    else
+      host = API_BASE_URL
+
+    "#{host}#{path}?auth_token=#{config.authToken}"
+
   @receiveEvent: (config, event, callback) ->
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+
     # Build the message
     if event.error
-
       details =
         title: "#{event.trigger.message} in #{event.error.releaseStage}"
         error_string: (event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)
@@ -23,14 +38,8 @@ class Hipchat extends NotificationPlugin
         details.comment.message = details.comment.message.truncate(80)
 
     else
-
       details =
         title: event.trigger.message
-
-    if config.authToken.length == 40
-      apiVer = 2
-    else
-      apiVer = 1
 
     # Build the payload
     payload =
@@ -39,28 +48,30 @@ class Hipchat extends NotificationPlugin
       notify: ["1", "true", true].indexOf(config.notify) != -1
       color: config.color || "yellow"
 
-    url = "#{API_BASE_URL}v#{apiVer}"
-
-    if apiVer == 2
-      url += "/room/#{config.roomId}/notification?auth_token=#{config.authToken}"
-    else
-      payload.notify = "1" if payload.notify
-      payload.auth_token = config.authToken
-      payload.room_id = config.roomId
-      url += "/rooms/message"
-
     # Send the request
-    resp = @request.post(url).timeout(4000).send(payload)
+    response = if config.authToken.length == 40
+      @request
+        .post(getApiUrl(config, "v2/room/#{config.roomId}/notification"))
+        .set("Content-Type", "application/json")
+        .timeout(4000)
+        .send(payload)
+        .on "error", (err) ->
+          callback(err)
+        .end (res) ->
+          callback(res.error)
 
-    if apiVer == 2
-      resp.set("Content-Type", "application/json")
     else
-      resp.type("form")
+      payload.room_id = config.roomId
+      @request
+        .post(getApiUrl(config, "v1/rooms/message"))
+        .type("form")
+        .timeout(4000)
+        .send(payload)
+        .on "error", (err) ->
+          callback(err)
+        .end (res) ->
+          callback(res.error)
 
-    resp.on "error", (err) ->
-      callback(err)
-    .end (res) ->
-      callback(res.error)
 
   @render: Handlebars.compile(
     '{{#if comment}}' +

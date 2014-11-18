@@ -34,6 +34,12 @@
       "type": "select",
       "allowedValues": ["yellow", "red", "green", "purple", "random"],
       "defaultValue": "yellow"
+    },
+    {
+      "name": "host",
+      "label": "HipChat Server Url",
+      "description": "If using HipChat Server, enter your URL, eg. https://hipchat.example.com",
+      "optional": true
     }
   ]
 }
