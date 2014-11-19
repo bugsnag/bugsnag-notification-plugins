@@ -1,17 +1,13 @@
-require "sugar"
-fs = require("fs")
-Handlebars = require("handlebars")
+fs = require "fs"
+sugar = require "sugar"
+handlebars = require "handlebars"
 
-Handlebars.registerHelper "eachSummaryFrame", (stack, options) ->
-  NotificationPlugin.getSummaryStacktrace(stack).map((line) ->
-    options.fn line
-  ).join ""
 
 #
 # The base Bugsnag NotificationPlugin class
 # Extend this class to create your own Bugsnag notification plugins:
 #
-#   NotificationPlugin = require "../../notification-plugin.js"
+#   NotificationPlugin = require "../../notification-plugin.coffee"
 #   class MyPlugin extends NotificationPlugin
 #     @receiveEvent = (config, event) ->
 #       ...
@@ -23,66 +19,73 @@ Handlebars.registerHelper "eachSummaryFrame", (stack, options) ->
 # See https://github.com/bugsnag/bugsnag-notification-plugins/ for full docs
 #
 
-NotificationPlugin = (->
-  NotificationPlugin = ->
-
-  # Load templates
-  NotificationPlugin.markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md.hbs", "utf8"))
-  NotificationPlugin.htmlTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.html.hbs", "utf8"))
-  NotificationPlugin.textTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.text.hbs", "utf8"))
-
+class NotificationPlugin
   # Fired when a new event is triggered for notification
   # Plugins MUST override this method
-  NotificationPlugin.receiveEvent = (config, event, callback) ->
+  @receiveEvent: (config, event, callback) ->
     throw new Error("Plugins must override receiveEvent")
 
-
-  # Utility methods for generating notification content
-  NotificationPlugin.stacktraceLineString = (stacktraceLine) ->
-    stacktraceLine.file + ":" + stacktraceLine.lineNumber + " - " + stacktraceLine.method
-
-  NotificationPlugin.basicStacktrace = (stacktrace) ->
-    @getSummaryStacktrace(stacktrace).map((line) ->
-      @stacktraceLineString line
+  # Plain-text stacktrace summary
+  @basicStacktrace = (stacktrace) ->
+    summaryStacktrace(stacktrace).map((line) ->
+      stacktraceLineString line
     , this).join "\n"
 
-
   # Returns the first line of a stacktrace (formatted)
-  NotificationPlugin.firstStacktraceLine = (stacktrace) ->
-    @stacktraceLineString @getSummaryStacktrace(stacktrace)[0]
+  @firstStacktraceLine = (stacktrace) ->
+    stacktraceLineString summaryStacktrace(stacktrace)[0]
 
+  # An error title, eg "Exception in dashboard#payments"
+  @title = (event) ->
+    event.error.exceptionClass + " in " + event.error.context
+
+  # A markdown-formatted error description
+  @markdownBody = (event) ->
+    markdownTemplate event
+
+  # An html-formatted error description
+  @htmlBody = (event) ->
+    htmlTemplate event
+
+  # A plan-text error description
+  @textBody = (event) ->
+    textTemplate event
+
+  # Utility methods for http requests
+  @request: require("superagent")
+
+
+  #
+  # Internal/utility functions
+  #
+
+  # Change a stackframe object into a string
+  stacktraceLineString = (stacktraceLine) ->
+    stacktraceLine.file + ":" + stacktraceLine.lineNumber + " - " + stacktraceLine.method
 
   # Utility to determine whether a stacktrace line is `inProject`
-  NotificationPlugin.inProjectStacktraceLine = (line) ->
+  inProjectStacktraceLine = (line) ->
     line? and "inProject" of line and line.inProject
 
-
   # Utility for getting all the stacktrace lines that are `inProject`
-  NotificationPlugin.getSummaryStacktrace = (stacktrace) ->
+  summaryStacktrace = (stacktrace) ->
     filtered = undefined
 
     # If there are no 'inProject' stacktrace lines
-    filtered = stacktrace.slice(0, 3)  unless (filtered = stacktrace.filter(@inProjectStacktraceLine)).length
+    filtered = stacktrace.slice(0, 3)  unless (filtered = stacktrace.filter(inProjectStacktraceLine)).length
     filtered
 
-  NotificationPlugin.title = (event) ->
-    event.error.exceptionClass + " in " + event.error.context
+  # Handlebars templates for error descriptions
+  markdownTemplate = handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md.hbs", "utf8"))
+  htmlTemplate = handlebars.compile(fs.readFileSync(__dirname + "/templates/error.html.hbs", "utf8"))
+  textTemplate = handlebars.compile(fs.readFileSync(__dirname + "/templates/error.text.hbs", "utf8"))
 
-  NotificationPlugin.markdownBody = (event) ->
-    @markdownTemplate event
-
-  NotificationPlugin.htmlBody = (event) ->
-    @htmlTemplate event
-
-  NotificationPlugin.textBody = (event) ->
-    @textTemplate event
-
-
-  # Utility methods for http requests
-  NotificationPlugin.request = require("superagent")
+  # Template helpers
+  handlebars.registerHelper "eachSummaryFrame", (stack, options) ->
+    summaryStacktrace(stack).map((line) -> options.fn line).join("")
 
   # Fire a test event to your notification plugin (do not override)
-  NotificationPlugin.fireTestEvent = (config, callback) ->
+  @fireTestEvent: (config, callback) ->
     event =
       error:
         exceptionClass: "ExampleException"
@@ -147,11 +150,10 @@ NotificationPlugin = (->
         name: "John Smith"
 
     @receiveEvent config, event, callback
-    return
 
 
   # Configuration validation methods (do not override)
-  NotificationPlugin.validateConfig = (config, pluginConfigFile) ->
+  @validateConfig = (config, pluginConfigFile) ->
     fs = require("fs")
     pluginConfig = JSON.parse(fs.readFileSync(pluginConfigFile, "ascii"))
     if pluginConfig.fields
@@ -166,12 +168,8 @@ NotificationPlugin = (->
 
         # Fill in default values
         config[option.name] = option.defaultValue  if not configValue? and option.defaultValue isnt `undefined`
-        return
 
-    return
 
-  NotificationPlugin
-)()
 module.exports = NotificationPlugin
 
 # If running plugins from the command line, allow them to fire test events
@@ -200,4 +198,3 @@ if module.parent and module.parent.parent is null
       console.error "Error firing notification\n", err
     else
       console.log "Fired test event successfully\n", data
-    return
