@@ -54,6 +54,7 @@ class Hipchat extends NotificationPlugin
 
     else
       payload.room_id = config.roomId
+      payload.notify = "1" if payload.notify == true
       @request
         .post(getApiUrl(config, "v1/rooms/message"))
         .type("form")
