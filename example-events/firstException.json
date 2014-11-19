@@ -1,0 +1,48 @@
+{
+  "error": {
+    "exceptionClass": "ExampleException",
+    "message": "Something really bad happened",
+    "context": "home#example",
+    "appVersion": "1.0.0",
+    "releaseStage": "production",
+    "occurrences": 42,
+    "usersAffected": 20,
+    "url": "http://bugsnag.com/errors/example/events/example",
+    "stacktrace": [
+      {
+        "file": "app/controllers/home_controller.rb",
+        "lineNumber": 123,
+        "method": "example",
+        "inProject": true
+      },
+      {
+        "file": "app/controllers/other_controller.rb",
+        "lineNumber": 12,
+        "method": "broken",
+        "inProject": true
+      },
+      {
+        "file": "gems/junk/junkfile.rb",
+        "lineNumber": 999,
+        "method": "something",
+        "inProject": false
+      },
+      {
+        "file": "lib/important/magic.rb",
+        "lineNumber": 4,
+        "method": "load_something",
+        "inProject": true
+      }
+    ]
+  },
+
+  "project": {
+    "name": "Example.com",
+    "url": "http://bugsnag.com/projects/example"
+  },
+
+  "trigger": {
+    "type": "firstException",
+    "message": "New exception"
+  }
+}
