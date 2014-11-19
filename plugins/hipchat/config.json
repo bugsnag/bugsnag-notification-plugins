@@ -20,11 +20,10 @@
       "description": "The ID or name of the HipChat chat room to send notifications to"
     },
     {
-      "name": "notify",
-      "label": "Notify",
-      "description": "Should we trigger a notification for people in the room?",
-      "type": "boolean",
-      "defaultValue": false
+      "name": "host",
+      "label": "HipChat Server URL (Optional)",
+      "description": "If using HipChat Server, enter your URL, eg. https://hipchat.example.com",
+      "optional": true
     },
     {
       "name": "color",
@@ -34,6 +33,13 @@
       "type": "select",
       "allowedValues": ["yellow", "red", "green", "purple", "random"],
       "defaultValue": "yellow"
+    },
+    {
+      "name": "notify",
+      "label": "Notify",
+      "description": "Should we trigger a notification for people in the room?",
+      "type": "boolean",
+      "defaultValue": false
     }
   ]
 }
