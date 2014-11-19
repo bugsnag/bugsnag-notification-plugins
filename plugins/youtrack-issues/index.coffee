@@ -31,6 +31,7 @@ class YouTrack extends NotificationPlugin
         callback err
       .end (res) ->
         return callback res.error if res.error
+        return callback "401: Unable to login - please check your credentials" unless res.headers['set-cookie']
         callback null, handleCookies res
 
   @createTicket = (config, event, token, callback) ->
