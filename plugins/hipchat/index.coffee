@@ -5,7 +5,7 @@ class Hipchat extends NotificationPlugin
   API_BASE_URL = "https://api.hipchat.com/"
 
   getApiUrl = (config, path) ->
-    if config.host?
+    if config.host? && config.host != ""
       host = if /\/$/.test(config.host) then config.host else config.host + "/"
     else
       host = API_BASE_URL
