@@ -48,7 +48,7 @@ class YouTrack extends NotificationPlugin
       .end (res) ->
         return callback res.error if res.error
         callback null,
-          url: res.header.location
+          url: res.header.location.replace("/rest/", "/")
 
   @receiveEvent = (config, event, callback) ->
     @fetchToken config, (err, token) =>
