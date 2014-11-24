@@ -47,7 +47,7 @@
     {
       "name": "version",
       "label": "Version",
-      "description": "The version of the bug",
+      "description": "The version associated with the bug",
       "defaultValue": "unspecified"
     },
     {
