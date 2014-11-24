@@ -28,11 +28,14 @@ class Bugzilla extends NotificationPlugin
       product: config.product
       component: config.component
       summary: NotificationPlugin.title(event)
-      version: 'unspecified'
+      version: config.version || 'unspecified'
       description: @textBody(event)
       op_sys: 'All'
       platform: 'All'
       priority: config.priority
+
+    if config.customFields
+      Object.merge(payload, JSON.parse(config.customFields))
 
     # Create the new bug
     authedRequest config, "Bug.create", payload, (err, response) ->
