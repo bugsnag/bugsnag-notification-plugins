@@ -54,7 +54,7 @@
       "name": "customFields",
       "label": "Custom Fields",
       "type": "json",
-      "description": "Additional JSON-encoded bugzilla fields, eg {\"customfield_10024\": {\"value\": \"Engineering\"}}",
+      "description": "Additional JSON-encoded bugzilla fields, eg {\"cf_internal\": \"Engineering\"}",
       "optional": true
     }
   ]
