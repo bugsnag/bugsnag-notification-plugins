@@ -10,16 +10,18 @@ class UserVoice extends NotificationPlugin
       client: config.apiKey
       email: "bugsnag@bugsnag.com"
       ticket:
-        subject: "#{event.error.exceptionClass} in #{event.error.context}"
+        subject: "[#{event.project.name}] #{event.error.exceptionClass} in #{event.error.context}"
         message:
           """
-          #{event.error.exceptionClass} in #{event.error.context}
+          #{event.error.exceptionClass} in #{event.error.context} for project #{event.project.name}
           #{event.error.message if event.error.message}
           #{event.error.url}
 
           Stacktrace:
           #{@basicStacktrace(event.error.stacktrace)}
           """
+        custom_field_values:
+          app: event.project.name
 
     # Send the request
     url = if config.url.startsWith(/https?:\/\//) then config.url else "https://#{config.url}"
