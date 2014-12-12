@@ -32,6 +32,13 @@
       "label": "Project Id",
       "description": "Your project's unique id, e.g. 190",
       "section": "authentication"
+    },
+    {
+      "name": "teamId",
+      "label": "Team Id",
+      "description": "The team (id) you wish to assign to all errors",
+      "section": "advanced",
+      "optional": true
     }
   ]
 }

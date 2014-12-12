@@ -13,9 +13,15 @@ module.exports = class TargetProcess extends NotificationPlugin
 
   # Build the request payload
   @requestPayload = (config, event) ->
-    name: @title event
-    description: @htmlBody event
-    project: id: config.projectId
+    payload =
+      name: @title event
+      description: @htmlBody event
+      project: id: config.projectId
+
+    # If a teamId is specified, add it to the payload
+    payload.team = id: config.teamId if config.teamId?
+
+    payload
 
   # Receive the configuration & event payload
   @receiveEvent = (config, event, callback) ->
