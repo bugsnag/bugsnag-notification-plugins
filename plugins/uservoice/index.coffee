@@ -21,7 +21,7 @@ class UserVoice extends NotificationPlugin
           #{@basicStacktrace(event.error.stacktrace)}
           """
         custom_field_values:
-          app: event.project.name
+          bugsnagProjectName: event.project.name
 
     # Send the request
     url = if config.url.startsWith(/https?:\/\//) then config.url else "https://#{config.url}"
