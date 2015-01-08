@@ -1,9 +1,14 @@
 NotificationPlugin = require "../../notification-plugin"
+url = require "url"
 
 class GithubIssue extends NotificationPlugin
   DEFAULT_URL = "https://api.github.com"
 
-  @githubUrl: (config) -> config.url or DEFAULT_URL
+  @githubUrl: (config) ->
+    if config.url?
+      url.resolve(config.url, "api/v3/")
+    else
+      DEFAULT_URL
 
   @issuesUrl: (config) -> "#{@githubUrl config}/repos/#{config.repo}/issues"
   @issueUrl: (config, issueNumber) -> "#{@issuesUrl(config)}/#{issueNumber}"

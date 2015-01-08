@@ -51,7 +51,7 @@
     {
       "name": "url",
       "label": "URL",
-      "description": "The GitHub Enterprise URL (e.g. https://github.local/api/v3)",
+      "description": "The GitHub Enterprise URL (e.g. https://github.local)",
       "optional": true,
       "section": "enterprise"
     }
