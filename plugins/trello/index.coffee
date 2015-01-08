@@ -11,9 +11,21 @@ class Trello extends NotificationPlugin
 
         callback null, res.body?.find((el) -> el.name == config?.listName)?.id
 
-  @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "reopened"
-    
+  @ensureIssueOpen: (config, issueId, callback) ->
+    @request.put("https://api.trello.com/1/cards/#{issueId}/?key=#{config?.applicationKey}&token=#{config?.memberToken}")
+      .send({"closed": false})
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        callback(res.error)
+
+  @addCommentToIssue: (config, issueId, comment) ->
+    @request.post("https://api.trello.com/1/cards/#{issueId}/actions/comments/?key=#{config?.applicationKey}&token=#{config?.memberToken}")
+      .send({"text": comment})
+      .on("error", console.error)
+      .end()
+
+  @openIssue: (config, event, callback) ->
     # Would be nice to save this list Id for repeated calls
     @getListId config, (err, listId) =>
       return callback(err) if err
@@ -38,5 +50,13 @@ class Trello extends NotificationPlugin
           callback null,
             id: res.body.id
             url: res.body.url
+
+  @receiveEvent: (config, event, callback) ->
+    if event?.trigger?.type == "reopened"
+      if event?.error?.createdIssue?.id
+        @ensureIssueOpen(config, event.error.createdIssue.id, callback)
+        @addCommentToIssue(config, event.error.createdIssue.id, @markdownBody(event))
+    else
+      @openIssue(config, event, callback)
 
 module.exports = Trello
