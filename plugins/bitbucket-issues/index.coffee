@@ -41,7 +41,6 @@ class BitbucketIssue extends NotificationPlugin
       "kind": config.kind
       "priority": config.priority
 
-    console.log @issuesUrl(config)
     # Send the request
     @bitbucketRequest(@request.post(@issuesUrl(config)), config)
       .send(qs.stringify(query_object))
