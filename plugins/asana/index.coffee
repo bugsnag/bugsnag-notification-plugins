@@ -5,22 +5,33 @@ NotificationPlugin = require "../../notification-plugin"
 class Asana extends NotificationPlugin
   BASE_URL = "https://app.asana.com/api/1.0"
 
-  renderBody = (event) ->
-    """
-    #{event.error.exceptionClass} in #{event.error.context}
+  @issueUrl: (issueId) ->
+    "#{BASE_URL}/tasks/#{issueId}"
 
-    #{event.error.message if event.error.message}
+  @storiesUrl: (issueId) ->
+    "#{@issueUrl(issueId)}/stories"
 
-    View on Bugsnag:
-    #{event.error.url}
+  @asanaRequest: (req, config) ->
+    req
+      .timeout(4000)
+      .type("form")
+      .auth(config.apiKey, "")
 
-    Stacktrace:
-    #{NotificationPlugin.basicStacktrace(event.error.stacktrace)}
-    """
+  @ensureIssueOpen: (config, issueId, callback) ->
+    @asanaRequest(@request.put(@issueUrl(issueId)), config)
+      .send({"completed": false})
+      .on "error", (err) ->
+        callback(err)
+      .end (res) ->
+        callback(res.error)
 
-  @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "reopened"
+  @addCommentToIssue: (config, issueId, comment) ->
+    @asanaRequest(@request.post(@storiesUrl(issueId)), config)
+      .send({"text": comment})
+      .on("error", console.error)
+      .end()
 
+  @openIssue: (config, event, callback) ->
     # Look up workspace id from project name
     getWorkspaceId = (cb) =>
       @request
@@ -39,10 +50,7 @@ class Asana extends NotificationPlugin
 
     # Look up project id from project name
     getProjectId = (cb) =>
-      @request
-        .get("#{BASE_URL}/projects")
-        .timeout(4000)
-        .auth(config.apiKey, "")
+      @asanaRequest(@request.get("#{BASE_URL}/projects"), config)
         .on("error", (err) -> cb(err))
         .end (res) =>
           return cb(res.error) if res.error
@@ -64,18 +72,14 @@ class Asana extends NotificationPlugin
       # Build task payload
       taskPayload =
         name: "#{event.error.exceptionClass} in #{event.error.context}"
-        notes: renderBody(event)
+        notes: @textBody(event)
         workspace: results.workspaceId
 
       taskPayload.projects = [results.projectId] if results.projectId?
 
       # Create the task
-      @request
-        .post("#{BASE_URL}/tasks")
-        .timeout(4000)
+      @asanaRequest(@request.post("#{BASE_URL}/tasks"), config)
         .send(taskPayload)
-        .type("form")
-        .auth(config.apiKey, "")
         .on("error", (err) -> callback(err))
         .end (res) ->
           return callback(res.error) if res.error
@@ -84,5 +88,12 @@ class Asana extends NotificationPlugin
             id: res.body.data.id
             url: "https://app.asana.com/0/#{results.workspaceId}/#{res.body.data.id}"
 
+  @receiveEvent: (config, event, callback) ->
+    if event?.trigger?.type == "reopened"
+      if event?.error?.createdIssue?.id
+        @ensureIssueOpen(config, event.error.createdIssue.id, callback)
+        @addCommentToIssue(config, event.error.createdIssue.id, @textBody(event))
+    else
+      @openIssue(config, event, callback)
 
 module.exports = Asana
