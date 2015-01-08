@@ -23,16 +23,14 @@ class VisualStudioIssue extends NotificationPlugin
             "op":"add",
             "path":"/fields/Microsoft.VSTS.TCM.ReproSteps",
             "value":@htmlBody(event)
-        },
+        }
     ]
-
-    console.log(config.area);
 
     query_object.push( {
             "op":"add",
             "path":"/fields/Area Path",
             "value":config.area
-    }) if (config.area!=undefined && config.area!=null && config.area!="")
+    }) if config.area?
 
     # Send the request
     @request

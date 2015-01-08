@@ -37,6 +37,7 @@
             "name": "area",
             "label": "Area path",
             "description": "Path to the area in which to create the bug",
+            "optional": true,
             "section": "authentication"
         }
 
