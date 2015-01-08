@@ -24,7 +24,7 @@ class PivotalTracker extends NotificationPlugin
 
   @ensureIssueOpen: (config, storyId, callback) ->
     @pivotalRequest(@request.put(@storyUrl(config, storyId)), config)
-      .send({"story[current_state]": "unstarted"})
+      .send({"story[current_state]": "unscheduled"})
       .on "error", (err) ->
         callback(err)
       .end (res) ->
