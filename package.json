@@ -18,6 +18,7 @@
   },
   "main": "./index.js",
   "devDependencies": {
+    "cli-table": "^0.3.1",
     "grunt": "~0.4.2",
     "grunt-release": "~0.6.0"
   }

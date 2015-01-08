@@ -1,6 +1,9 @@
 require "sugar"
-fs = require("fs")
-Handlebars = require("handlebars")
+fs = require "fs"
+path = require "path"
+Handlebars = require "handlebars"
+Table = require('cli-table')
+argv = require("optimist").argv
 
 Handlebars.registerHelper "eachSummaryFrame", (stack, options) ->
   NotificationPlugin.getSummaryStacktrace(stack).map((line) ->
@@ -23,66 +26,60 @@ Handlebars.registerHelper "eachSummaryFrame", (stack, options) ->
 # See https://github.com/bugsnag/bugsnag-notification-plugins/ for full docs
 #
 
-NotificationPlugin = (->
-  NotificationPlugin = ->
+module.exports = class NotificationPlugin
 
   # Load templates
-  NotificationPlugin.markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md.hbs", "utf8"))
-  NotificationPlugin.htmlTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.html.hbs", "utf8"))
-  NotificationPlugin.textTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.text.hbs", "utf8"))
+  @markdownTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.md.hbs", "utf8"))
+  @htmlTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.html.hbs", "utf8"))
+  @textTemplate = Handlebars.compile(fs.readFileSync(__dirname + "/templates/error.text.hbs", "utf8"))
+
+  # Utility methods for http requests
+  @request = require "superagent"
 
   # Fired when a new event is triggered for notification
   # Plugins MUST override this method
-  NotificationPlugin.receiveEvent = (config, event, callback) ->
+  @receiveEvent = (config, event, callback) ->
     throw new Error("Plugins must override receiveEvent")
 
-
   # Utility methods for generating notification content
-  NotificationPlugin.stacktraceLineString = (stacktraceLine) ->
+  @stacktraceLineString = (stacktraceLine) ->
     stacktraceLine.file + ":" + stacktraceLine.lineNumber + " - " + stacktraceLine.method
 
-  NotificationPlugin.basicStacktrace = (stacktrace) ->
+  @basicStacktrace = (stacktrace) ->
     @getSummaryStacktrace(stacktrace).map((line) ->
       @stacktraceLineString line
     , this).join "\n"
 
-
   # Returns the first line of a stacktrace (formatted)
-  NotificationPlugin.firstStacktraceLine = (stacktrace) ->
+  @firstStacktraceLine = (stacktrace) ->
     @stacktraceLineString @getSummaryStacktrace(stacktrace)[0]
 
-
   # Utility to determine whether a stacktrace line is `inProject`
-  NotificationPlugin.inProjectStacktraceLine = (line) ->
+  @inProjectStacktraceLine = (line) ->
     line? and "inProject" of line and line.inProject
 
-
   # Utility for getting all the stacktrace lines that are `inProject`
-  NotificationPlugin.getSummaryStacktrace = (stacktrace) ->
+  @getSummaryStacktrace = (stacktrace) ->
     filtered = undefined
 
     # If there are no 'inProject' stacktrace lines
     filtered = stacktrace.slice(0, 3)  unless (filtered = stacktrace.filter(@inProjectStacktraceLine)).length
     filtered
 
-  NotificationPlugin.title = (event) ->
+  @title = (event) ->
     event.error.exceptionClass + " in " + event.error.context
 
-  NotificationPlugin.markdownBody = (event) ->
+  @markdownBody = (event) ->
     @markdownTemplate event
 
-  NotificationPlugin.htmlBody = (event) ->
+  @htmlBody = (event) ->
     @htmlTemplate event
 
-  NotificationPlugin.textBody = (event) ->
+  @textBody = (event) ->
     @textTemplate event
 
-
-  # Utility methods for http requests
-  NotificationPlugin.request = require("superagent")
-
   # Fire a test event to your notification plugin (do not override)
-  NotificationPlugin.fireTestEvent = (config, callback) ->
+  @fireTestEvent = (config, callback) ->
     event =
       error:
         exceptionClass: "ExampleException"
@@ -146,14 +143,24 @@ NotificationPlugin = (->
       event.user =
         name: "John Smith"
 
+    if config.reopened
+      delete config.reopened
+      event.trigger =
+        type: "reopened"
+        message: "Resolved error re-occurred"
+
+    if config.createdIssue
+      info = config.createdIssue.split(",")
+      event.error.createdIssue = {}
+      event.error.createdIssue[info[0]] = info[1]
+      delete config.createdIssue
+
     @receiveEvent config, event, callback
     return
 
-
   # Configuration validation methods (do not override)
-  NotificationPlugin.validateConfig = (config, pluginConfigFile) ->
-    fs = require("fs")
-    pluginConfig = JSON.parse(fs.readFileSync(pluginConfigFile, "ascii"))
+  @validateConfig = (config, pluginConfigFile) ->
+    pluginConfig = require pluginConfigFile
     if pluginConfig.fields
       pluginConfig.fields.each (option) ->
         configValue = config[option.name]
@@ -170,28 +177,62 @@ NotificationPlugin = (->
 
     return
 
-  NotificationPlugin
-)()
-module.exports = NotificationPlugin
+printHelp = (configFile) ->
+  table = new Table(
+    chars:
+      'top': ''
+      'top-mid': ''
+      'top-left': ''
+      'top-right': ''
+      'bottom': ''
+      'bottom-mid': ''
+      'bottom-left': ''
+      'bottom-right': ''
+      'left': ''
+      'left-mid': ''
+      'mid': ''
+      'mid-mid': ''
+      'right': ''
+      'right-mid': ''
+      'middle': ' '
+    style:
+      'padding-left': 5
+      'padding-right': 0
+  )
+
+  configFile.fields.forEach (field) ->
+    fieldDesc = "--#{field.name}=#{field.type || "string"}"
+    fieldDesc = fieldDesc + " (optional)" if field.optional
+    table.push [fieldDesc, field.description]
+
+  table.push ["",""]
+  table.push ["--reopened (optional)", "Simulate an error reopening"]
+  table.push ["--createdIssue=string,string (optional)", "Simulate created issue metadata key,value"]
+  table.push ["--comment (optional)", "Simulate a comment"]
+  table.push ["--spike (optional)", "Simulate a project spike"]
+  console.log ""
+  console.log "Attempting to test the #{path.basename(path.dirname(module.parent.filename))} integration"
+  console.log table.toString()
 
 # If running plugins from the command line, allow them to fire test events
 if module.parent and module.parent.parent is null
-  path = require("path")
-  argv = require("optimist").argv
+  pluginConfigFile = require(path.dirname(module.parent.filename) + "/config.json")
 
   # Parse command line flags
   flags = Object.keys(argv).exclude("_", "$0")
   config = {}
+  if flags.indexOf("help") != -1
+    return printHelp(pluginConfigFile)
   flags.each (flag) ->
-    config[flag] = argv[flag]  if argv[flag]? and argv[flag] isnt ""
-    return
-
+    config[flag] = argv[flag] if argv[flag]? and argv[flag] isnt ""
 
   # Validate configuration
   try
     NotificationPlugin.validateConfig config, path.dirname(module.parent.filename) + "/config.json"
   catch err
-    return console.error err.message
+    console.error err.message
+    printHelp(pluginConfigFile)
+    return
 
   # Fire a test event
   plugin = require(module.parent.filename)
@@ -200,4 +241,3 @@ if module.parent and module.parent.parent is null
       console.error "Error firing notification\n", err
     else
       console.log "Fired test event successfully\n", data
-    return
