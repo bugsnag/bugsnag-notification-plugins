@@ -23,11 +23,11 @@ class LiquidPlanner extends NotificationPlugin
     payload =
       task:
         name: "#{event.error.exceptionClass} in #{event.error.context} from Bugsnag"
-      note:
-        note: description(event)
-      link:
-        title: "Bugsnag entry"
-        url: "#{event.error.url}"
+        note:
+          note: description(event)
+        links:
+          description: "Bugsnag entry"
+          url: "#{event.error.url}"
 
     config.host = BASE_URL unless config.host
 
