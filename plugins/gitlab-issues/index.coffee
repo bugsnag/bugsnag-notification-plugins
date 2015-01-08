@@ -1,8 +1,10 @@
 NotificationPlugin = require "../../notification-plugin"
 
 class GitLabIssue extends NotificationPlugin
+  DEFAULT_URL = "https://gitlab.com"
+
   @baseUrl: (config) ->
-    "#{config.gitlab_url}/api/v3/projects"
+    "#{config.gitlab_url || DEFAULT_URL}/api/v3/projects"
 
   @issuesUrl: (config) ->
     "#{@baseUrl(config)}/#{encodeURIComponent(config.project_id)}/issues"
@@ -30,7 +32,7 @@ class GitLabIssue extends NotificationPlugin
         return callback(res.error) if res.error
         callback null,
           id: res.body.id
-          url: "#{config.gitlab_url}/#{config.project_id}/issues/#{res.body.id}"
+          url: "#{config.gitlab_url || DEFAULT_URL}/#{config.project_id}/issues/#{res.body.id}"
 
   @ensureIssueOpen: (config, issueId, callback) ->
     @gitlabRequest(@request.put(@issueUrl(config, issueId)), config)
@@ -52,7 +54,6 @@ class GitLabIssue extends NotificationPlugin
         @ensureIssueOpen(config, event.error.createdIssue.id, callback)
         @addCommentToIssue(config, event.error.createdIssue.id, @markdownBody(event))
     else
-      console.log config
       @openIssue(config, event, callback)
 
 module.exports = GitLabIssue
