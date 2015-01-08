@@ -5,25 +5,32 @@ url = require "url"
 
 class Redmine extends NotificationPlugin
 
-  # Map the visually appealing priority, with it's id
-  priorityMap =
-    low: 1
-    normal: 2
-    high: 3
-    urgent: 4
-    immediate: 5
-
   # The issue creation api location
   @issuesUrl: (config) ->
-    url.resolve(config.host, "/issues.json?key=#{config.apiKey}")
+    url.resolve config.host, "/issues.json?key=#{config.apiKey}"
+
+  # The issue priority registry api location
+  @priorityUrl: (config) ->
+    url.resolve config.host, "/enumerations/issue_priorities.json"
 
   # The issue JSON body (creation payload)
-  @payloadJson: (config, event) ->
+  @payloadJson: (config, event, priorityId) ->
     issue:
       project_id: config.project
       subject: @title(event)
       description: @render(event)
-      priority_id: priorityMap[config.priority]
+      priority_id: priorityId
+
+  # Fetch the priority id by it's pretty name
+  @fetchPriorityId: (config, priorityName, callback) ->
+    @request
+      .get @priorityUrl config
+      .end (res) ->
+        for priority in res.body.issue_priorities
+          if priority.name.toLowerCase() is priorityName.toLowerCase()
+            callback null, priority.id
+            return
+        callback Error "Priority not found with name '#{priorityName}'"
 
   @receiveEvent = (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
@@ -43,12 +50,18 @@ class Redmine extends NotificationPlugin
         url: url.resolve(config.host, "/issues/#{res.body.issue.id}")
 
     # Send out the request to the issues API
-    @request
-      .post @issuesUrl(config)
-      .type 'json' # Redmine JSON body
-      .send @payloadJson(config, event)
-      .on 'error', handleError
-      .end handleCallback
+    handleRequest = (priorityId) =>
+      @request
+        .post @issuesUrl(config)
+        .type 'json' # Redmine JSON body
+        .send @payloadJson config, event, priorityId
+        .on 'error', handleError
+        .end handleCallback
+
+    # Fetch the priority id, and then handle the request
+    @fetchPriorityId config, config.priority, (err, priorityId) ->
+      return callback err if err
+      handleRequest priorityId
 
   # Redmine flavoured message information
   # http://www.redmine.org/help/en/wiki_syntax.html
