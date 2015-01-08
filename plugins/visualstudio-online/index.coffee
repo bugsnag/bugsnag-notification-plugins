@@ -4,14 +4,6 @@ class VisualStudioIssue extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
 
-
-#
-#    "title": @title(event)
-#    "content": @markdownBody(event)
-#    "kind": config.kind
-#    "priority": config.priority
-#
-
     query_object = [
 
         {
