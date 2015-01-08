@@ -3,14 +3,14 @@ NotificationPlugin = require "../../notification-plugin"
 class UserVoice extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
-    
+
     # Build the payload
     payload =
       name: "Bugsnag"
       client: config.apiKey
       email: "bugsnag@bugsnag.com"
       ticket:
-        subject: "[#{event.project.name}] #{event.error.exceptionClass} in #{event.error.context}"
+        subject: "#{event.error.exceptionClass} in #{event.error.context}"
         message:
           """
           #{event.error.exceptionClass} in #{event.error.context} for project #{event.project.name}
