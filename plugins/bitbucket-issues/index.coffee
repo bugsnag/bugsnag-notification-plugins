@@ -22,7 +22,7 @@ class BitbucketIssue extends NotificationPlugin
 
   @ensureIssueOpen: (config, issueId, callback) ->
     @bitbucketRequest(@request.put(@issueUrl(config, issueId)), config)
-      .send(qs.stringify({status: "open"}))
+      .send(qs.stringify({status: "new"}))
       .on "error", (err) ->
         callback(err)
       .end (res) ->
