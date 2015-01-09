@@ -27,6 +27,7 @@ class Gitter extends NotificationPlugin
         callback(err)
       .end (res) =>
         callback(res.error) if res.error
+        callback(res.body) unless Object.isArray(res.body)
 
         room = res.body.find (r) ->
           r['name'] == config.repo
