@@ -1,10 +1,11 @@
 {
   "name": "bugsnag-notification-plugins",
   "description": "Notification plugins (chat and issue tracking integrations) for Bugsnag.",
-  "version": "1.23.0",
+  "version": "1.23.1",
   "repository": "https://github.com/bugsnag/bugsnag-notification-plugins.git",
   "dependencies": {
     "async": "~0.2.6",
+    "cli-table": "^0.3.1",
     "coffee-script": "~1.7.1",
     "cookie": "~0.1.2",
     "escape-html": "~1.0.1",
@@ -18,7 +19,6 @@
   },
   "main": "./index.js",
   "devDependencies": {
-    "cli-table": "^0.3.1",
     "grunt": "~0.4.2",
     "grunt-release": "~0.6.0"
   }
