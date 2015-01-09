@@ -51,6 +51,8 @@ class Jira extends NotificationPlugin
       .end (res) =>
         callback(res.error) if res.error
 
+        return unless res.body.transitions
+
         transition = res.body.transitions.filter((obj) -> obj.name == 'Reopen')[0]
         return unless transition
 
@@ -65,7 +67,7 @@ class Jira extends NotificationPlugin
           .end (res) ->
             callback(res.error) if res.error
 
-  @addCommentToIssue: (config, issueId, comment) ->
+  @addCommentToIssue: (config, issueId, comment, callback) ->
     @jiraRequest(@request.post(@commentUrl(config, issueId)), config)
       .send({body: comment})
       .on "error", (err) ->
@@ -112,7 +114,7 @@ class Jira extends NotificationPlugin
     if event?.trigger?.type == "reopened"
       if event?.error?.createdIssue?.id
         @ensureIssueOpen(config, event.error.createdIssue.id, callback)
-        @addCommentToIssue(config, event.error.createdIssue.id, jiraBody(event))
+        @addCommentToIssue(config, event.error.createdIssue.id, jiraBody(event), callback)
     else
       @openIssue(config, event, callback)
 
