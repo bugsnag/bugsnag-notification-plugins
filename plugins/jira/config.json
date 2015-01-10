@@ -38,7 +38,7 @@
       "name": "issueType",
       "label": "Issue Type",
       "description": "The type of issue to be created",
-      "defaultValue": "Bug",
+      "defaultValue": "Task",
       "section": "fields"
     },
     {
