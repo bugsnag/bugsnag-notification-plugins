@@ -5,7 +5,7 @@ class GithubIssue extends NotificationPlugin
   DEFAULT_URL = "https://api.github.com"
 
   @githubUrl: (config) ->
-    if config.url?
+    if config.url
       url.resolve(config.url, "api/v3/")
     else
       DEFAULT_URL
