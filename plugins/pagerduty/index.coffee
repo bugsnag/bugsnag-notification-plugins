@@ -24,7 +24,8 @@ class PagerDuty extends NotificationPlugin
       payload =
         service_key: config.serviceKey
         event_type: 'trigger'
-        incident_key: event.error.url
+        # Use error url without unique event key to allow pagerduty to de-dupe
+        incident_key: event.error.url.split('?')[0]
         description: "#{event.error.exceptionClass} in #{event.error.context}"
         details: pagerDutyDetails(event)
 
