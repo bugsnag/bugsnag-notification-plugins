@@ -1,7 +1,6 @@
 require "sugar"
 
 NotificationPlugin = require "../../notification-plugin"
-FormUrlencoded = require 'form-urlencoded'
 
 class DoneDone extends NotificationPlugin
   @baseUrl: (config) ->
@@ -19,10 +18,11 @@ class DoneDone extends NotificationPlugin
   @sendRequest: (req, config) ->
     req
       .auth(config.username, config.apitoken)
+      .type('form') # application/x-www-form-urlencoded
 
   @addCommentToIssue: (config, issueId, comment, callback) ->
     @sendRequest(@request.post(@commentUrl(config, issueId)), config)
-      .send(FormUrlencoded.encode({"comment": comment}))
+      .send({"comment": comment})
       .on "error", (err) ->
         callback(err)
       .end()
@@ -47,7 +47,7 @@ class DoneDone extends NotificationPlugin
 
     # Send the request to the url
     req = @sendRequest(@request.post(@issuesUrl(config)), config)
-      .send(FormUrlencoded.encode(params))
+      .send(params)
       .on "error", (err) ->
         callback(err)
       .end (res) =>
