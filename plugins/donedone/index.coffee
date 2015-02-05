@@ -1,6 +1,7 @@
 require "sugar"
 
 NotificationPlugin = require "../../notification-plugin"
+FormUrlencoded = require 'form-urlencoded'
 
 class DoneDone extends NotificationPlugin
   @baseUrl: (config) ->
@@ -13,21 +14,17 @@ class DoneDone extends NotificationPlugin
     "#{@baseUrl(config)}/issues/#{issueId}/comments.json"
 
   @issueWebUrl: (config, issueId) ->
-    "#{@baseUrl(config)}/issues/#{issueId}"
+    "https://#{config.subdomain}.mydonedone.com/issuetracker/projects/#{config.projectId}/issues/#{issueId}"
 
   @sendRequest: (req, config) ->
     req
-      .timeout(4000)
       .auth(config.username, config.apitoken)
-      .type("form")
-      .buffer(true)
-      .set({"Accept": "application/json"})
-      # .set({"Accept-Encoding" : "gzip,sdch"})
 
-  @addCommentToIssue: (config, issueId, comment) ->
+  @addCommentToIssue: (config, issueId, comment, callback) ->
     @sendRequest(@request.post(@commentUrl(config, issueId)), config)
-      .send({"comment": comment})
-      .on("error", console.error)
+      .send(FormUrlencoded.encode({"comment": comment}))
+      .on "error", (err) ->
+        callback(err)
       .end()
 
   @openIssue: (config, event, callback) ->
@@ -50,20 +47,19 @@ class DoneDone extends NotificationPlugin
 
     # Send the request to the url
     req = @sendRequest(@request.post(@issuesUrl(config)), config)
-      .send(params)
+      .send(FormUrlencoded.encode(params))
       .on "error", (err) ->
         callback(err)
-      .end (res) ->
+      .end (res) =>
         return callback(res.error) if res.error
         callback null,
-          id: res.id
-          url: @issueWebUrl(config, res.id)
-    # console.log req
+          id: res.body.order_number
+          url: @issueWebUrl(config, res.body.order_number)
 
   @receiveEvent: (config, event, callback) ->
     if event?.trigger?.type == "reopened"
       if event.error?.createdIssue?.id
-        @addCommentToIssue(config, event.error.createdIssue.id, @markdownBody(event))
+        @addCommentToIssue(config, event.error.createdIssue.id, @markdownBody(event), callback)
     else
       @openIssue(config, event, callback)
 
