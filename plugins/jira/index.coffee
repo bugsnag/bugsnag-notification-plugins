@@ -113,7 +113,7 @@ class Jira extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
     if event?.trigger?.type == "reopened"
       if event?.error?.createdIssue?.id
-        @ensureIssueOpen(config, event.error.createdIssue.id, callback)
+        @ensureIssueOpen(config, event.error.createdIssue.id, callback) unless not config.reopenIssues
         @addCommentToIssue(config, event.error.createdIssue.id, jiraBody(event), callback)
     else
       @openIssue(config, event, callback)
