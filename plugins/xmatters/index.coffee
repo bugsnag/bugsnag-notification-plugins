@@ -10,7 +10,7 @@ class xMatters extends NotificationPlugin
           continue	# nested objects like stackTrace array are not supported
         flatten(dstObj, srcObj[property], property)
       else if prefix 
-        dstObj[ prefix + "_" + property] = srcObj[property] 
+        dstObj[ prefix + "." + property] = srcObj[property] 
     
     dstObj
     
