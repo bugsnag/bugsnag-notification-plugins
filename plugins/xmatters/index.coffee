@@ -6,8 +6,10 @@ class xMatters extends NotificationPlugin
   flatten = (dstObj, srcObj, prefix) ->     
     for property of srcObj
       if typeof srcObj[property] == "object"
-        if prefix 
-          continue	# nested objects like stackTrace array are not supported
+        # for stacktrace, pick first object
+        if property == "stacktrace" && srcObj[property].length > 0
+          flatten(dstObj, srcObj[property][0], property)
+        continue if prefix	# other nested objects are not supported
         flatten(dstObj, srcObj[property], property)
       else if prefix 
         dstObj[ prefix + "." + property] = srcObj[property] 
