@@ -11,7 +11,7 @@ class Redmine extends NotificationPlugin
 
   # The issue priority registry api location
   @priorityUrl: (config) ->
-    url.resolve config.host, "/enumerations/issue_priorities.json"
+    url.resolve config.host, "/enumerations/issue_priorities.json?key=#{config.apiKey}""
 
   # The issue JSON body (creation payload)
   @payloadJson: (config, event, priorityId) ->
