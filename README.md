@@ -121,7 +121,7 @@ event: {
         type: "firstException",
         
         // The human readable form of the trigger. This can be used to start 
-        // a sentance.
+        // a sentence.
         message: "New exception"
     },
 
@@ -132,7 +132,7 @@ event: {
         exceptionClass: "NullPointerException",
         
         // The message that came with the exception. This may not be present if 
-        // the exception didnt generate one.
+        // the exception didn't generate one.
         message: "Null cannot be dereferenced",
         
         // The context that was active in the application when the error 
@@ -146,7 +146,7 @@ event: {
         // The release stage, will most often be production, or development.
         releaseStage: "production",
         
-        // The number of times this exception has occured (including this one)
+        // The number of times this exception has occurred (including this one)
         occurrences: 1,
         
         // When was the error first received. Will be a Date object.
