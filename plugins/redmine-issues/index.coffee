@@ -12,7 +12,7 @@ class Redmine extends NotificationPlugin
   # The issue priority registry api location
   @priorityUrl: (config) ->
     url.resolve config.host, "/enumerations/issue_priorities.json?key=#{config.apiKey}"
-    
+
   # The issue tracker registry api location
   @trackerUrl: (config) ->
     url.resolve config.host, "/trackers.json?key=#{config.apiKey}"
@@ -47,7 +47,7 @@ class Redmine extends NotificationPlugin
             callback null, tracker.id
             return
         callback Error "Tracker not found with name '#{trackerId}'"
-        
+
   @receiveEvent = (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
 
@@ -78,7 +78,7 @@ class Redmine extends NotificationPlugin
     @fetchPriorityId config, config.priority, (err, priorityId) ->
       return callback err if err
       unless config.tracker.nil?
-        @fetchTrackerId config, config.tracker (err, trackerId) -->
+        @fetchTrackerId config, config.tracker (err, trackerId) ->
           return callback err if err
           handleRequest priorityId trackerId
       else
