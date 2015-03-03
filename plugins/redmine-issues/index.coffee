@@ -12,14 +12,19 @@ class Redmine extends NotificationPlugin
   # The issue priority registry api location
   @priorityUrl: (config) ->
     url.resolve config.host, "/enumerations/issue_priorities.json?key=#{config.apiKey}"
+    
+  # The issue tracker registry api location
+  @trackerUrl: (config) ->
+    url.resolve config.host, "/trackers.json?key=#{config.apiKey}"
 
   # The issue JSON body (creation payload)
-  @payloadJson: (config, event, priorityId) ->
+  @payloadJson: (config, event, priorityId, trackerId=nil) ->
     issue:
       project_id: config.project
       subject: @title(event)
       description: @render(event)
-      priority_id: priorityId
+      priority_id: priorityId,
+      tracker_id: trackerId
 
   # Fetch the priority id by it's pretty name
   @fetchPriorityId: (config, priorityName, callback) ->
@@ -32,6 +37,17 @@ class Redmine extends NotificationPlugin
             return
         callback Error "Priority not found with name '#{priorityName}'"
 
+# Fetch the tracker id by it's pretty name
+  @fetchTrackerId: (config, trackerId, callback) ->
+    @request
+      .get @trackerUrl config
+      .end (res) ->
+        for tracker in res.body.trackers
+          if tracker.name.toLowerCase() is trackerId.toLowerCase()
+            callback null, tracker.id
+            return
+        callback Error "Tracker not found with name '#{trackerId}'"
+        
   @receiveEvent = (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
 
@@ -50,18 +66,23 @@ class Redmine extends NotificationPlugin
         url: url.resolve(config.host, "/issues/#{res.body.issue.id}")
 
     # Send out the request to the issues API
-    handleRequest = (priorityId) =>
+    handleRequest = (priorityId, trackerId) =>
       @request
         .post @issuesUrl(config)
         .type 'json' # Redmine JSON body
-        .send @payloadJson config, event, priorityId
+        .send @payloadJson config, event, priorityId, trackerId
         .on 'error', handleError
         .end handleCallback
 
-    # Fetch the priority id, and then handle the request
+    # Fetch the priority and tracker id, and then handle the request
     @fetchPriorityId config, config.priority, (err, priorityId) ->
       return callback err if err
-      handleRequest priorityId
+      unless config.tracker.nil?
+        @fetchTrackerId config, config.tracker (err, trackerId) -->
+          return callback err if err
+          handleRequest priorityId trackerId
+      else
+        handleRequest priorityId
 
   # Redmine flavoured message information
   # http://www.redmine.org/help/en/wiki_syntax.html

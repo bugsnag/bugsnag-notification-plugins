@@ -33,6 +33,12 @@
       "label": "Issue Priority",
       "description": "The priority of the issue to be created",
       "section": "tags"
-    }
+    },
+    {
+      "name": "tracker",
+      "label": "Issue Tracker",
+      "description": "The tracker of the issue to be created",
+      "section": "tags"
+    }    
   ]
 }
