@@ -80,7 +80,7 @@ class Redmine extends NotificationPlugin
       unless config.tracker.nil?
         @fetchTrackerId config, config.tracker (err, trackerId) -->
           return callback err if err
-          handleRequest priorityId trackerId
+          handleRequest priorityId, trackerId
       else
         handleRequest priorityId
 
