@@ -1,0 +1,17 @@
+{
+    "name": "Datadog",
+    "url": "https://www.datadoghq.com",
+    "actions": {
+        "create": "Post to Datadog event stream"
+    },
+    "supportedTriggers": "all",
+    "type": "communication",
+    "fields": [
+        {
+            "name": "api_key",
+            "label": "Datadog API Key",
+            "description": "A Datadog API key.",
+            "link": "https://app.datadoghq.com/account/settings#api"
+        }
+    ]
+}
