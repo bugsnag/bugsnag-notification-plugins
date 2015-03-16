@@ -17,9 +17,9 @@ class Datadog extends NotificationPlugin
 
         # Add some tags
         if event.error.appVersion
-            payload.tags << "appversion:#{event.error.appVersion}"
+            payload.tags << "app-version:#{event.error.appVersion}"
         if event.error.releaseStage
-            payload.tags << "environment:#{event.error.releaseStage}"
+            payload.tags << "release-stage:#{event.error.releaseStage}"
     
         if event.error.severity == "info"
             payload.priority = "low"
