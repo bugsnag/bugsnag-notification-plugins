@@ -41,8 +41,6 @@ class Bugzilla extends NotificationPlugin
     # Normalize the url: https://example.com/bugzilla becomes https://example.com/bugzilla/
     config.host += "/" unless /\/$/.test(config.host)
 
-    console.log('config', config.host)
-
     if config.customFields
       Object.merge(payload, JSON.parse(config.customFields))
 
