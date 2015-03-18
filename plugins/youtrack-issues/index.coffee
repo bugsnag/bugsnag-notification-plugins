@@ -51,6 +51,7 @@ class YouTrack extends NotificationPlugin
           url: res.header.location.replace("/rest/", "/")
 
   @receiveEvent = (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
     @fetchToken config, (err, token) =>
       return callback err if err # Unable to authenticate
       @createTicket config, event, token, callback

@@ -29,6 +29,7 @@ class Slack extends NotificationPlugin
     attachment
 
   @receiveEvent = (config, event, callback) ->
+
     # Build the notification title
     projectName = event.project.name.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 

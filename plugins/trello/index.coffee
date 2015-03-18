@@ -52,6 +52,9 @@ class Trello extends NotificationPlugin
             url: res.body.url
 
   @receiveEvent: (config, event, callback) ->
+
+    return if event?.trigger?.type == "linkExistingIssue"
+
     if event?.trigger?.type == "reopened"
       if event?.error?.createdIssue?.id
         @ensureIssueOpen(config, event.error.createdIssue.id, callback)

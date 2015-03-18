@@ -4,6 +4,7 @@ class Codebase extends NotificationPlugin
   BASE_URL = "http://api3.codebasehq.com"
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
     return if event?.trigger?.type == "reopened"
     
     # Build the ticket payload
