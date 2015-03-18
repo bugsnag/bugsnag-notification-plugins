@@ -5,8 +5,6 @@ class Flowdock extends NotificationPlugin
   BASE_URL = "https://api.flowdock.com/v1"
 
   @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
-
 
     subject = "#{event.trigger.message} in #{event.project.name}"
     if event.error && event.error && event.error.releaseStage

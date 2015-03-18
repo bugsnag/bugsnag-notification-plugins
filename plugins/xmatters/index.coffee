@@ -15,7 +15,6 @@ class xMatters extends NotificationPlugin
     dstObj
     
   @receiveEvent = (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
     # Set event priority
     if event.error? 
       xm_priority = 'high'

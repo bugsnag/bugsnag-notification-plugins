@@ -5,7 +5,6 @@ class Gitter extends NotificationPlugin
   BASE_URL = "https://api.gitter.im/v1"
 
   @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
 
     if event.error
       details =

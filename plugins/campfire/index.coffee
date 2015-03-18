@@ -2,7 +2,6 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Campfire extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
 
     if event.trigger.type == 'projectSpiking'
       message = "Spike of #{event.trigger.rate} exceptions/minute from #{event.project.name}."
