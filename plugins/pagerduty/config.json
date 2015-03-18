@@ -2,7 +2,7 @@
   "name": "PagerDuty",
   "actions": {
     "create": "Create a PagerDuty incident.",
-    "new": "Add Account"
+    "new": "Add Alert"
   },
   "supportedTriggers": "all",
   "fields": [
