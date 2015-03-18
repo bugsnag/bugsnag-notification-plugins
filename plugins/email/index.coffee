@@ -5,6 +5,8 @@ class Email extends NotificationPlugin
   SIDEKIQ_QUEUE = "error_emails"
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
+
     sidekiq = config.sidekiq
     delete config.sidekiq
 

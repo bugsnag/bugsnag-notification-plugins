@@ -49,6 +49,7 @@ class Redmine extends NotificationPlugin
         callback Error "Tracker not found with name '#{trackerId}'"
 
   @receiveEvent = (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
     return if event?.trigger?.type == "reopened"
 
     # Handle unknown error

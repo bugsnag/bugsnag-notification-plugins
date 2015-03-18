@@ -33,6 +33,7 @@ module.exports = class FogBugz extends NotificationPlugin
         callback null, id
 
   @receiveEvent = (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
     return if event?.trigger?.type == 'reopened'
 
     # 1 - Create the issue

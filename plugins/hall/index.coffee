@@ -76,6 +76,8 @@ class Hall extends NotificationPlugin
 
   # Fire the event
   @receiveEvent = (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
+
     @request
       .post @chatUrl config
       .type 'json' # Content-Type: application/json

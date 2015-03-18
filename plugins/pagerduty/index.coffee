@@ -11,6 +11,7 @@ class PagerDuty extends NotificationPlugin
     details
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
 
     if event.trigger.type == 'projectSpiking'
       payload =

@@ -5,6 +5,9 @@ url = require "url"
 class Jaconda extends NotificationPlugin
 
   @receiveEvent: (config, event, callback) ->
+
+    return if event?.trigger?.type == "linkExistingIssue"
+
     # Build the message
     if event.error
 

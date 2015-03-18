@@ -2,6 +2,9 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Twilio extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
+
+    return if event?.trigger?.type == "linkExistingIssue"
+
     # Build the message
     message = "[#{event.project.name}] #{event.trigger.message}"
     if event.trigger.type == 'projectSpiking'

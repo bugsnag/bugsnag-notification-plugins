@@ -17,6 +17,7 @@ class LiquidPlanner extends NotificationPlugin
     """
 
   @receiveEvent: (config, event, callback) ->
+    return if event?.trigger?.type == "linkExistingIssue"
     return if event?.trigger?.type == "reopened"
     
     # Build the task info.

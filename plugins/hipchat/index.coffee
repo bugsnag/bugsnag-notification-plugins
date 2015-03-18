@@ -13,6 +13,9 @@ class Hipchat extends NotificationPlugin
     "#{host}#{path}?auth_token=#{config.authToken}"
 
   @receiveEvent: (config, event, callback) ->
+
+    return if event?.trigger?.type == "linkExistingIssue"
+
     # Build the message
     if event.error
       details =
