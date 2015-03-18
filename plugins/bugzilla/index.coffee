@@ -12,6 +12,9 @@ class Bugzilla extends NotificationPlugin
     client.methodCall "User.login", [login: config.login, password: config.password], (err, response) ->
       return callback({status: 401, code: err.faultCode, message: err.faultString}) if err
 
+      if response.token
+        payload.token = response.token
+
       client.methodCall method, [payload], (err, response) ->
         return callback({status: 400, code: err.faultCode, message: err.faultString}) if err
 
