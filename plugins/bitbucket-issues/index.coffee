@@ -54,7 +54,8 @@ class BitbucketIssue extends NotificationPlugin
           url: url.resolve(BASE_URL, "#{config.repo}/issue/#{res.body.local_id}")
 
   @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
 
     if event?.trigger?.type == "reopened"
       if event?.error?.createdIssue?.id

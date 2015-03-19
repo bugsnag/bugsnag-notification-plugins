@@ -68,7 +68,8 @@ class PivotalTracker extends NotificationPlugin
             url: result.story.url
 
   @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
     if event?.trigger?.type == "reopened"
       if event.error?.createdIssue?.id
         @ensureIssueOpen(config, event.error.createdIssue.id, callback)

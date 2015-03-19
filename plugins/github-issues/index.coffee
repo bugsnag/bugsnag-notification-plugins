@@ -62,7 +62,8 @@ class GithubIssue extends NotificationPlugin
           url: res.body.html_url
 
   @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
 
     if event?.trigger?.type == "reopened"
       if event?.error?.createdIssue?.number

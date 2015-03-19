@@ -21,7 +21,7 @@ class Bugzilla extends NotificationPlugin
 
   @addCommentToIssue: (config, event, callback) ->
     issueId = event?.error?.createdIssue?.url?.match(/\?id=(\d+)/)?[1]
-    return unless issueId
+    return callback(null, null) unless issueId
 
     payload =
       id: issueId

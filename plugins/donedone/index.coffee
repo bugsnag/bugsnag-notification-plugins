@@ -57,7 +57,8 @@ class DoneDone extends NotificationPlugin
           url: @issueWebUrl(config, res.body.order_number)
 
   @receiveEvent: (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
     if event?.trigger?.type == "reopened"
       if event.error?.createdIssue?.id
         @addCommentToIssue(config, event.error.createdIssue.id, @markdownBody(event), callback)
