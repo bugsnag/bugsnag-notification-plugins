@@ -22,7 +22,9 @@ class Unfuddle extends NotificationPlugin
     """
 
   @receiveEvent = (config, event, callback) ->
-    return if event?.trigger?.type == "linkExistingIssue"
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
+
     @request
       .post @ticketsUrl config
       .auth config.username, config.password

@@ -3,7 +3,8 @@ NotificationPlugin = require "../../notification-plugin"
 class Datadog extends NotificationPlugin
     @receiveEvent = (config, event, callback) ->
 
-        return if event?.trigger?.type == "linkExistingIssue"
+        if event?.trigger?.type == "linkExistingIssue"
+            return callback(null, null)
 
         # Refer to http://docs.datadoghq.com/api/#events
         payload = {
@@ -23,7 +24,7 @@ class Datadog extends NotificationPlugin
             payload.tags << "app-version:#{event.error.appVersion}"
         if event.error.releaseStage
             payload.tags << "release-stage:#{event.error.releaseStage}"
-    
+
         if event.error.severity == "info"
             payload.priority = "low"
             payload.alert_type = "info"

@@ -95,7 +95,8 @@ class Axosoft extends NotificationPlugin
   # Do all the heavy lifting
   @receiveEvent: (config, event, callback) ->
 
-    return if event?.trigger?.type == "linkExistingIssue"
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
 
     # Step 1. Get token
     @getToken config, (err) =>

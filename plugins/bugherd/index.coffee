@@ -35,7 +35,8 @@ module.exports = class BugHerd extends NotificationPlugin
   # Receive the configuration & event payload
   @receiveEvent = (config, event, callback) ->
 
-    return if event?.trigger?.type == "linkExistingIssue"
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
     return if event?.trigger?.type == 'reopened'
 
     @request
