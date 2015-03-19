@@ -3,9 +3,6 @@ NotificationPlugin = require "../../notification-plugin"
 class Datadog extends NotificationPlugin
     @receiveEvent = (config, event, callback) ->
 
-        if event?.trigger?.type == "linkExistingIssue"
-            return callback(null, null)
-
         # Refer to http://docs.datadoghq.com/api/#events
         payload = {
             title: null, # Event title; limited to 100 characters.
