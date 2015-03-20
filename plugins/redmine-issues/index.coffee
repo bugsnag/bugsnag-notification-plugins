@@ -77,10 +77,10 @@ class Redmine extends NotificationPlugin
         .end handleCallback
 
     # Fetch the priority and tracker id, and then handle the request
-    @fetchPriorityId config, config.priority, (err, priorityId) ->
+    @fetchPriorityId config, config.priority, (err, priorityId) =>
       return callback err if err
       unless config.tracker.nil?
-        @fetchTrackerId config, config.tracker (err, trackerId) ->
+        @fetchTrackerId config, config.tracker, (err, trackerId) ->
           return callback err if err
           handleRequest priorityId, trackerId
       else
