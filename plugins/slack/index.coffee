@@ -39,7 +39,7 @@ class Slack extends NotificationPlugin
 
     if event.trigger.type == 'comment'
 
-      title = ["#{event.user.name} commented on #{(event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)}"]
+      title = ["Comment on #{(event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)}"]
       title.push("<#{event.error.url}|(details)>")
     else if event.trigger.type == 'projectSpiking'
       title = ["Spike of #{event.trigger.rate} exceptions/minute from <#{event.project.url}|#{projectName}>"]
