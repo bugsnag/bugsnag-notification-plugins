@@ -21,12 +21,16 @@ class Slack extends NotificationPlugin
         attachment.color = "#FD9149"
       when "info"
         attachment.color = "#20A6DF"
-    if event.comment
-      attachment.fields.push
-        title: 'Comment'
-        value: event.comment.message.truncate(80)
 
     attachment
+
+  @commentAttachment = (event) ->
+    {
+      color: "good"
+      fallback: "Somebody commented"
+      author_name: event.user.name
+      text: event.comment.message
+    }
 
   @receiveEvent = (config, event, callback) ->
 
@@ -35,7 +39,7 @@ class Slack extends NotificationPlugin
 
     if event.trigger.type == 'comment'
 
-      title = ["#{event.user.name} commented on #{(event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)}"]
+      title = ["Comment on #{(event.error.exceptionClass + (if event.error.message then ": #{event.error.message}")).truncate(85)}"]
       title.push("<#{event.error.url}|(details)>")
     else if event.trigger.type == 'projectSpiking'
       title = ["Spike of #{event.trigger.rate} exceptions/minute from <#{event.project.url}|#{projectName}>"]
@@ -53,7 +57,10 @@ class Slack extends NotificationPlugin
     }
 
     # Attach error information
-    payload.attachments.push(@errorAttachment(event)) if event.error
+    if event.comment
+      payload.attachments.push(@commentAttachment(event))
+    else if event.error
+      payload.attachments.push(@errorAttachment(event))
 
     # Post to slack
     @request
