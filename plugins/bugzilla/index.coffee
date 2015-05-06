@@ -41,9 +41,6 @@ class Bugzilla extends NotificationPlugin
     # Normalize the url: https://example.com/bugzilla becomes https://example.com/bugzilla/
     config.host += "/" unless /\/$/.test(config.host)
 
-    if config.customFields
-      Object.merge(payload, JSON.parse(config.customFields))
-
     if event?.trigger?.type == "linkExistingIssue"
       @addCommentToIssue(config, event, callback)
     else
@@ -58,6 +55,8 @@ class Bugzilla extends NotificationPlugin
         platform: 'All'
         priority: config.priority
 
+      if config.customFields
+        Object.merge(payload, JSON.parse(config.customFields))
 
       # Create the new bug
       authedRequest config, "Bug.create", payload, (err, response) ->
