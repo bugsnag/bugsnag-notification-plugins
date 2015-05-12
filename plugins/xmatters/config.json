@@ -10,7 +10,7 @@
       "name": "form",
       "label": "Form URL",
       "description": "Your xMatters BugSnag Integration form",
-      "pattern": "http?:\/\/.+",
+      "pattern": "https?:\/\/.+",
       "section": "authentication"
     },
     {
