@@ -1,0 +1,35 @@
+{
+  "name": "HiTask",
+  "url": "https://hitask.com",
+  "actions": {
+    "create": "Create a task"
+  },
+  "supportedTriggers": "firstException",
+  "type": "communication",
+  "fields": [
+    {
+      "name": "api_key",
+      "label": "API key",
+      "description": "Your HiTask API key",
+      "type": "password",
+      "link": "https://hitask.com/settings#developerAPI"
+    },
+    {
+      "name": "title",
+      "label": "Title",
+      "description": "Title of the task"
+    },
+    {
+      "name": "note",
+      "label": "Note (Optional)",
+      "description": "Description of the task",
+      "optional": true
+    },
+    {
+      "name": "project",
+      "label": "Project",
+      "description": "Specify project name if you wish to add the task to the project",
+      "optional": true
+    }
+  ]
+}
