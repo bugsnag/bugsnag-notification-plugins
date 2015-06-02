@@ -5,7 +5,7 @@
     "create": "Create a task"
   },
   "supportedTriggers": "firstException",
-  "type": "communication",
+  "type": "issueTracker",
   "fields": [
     {
       "name": "api_key",
