@@ -32,8 +32,8 @@ class Bugzilla extends NotificationPlugin
       return callback(err) if err
 
       callback null,
-        id: response.id,
-        url: url.resolve(config.host, "show_bug.cgi?id=#{response.id}")
+        id: issueId,
+        url: url.resolve(config.host, "show_bug.cgi?id=#{issueId}")
 
   @receiveEvent: (config, event, callback) ->
     return if event?.trigger?.type == "reopened"
