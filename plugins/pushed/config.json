@@ -1,0 +1,17 @@
+{
+  "name": "Pushed",
+  "url": "https://pushed.co",
+  "actions": {
+    "create": "Send a push notification to your Pushed account"
+  },
+  "supportedTriggers": "firstException",
+  "type": "communication",
+  "fields": [
+    {
+      "name": "pushed_id",
+      "label": "Pushed ID",
+      "description": "Your Pushed Identifier, you can find it in your Account Settings page.",
+      "link": "https://about.pushed.co/docs/integrations/bugsnag"
+    }
+  ]
+}
