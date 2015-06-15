@@ -13,6 +13,7 @@ class Hipchat extends NotificationPlugin
     "#{host}#{path}?auth_token=#{config.authToken}"
 
   @receiveEvent: (config, event, callback) ->
+
     # Build the message
     if event.error
       details =

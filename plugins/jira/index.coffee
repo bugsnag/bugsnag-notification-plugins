@@ -111,6 +111,9 @@ class Jira extends NotificationPlugin
           url: url.resolve(config.host, "browse/#{res.body.key}")
 
   @receiveEvent: (config, event, callback) ->
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
+
     if event?.trigger?.type == "reopened"
       if event?.error?.createdIssue?.id
         @ensureIssueOpen(config, event.error.createdIssue.id, callback)

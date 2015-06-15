@@ -5,6 +5,7 @@ class Gitter extends NotificationPlugin
   BASE_URL = "https://api.gitter.im/v1"
 
   @receiveEvent: (config, event, callback) ->
+
     if event.error
       details =
         title: "#{event.trigger.message} in #{event.error.releaseStage}"

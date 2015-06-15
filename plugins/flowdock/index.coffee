@@ -6,7 +6,6 @@ class Flowdock extends NotificationPlugin
 
   @receiveEvent: (config, event, callback) ->
 
-
     subject = "#{event.trigger.message} in #{event.project.name}"
     if event.error && event.error && event.error.releaseStage
       subject += " (#{event.error.releaseStage})"

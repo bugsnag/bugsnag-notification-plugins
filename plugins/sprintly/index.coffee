@@ -3,6 +3,8 @@ qs = require 'qs'
 
 class Sprintly extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
     return if event?.trigger?.type == "reopened"
     
     user_email = config.sprintlyEmail

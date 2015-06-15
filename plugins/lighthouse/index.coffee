@@ -2,6 +2,8 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Lighthouse extends NotificationPlugin
   @receiveEvent: (config, event, callback) ->
+    if event?.trigger?.type == "linkExistingIssue"
+      return callback(null, null)
     return if event?.trigger?.type == "reopened"
     
     # Build the ticket payload

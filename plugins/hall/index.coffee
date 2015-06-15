@@ -76,6 +76,7 @@ class Hall extends NotificationPlugin
 
   # Fire the event
   @receiveEvent = (config, event, callback) ->
+
     @request
       .post @chatUrl config
       .type 'json' # Content-Type: application/json
