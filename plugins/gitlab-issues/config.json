@@ -13,7 +13,8 @@
       "name": "private_token",
       "label": "Private Token",
       "description": "Your private token used to access the GitLab API. Available in your Gitlab profile.",
-      "type": "password"
+      "type": "password",
+      "link": "https://gitlab.com/profile/account"
     },
     {
       "name": "project_id",
