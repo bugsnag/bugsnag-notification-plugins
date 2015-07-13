@@ -35,6 +35,14 @@ module.exports = class NotificationPlugin
 
   # Utility methods for http requests
   @request = require "superagent"
+  if process.env.NOTIFICATIONS_PROXY
+    # If we have a configured proxy monkey patch it in so clients dont need to know
+    require('superagent-proxy')(@request)
+
+    ["post", "get", "delete", "head", "put"].forEach (verb) =>
+      original = @request[verb]
+      @request[verb] = (args...) ->
+        original(args...).proxy(process.env.NOTIFICATIONS_PROXY)
 
   # Fired when a new event is triggered for notification
   # Plugins MUST override this method

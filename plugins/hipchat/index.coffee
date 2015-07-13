@@ -48,10 +48,11 @@ class Hipchat extends NotificationPlugin
         .set("Content-Type", "application/json")
         .timeout(4000)
         .send(payload)
-        .on "error", (err) ->
-          callback(err)
-        .end (res) ->
-          callback(res.error)
+        .end (error, response) ->
+          if error?.response?.text
+            callback(JSON.parse(error.response.text).error?.message)
+          else
+            callback()
 
     else
       payload.room_id = config.roomId
@@ -61,10 +62,11 @@ class Hipchat extends NotificationPlugin
         .type("form")
         .timeout(4000)
         .send(payload)
-        .on "error", (err) ->
-          callback(err)
-        .end (res) ->
-          callback(res.error)
+        .end (error, response) ->
+          if error?.response?.text
+            callback(JSON.parse(error.response.text).error?.message)
+          else
+            callback()
 
 
   @render: Handlebars.compile(

@@ -13,7 +13,8 @@
     "optimist": "~0.3.5",
     "qs": "~0.6.6",
     "sugar": "~1.3.8",
-    "superagent": "~0.13.0",
+    "superagent": "^1.2.0",
+    "superagent-proxy": "^0.3.2",
     "xml2js": "~0.2.6",
     "xmlrpc": "^1.2.0"
   },
