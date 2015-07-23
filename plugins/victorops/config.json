@@ -1,0 +1,22 @@
+{
+  "name": "VictorOps",
+  "actions": {
+    "create": "Create a VictorOps incident.",
+    "new": "Add Alert"
+  },
+  "supportedTriggers": "all",
+  "fields": [
+    {
+      "name": "apiKey",
+      "label": "VictorOps API Key",
+      "description": "Enter your API key here.",
+      "type": "password"
+    },
+    {
+      "name": "routingKey",
+      "label": "VictorOps Routing Key",
+      "description": "Enter your routing key here.",
+      "type": "string"
+    }
+  ]
+}
