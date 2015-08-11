@@ -21,7 +21,7 @@ class Jira extends NotificationPlugin
     """
 
   @baseUrl: (config) ->
-    url.resolve(config.host, "/rest/api/2")
+    url.resolve(config.host, "rest/api/2")
 
   @issuesUrl: (config) ->
     @baseUrl(config) + "/issue"
