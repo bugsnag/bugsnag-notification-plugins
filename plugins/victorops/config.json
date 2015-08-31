@@ -15,8 +15,7 @@
     {
       "name": "routingKey",
       "label": "VictorOps Routing Key",
-      "description": "Enter your routing key here.",
-      "type": "string"
+      "description": "Enter your routing key here."
     }
   ]
 }
