@@ -2,9 +2,11 @@ NotificationPlugin = require "../../notification-plugin"
 
 class Wunderlist extends NotificationPlugin
 
+  @webhookURLPrefix = "https://in.wunderlist.com/"
+
   @receiveEvent = (config, event, callback) ->
 
-    if ~config.url.indexOf "https://in.wunderlist.com/"
+    if ~config.url.indexOf @webhookURLPrefix
 
       # Post to Wunderlist
       @request
@@ -15,5 +17,8 @@ class Wunderlist extends NotificationPlugin
           callback(err)
         .end (res) ->
           callback(res.error)
+
+    else
+      callback "Invalid config.url, must start with " + @webhookURLPrefix
 
 module.exports = Wunderlist
