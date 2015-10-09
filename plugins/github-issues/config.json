@@ -51,9 +51,9 @@
     {
       "name": "url",
       "label": "URL",
-      "description": "The GitHub Enterprise URL (e.g. https://github.local)",
+      "description": "Your GitHub Enterprise URL (e.g. https://github.local). Leave blank for github.com.",
       "optional": true,
-      "section": "enterprise"
+      "section": "GitHub Enterprise"
     }
   ]
 }
