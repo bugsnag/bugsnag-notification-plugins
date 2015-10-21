@@ -48,6 +48,7 @@ class Datadog extends NotificationPlugin
         @request
             .post("https://app.datadoghq.com/api/v1/events?api_key=" + config.api_key)
             .set('Content-Type', 'application/json')
+            .timeout(4000)
             .send(payload)
             .on "error", (err) ->
                 callback(err)
