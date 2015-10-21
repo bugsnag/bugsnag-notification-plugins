@@ -2,7 +2,8 @@
     "name": "Datadog",
     "url": "https://www.datadoghq.com",
     "actions": {
-        "create": "Post to Datadog event stream"
+        "create": "Post to Datadog event stream",
+        "new": "Add stream"
     },
     "supportedTriggers": "all",
     "type": "communication",
