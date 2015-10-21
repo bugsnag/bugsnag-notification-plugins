@@ -37,9 +37,11 @@ class PivotalTracker extends NotificationPlugin
       .end()
 
   @openIssue: (config, event, callback) ->
+    nonAscii = /[^\x00-\x7F]/g
+
     # Build the request
     params =
-      "story[name]": "#{event.error.exceptionClass} in #{event.error.context}".truncate(5000)
+      "story[name]": "#{event.error.exceptionClass} in #{event.error.context}".replace(nonAscii, '').truncate(5000)
       "story[story_type]": "bug"
       "story[labels]": (config?.labels || "bugsnag").trim()
       "story[description]":
@@ -50,7 +52,7 @@ class PivotalTracker extends NotificationPlugin
 
         *Stacktrace:*
         #{@basicStacktrace(event.error.stacktrace)}
-        """.truncate(20000)
+        """.replace(nonAscii, '').truncate(20000)
 
     # Send the request to the url
     @pivotalRequest(@request.post(@storiesUrl(config)), config)
