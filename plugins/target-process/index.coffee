@@ -19,7 +19,7 @@ module.exports = class TargetProcess extends NotificationPlugin
       project: id: config.projectId
 
     # If a teamId is specified, add it to the payload
-    payload.team = id: config.teamId if config.teamId?
+    payload.team = id: config.teamId if config.teamId
 
     payload
 
