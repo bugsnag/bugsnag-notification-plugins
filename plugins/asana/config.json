@@ -2,27 +2,28 @@
   "name": "Asana",
   "url": "https://asana.com",
   "actions": {
-    "create": "Create an Asana task",
+    "create": "Create Asana Task",
     "view": "View in Asana",
     "object": "Asana Task"
   },
   "type": "issueTracker",
   "fields": [
     {
-      "name": "apiKey",
-      "label": "API Key - [view on Asana](http://app.asana.com/-/account_api)",
-      "description": "Your Asana API key",
+      "name": "personalAccessToken",
+      "label": "Personal Access Token - [view on Asana](http://app.asana.com/-/account_api)",
+      "description": "Your Asana Personal Access Token",
       "type": "password"
     },
     {
-      "name": "workspaceName",
-      "label": "Workspace or organization name",
-      "description": "Your Asana workspace name or organization name"
+      "name": "workspaceId",
+      "label": "Workspace ID",
+      "description": "Your Asana [workspace ID](https://app.asana.com/api/1.0/workspaces)",
+      "optional": true
     },
     {
-      "name": "projectName",
-      "label": "Project name",
-      "description": "Your Asana project name",
+      "name": "projectId",
+      "label": "Project ID",
+      "description": "Your Asana project ID (in an Asana project, look at the URL: https://app.asana.com/PROJECT_ID/TASK_ID)",
       "optional": true
     }
   ]
