@@ -5,6 +5,20 @@ NotificationPlugin = require "../../notification-plugin"
 class Asana extends NotificationPlugin
   BASE_URL = "https://app.asana.com/api/1.0"
 
+  asanaDesc = (event) ->
+      """
+      #{event.error.exceptionClass} in #{event.error.context}
+      #{event.error.message if event.error.message}
+
+      #{event.error.url}
+
+      #{event.error.occurrences} occurences
+      #{event.error.usersAffected} users affected
+
+      ===
+      COMPLETE THIS TASK IN BUGSNAG. IT WILL BE AUTOMATICALLY CLOSED IN ASANA.
+      """
+
   @issueUrl: (issueId) ->
     "#{BASE_URL}/tasks/#{issueId}"
 
@@ -13,13 +27,13 @@ class Asana extends NotificationPlugin
 
   @asanaRequest: (req, config) ->
     req
-      .timeout(4000)
+      .timeout(10000)
       .type("form")
-      .auth(config.apiKey, "")
+      .set("Authorization","Bearer " + config.personalAccessToken)
 
-  @ensureIssueOpen: (config, issueId, callback) ->
-    @asanaRequest(@request.put(@issueUrl(issueId)), config)
-      .send({"completed": false})
+  @ensureIssueOpen: (config, event, callback) ->
+    @asanaRequest(@request.put(@issueUrl(event.error.createdIssue.id)), config)
+      .send({"completed": false, "notes": asanaDesc(event)})
       .on "error", (err) ->
         callback(err)
       .end (res) ->
@@ -32,53 +46,13 @@ class Asana extends NotificationPlugin
       .end()
 
   @openIssue: (config, event, callback) ->
-    # Look up workspace id from project name
-    getWorkspaceId = (cb) =>
-      @request
-        .get("#{BASE_URL}/workspaces")
-        .timeout(4000)
-        .auth(config.apiKey, "")
-        .on("error", (err) -> cb(err))
-        .end (res) =>
-          return cb(res.error) if res.error
-
-          workspace = res.body?.data?.find? (el) -> el.name == config.workspaceName
-          if workspace
-            cb null, workspace.id
-          else
-            cb new Error("Workspace not found with name '#{config.workspaceName}'")
-
-    # Look up project id from project name
-    getProjectId = (cb) =>
-      @asanaRequest(@request.get("#{BASE_URL}/projects"), config)
-        .on("error", (err) -> cb(err))
-        .end (res) =>
-          return cb(res.error) if res.error
-          return cb(null, null) unless config.projectName
-
-          project = res.body?.data?.find? (el) -> el.name == config.projectName
-          if project
-            cb null, project.id
-          else
-            cb new Error("Project not found with name '#{config.projectName}'")
-
-    # Look up workspace and project ids
-    async.parallel
-      workspaceId: getWorkspaceId
-      projectId: getProjectId
-    , (err, results) =>
-      return callback(err) if err?
-
       # Build task payload
       taskPayload =
-        name: "#{event.error.exceptionClass} in #{event.error.context}"
-        notes: @textBody(event)
-        workspace: results.workspaceId
-
-      taskPayload.projects = [results.projectId] if results.projectId?
-
+        name: "[#{event.error.usersAffected}] #{event.error.exceptionClass}"
+        notes: asanaDesc(event)
+        projects: [config.projectId]
       # Create the task
-      @asanaRequest(@request.post("#{BASE_URL}/tasks"), config)
+      @asanaRequest(@request.post("#{BASE_URL}/tasks?workspace=" + config.workspaceId), config)
         .send(taskPayload)
         .on("error", (err) -> callback(err))
         .end (res) ->
@@ -86,17 +60,22 @@ class Asana extends NotificationPlugin
 
           callback null,
             id: res.body.data.id
-            url: "https://app.asana.com/0/#{results.workspaceId}/#{res.body.data.id}"
+            url: "https://app.asana.com/0/#{config.projectId}/#{res.body.data.id}"
 
   @receiveEvent: (config, event, callback) ->
     if event?.trigger?.type == "linkExistingIssue"
       return callback(null, null)
 
-    if event?.trigger?.type == "reopened"
-      if event?.error?.createdIssue?.id
-        @ensureIssueOpen(config, event.error.createdIssue.id, callback)
-        @addCommentToIssue(config, event.error.createdIssue.id, @textBody(event))
+    if event?.error?.createdIssue?.id
+      if event?.trigger?.type == "comment"
+        @addCommentToIssue(config, event.error.createdIssue.id,
+          event.user.name + ": " + event.comment.message)
+      if event?.trigger?.type == "projectSpiking"
+        @addCommentToIssue(config, event.error.createdIssue.id,
+          event.trigger.message + " - " + event.trigger.rate + " exceptions per minute")
+      @ensureIssueOpen(config, event, callback)
     else
-      @openIssue(config, event, callback)
+      if event?.trigger?.type == "firstException"
+        @openIssue(config, event, callback)
 
 module.exports = Asana
