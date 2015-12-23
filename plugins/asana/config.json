@@ -23,7 +23,7 @@
     {
       "name": "projectId",
       "label": "Project ID",
-      "description": "Your Asana project ID",
+      "description": "Your Asana project ID (in an Asana project, look at the URL: https://app.asana.com/PROJECT_ID/TASK_ID)",
       "optional": true
     }
   ]
