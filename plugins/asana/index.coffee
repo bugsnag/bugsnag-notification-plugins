@@ -14,9 +14,6 @@ class Asana extends NotificationPlugin
 
       #{event.error.occurrences} occurences
       #{event.error.usersAffected} users affected
-
-      ===
-      COMPLETE THIS TASK IN BUGSNAG. IT WILL BE AUTOMATICALLY CLOSED IN ASANA.
       """
 
   @issueUrl: (issueId) ->
