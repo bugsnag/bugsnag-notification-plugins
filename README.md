@@ -1,48 +1,40 @@
-Bugsnag Notification Plugin Creation Guide
-==========================================
+Bugsnag Notification Plugins
+============================
 
 Bugsnag.com can notify you when errors happen in your applications.
-We've created a plugin architecture so you can contribute notification 
+We've created a plugin architecture so you can contribute notification
 plugins for services you use.
 
-[Bugsnag](http://bugsnag.com) captures errors in real-time from your web, 
-mobile and desktop applications, helping you to understand and resolve them 
-as fast as possible. [Create a free account](http://bugsnag.com) to start 
+[Bugsnag](http://bugsnag.com) captures errors in real-time from your web,
+mobile and desktop applications, helping you to understand and resolve them
+as fast as possible. [Create a free account](http://bugsnag.com) to start
 capturing exceptions from your applications.
 
+Project Status ![maintenance only](https://img.shields.io/badge/status-maintenance%20only-orange.svg)
+--------------
 
-Steps to contributing
+Bugsnag is in the process of moving to a more integrated approach to
+notification plugins, moving the development internally to reduce logic
+duplication between third-party plugins and application behavior. The existing
+plugins will continue to exist, however they will be superceded by better
+counterparts in the near future.
+
+Reporting Bugs or Feature Requests
+----------------------------------
+
+Please report any bugs or feature requests for notification plugins to
+[support@bugsnag.com](mailto:support@bugsnag.com).
+
+Plugin Creation Guide
 ---------------------
 
--   [Fork](https://help.github.com/articles/fork-a-repo) the 
-    [bugsnag-notification-plugins project](https://github.com/bugsnag/bugsnag-notification-plugins)
-    on GitHub.
+### Writing your plugin
 
--   Create a new folder in `/plugins/` for your plugin
-
--   Create the plugin file as `index.js` or `index.coffee`, see below for 
-    instructions
-
--   Create a `config.json` file describing the usage and configurable settings
-    for your plugin
-
--   Add a 50x50 `icon.png` file representing your plugin
-
--   If necessary, add any node module dependencies to the base `package.json` 
-    file
-
--   [Make a pull request](https://help.github.com/articles/using-pull-requests)
-    from your fork to [bugsnag/bugsnag-notification-plugins](https://github.com/bugsnag/bugsnag-notification-plugins)
-
-
-Writing your plugin
--------------------
-
-Notification plugins should be written in JavaScript or CoffeeScript and are 
+Notification plugins should be written in JavaScript or CoffeeScript and are
 executed in a queue using our internal node.js application.
 
 Plugins should extend the base `NotificationPlugin` class defined in
-`notification-plugin.js` and override the `receiveEvent` function to perform 
+`notification-plugin.js` and override the `receiveEvent` function to perform
 the notification. This method is fired when a new event is triggered.
 
 It is easiest to write plugins using CoffeeScript, for example:
@@ -56,7 +48,7 @@ class MyPlugin extends NotificationPlugin
 module.exports = MyPlugin
 ```
 
-If you prefer to write your plugin with plain old JavaScript, this is also 
+If you prefer to write your plugin with plain old JavaScript, this is also
 possible:
 
 ```javascript
@@ -73,10 +65,9 @@ module.exports = MyPlugin;
 ```
 
 
-Testing your plugin
--------------------
+### Testing your plugin
 
-By extending the `NotificationPlugin` class, you'll be able to test your 
+By extending the `NotificationPlugin` class, you'll be able to test your
 plugin directly on the command line. In your new plugin directory
 (`plugins/your-plugin`) run `index.coffee` directly:
 
@@ -89,28 +80,28 @@ defined in your `config.json` file.
 directory first, to install the dependencies for the project.
 
 
-Event Format
-------------
+### Event Format
+
 As well as passing the user's plugin configuration settings, we also pass you
 an event object, which tells you the reason we triggered a notification.
 
 ```javascript
 event: {
-    
+
     // Contains information about the account which has had an event
     account: {
         // The account name
         name: "Account Name",
-        
+
         // The url for the Bugsnag dashboard of the account
         url: "https://bugsnag.com/dashboard/"
     },
-    
+
     // Contains information about the project which has had an event
     project: {
         // The project name
         name: "Project Name",
-        
+
         // The url for the Bugsnag dashboard of the project
         url: "https://bugsnag.com/dashboard/project-name"
     },
@@ -119,8 +110,8 @@ event: {
     trigger: {
         // The identifier for the reason for notification
         type: "firstException",
-        
-        // The human readable form of the trigger. This can be used to start 
+
+        // The human readable form of the trigger. This can be used to start
         // a sentence.
         message: "New exception"
     },
@@ -130,46 +121,46 @@ event: {
     error: {
         // The class of exception that caused the error
         exceptionClass: "NullPointerException",
-        
-        // The message that came with the exception. This may not be present if 
+
+        // The message that came with the exception. This may not be present if
         // the exception didn't generate one.
         message: "Null cannot be dereferenced",
-        
-        // The context that was active in the application when the error 
+
+        // The context that was active in the application when the error
         // occurred. This could be which screen
         // the user was using at the time, for example.
         context: "BugsnagMainActivity",
-        
+
         // The application version
         appVersion: "1.2.3",
-        
+
         // The release stage, will most often be production, or development.
         releaseStage: "production",
-        
+
         // The number of times this exception has occurred (including this one)
         occurrences: 1,
-        
+
         // When was the error first received. Will be a Date object.
         firstReceived: new Date(),
-        
-        // How many users have been affected. Could be 0 if there was no user 
+
+        // How many users have been affected. Could be 0 if there was no user
         // associated with the error.
         usersAffected: 1,
-        
+
         // The URL on bugsnag.com with the full details about this error
         url: "https://bugsnag.com/errors/example",
-        
+
         // The stack trace for this error. An array of stack frames.
         stacktrace: [{
             // The file that this stack frame was in.
             file: "BugsnagMainActivity.java",
-            
+
             // The line number of the stack frame, within the file.
             lineNumber: 123,
-            
+
             // The method that was being executed.
             method: "onCreate",
-            
+
             // Indicates that this stack fram was within the project. If the key
             //is not present, it is assumed to be false.
             inProject: true
@@ -180,10 +171,9 @@ event: {
 }
 ```
 
-HTTP request helper
--------------------
+### HTTP request helper
 
-Since most notification plugins will use http for communication to external 
+Since most notification plugins will use http for communication to external
 services, we've provided a `request` helper function. This function provides
 a `superagent` request object, which you can
 [read about here](http://visionmedia.github.com/superagent/). Some examples:
@@ -212,8 +202,7 @@ a `superagent` request object, which you can
 ```
 
 
-config.json format
-------------------
+### config.json format
 
 Your plugin's `config.json` file describes to users how to use and configure
 your plugin from their Bugsnag dashboard. The file must be a valid JSON file
@@ -223,16 +212,16 @@ and look similar to the following example:
 {
     // The name of the plugin.
     "name": "HipChat",
-    
+
     // A description of the action that will be performed.
     "actions": {
       "create": "Post to a HipChat chatroom",
     },
-    
-    // We trigger notifications when certain events occur in bugsnag (see the 
+
+    // We trigger notifications when certain events occur in bugsnag (see the
     // Event Format documentation above). To signal which triggers your plugin
-    // understands, set this to an array of trigger strings. 
-    // eg. ["exception", "firstException"]. 
+    // understands, set this to an array of trigger strings.
+    // eg. ["exception", "firstException"].
     "supportedTriggers": ["firstException"],
 
     // The type of plugin ("issueTracker", "communication", or "other")
@@ -240,25 +229,25 @@ and look similar to the following example:
 
     // An array of fields to present to the user on the Bugsnag.com dashboard.
     "fields": [{
-        // The name of the field. This is how you will reference the field in 
+        // The name of the field. This is how you will reference the field in
         // the configuration options that are passed to your notifier when it is
         // run. Should be camelCase.
         "name": "authToken",
-        
+
         // The label to display to the user for this field
         "label": "Auth Token",
-        
+
         // A full description or hint for this field.
         "description": "Your HipChat API auth token",
-        
-        // The data type of this field, either string, select, password or boolean 
+
+        // The data type of this field, either string, select, password or boolean
         // (optional, defaults to string)
         "type": "boolean",
-        
+
         // An array of selectable values to present in the dropdown list
         // (required when type == "select").
         "allowedValues": ["yellow", "red", "green", "purple", "random"],
-        
+
         // A default value for this field (optional).
         "defaultValue": "yellow"
 
@@ -271,11 +260,3 @@ and look similar to the following example:
     ]
 }
 ```
-
-Reporting Bugs or Feature Requests
-----------------------------------
-
-Please report any bugs or feature requests on the github issues page for this
-project here:
-
-<https://github.com/bugsnag/bugsnag-notification-plugins/issues>
