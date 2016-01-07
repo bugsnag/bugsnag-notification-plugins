@@ -16,7 +16,7 @@ Project Status ![maintenance only](https://img.shields.io/badge/status-maintenan
 Bugsnag is in the process of moving to a more integrated approach to
 notification plugins, moving the development internally to reduce logic
 duplication between third-party plugins and application behavior. The existing
-plugins will continue to exist, however they will be superceded by better
+plugins will continue to operate, however they will be superceded by better
 counterparts in the near future.
 
 Reporting Bugs or Feature Requests
