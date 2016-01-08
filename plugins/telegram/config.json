@@ -1,0 +1,25 @@
+{
+  "name": "Telegram",
+
+  "actions": {
+    "create": "Post to a Telegram chatroom"
+  },
+
+  "supportedTriggers": ["error"],
+  "type": "issueTracker",
+
+  "fields": [{
+      "name": "chatId",
+      "label": "chat id",
+      "description": "your telegram chat id number",
+      "type": "string"
+    },
+
+    {
+      "name": "token",
+      "label": "token",
+      "description": "Your Telegram token or bot id.",
+      "type": "string"
+    }
+  ]
+}
