@@ -55,6 +55,14 @@
       "type": "json",
       "optional": true,
       "section": "fields"
+    },
+    {
+      "name": "reopenIssues",
+      "label": "Re-open Closed Issues",
+      "description": "Whether or not bugsnag should re-open issues that have been closed in JIRA. If disabled, bugsnag will still comment on an issue if it re-occurs.",
+      "defaultValue": true,
+      "type": "boolean",
+      "section": "behavior"
     }
   ]
 }
