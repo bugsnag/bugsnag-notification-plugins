@@ -1,0 +1,17 @@
+{
+  "name": "Kore",
+  "url": "https://kore.com",
+  "actions": {
+    "create": "Post to Kore",
+    "new": "Add Room"
+  },
+  "supportedTriggers": "all",
+  "type": "communication",
+  "fields": [
+    {
+      "name": "url",
+      "label": "Kore Webhook URL",
+      "description": "The Kore webhook URL you would like data posted to"
+    }
+  ]
+}
